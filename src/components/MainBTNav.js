@@ -1,13 +1,88 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import styles from "../styles/common/MainBTNav.module.css";
+import { FaHouseChimney } from "react-icons/fa6";
+import { FaRegCalendarDays } from "react-icons/fa6";
+import { FaStar } from "react-icons/fa6";
+import { FaMessage } from "react-icons/fa6";
+import { FaUserLarge } from "react-icons/fa6";
 
 const MainBTNav = () => {
   return (
-    <div className={styles.frame}>
-      <Outlet />
-      <div className={styles.btbody}>응애응애</div>
-    </div>
+    <>
+      <div className={styles.wrapper}>
+        <Outlet></Outlet>
+      </div>
+
+      {/* footer */}
+      <ul className={styles.footer}>
+        <NavLink
+          to="/"
+          className={({ isActive }) => {
+            return isActive
+              ? `${styles.activeFooterBT}`
+              : `${styles.defaultFooterBT}`;
+          }}
+        >
+          <li>
+            <FaHouseChimney />
+            <p>예약하기</p>
+          </li>
+        </NavLink>
+        <NavLink
+          to="/check"
+          className={({ isActive }) => {
+            return isActive
+              ? `${styles.activeFooterBT}`
+              : `${styles.defaultFooterBT}`;
+          }}
+        >
+          <li>
+            <FaRegCalendarDays />
+            <p>예약확인</p>
+          </li>
+        </NavLink>
+        <NavLink
+          to="/favorite"
+          className={({ isActive }) => {
+            return isActive
+              ? `${styles.activeFooterBT}`
+              : `${styles.defaultFooterBT}`;
+          }}
+        >
+          <li>
+            <FaStar />
+            <p>즐겨찾기</p>
+          </li>
+        </NavLink>
+        <NavLink
+          to="/chat"
+          className={({ isActive }) => {
+            return isActive
+              ? `${styles.activeFooterBT}`
+              : `${styles.defaultFooterBT}`;
+          }}
+        >
+          <li>
+            <FaMessage />
+            <p>채팅</p>
+          </li>
+        </NavLink>
+        <NavLink
+          to="/mypage"
+          className={({ isActive }) => {
+            return isActive
+              ? `${styles.activeFooterBT}`
+              : `${styles.defaultFooterBT}`;
+          }}
+        >
+          <li>
+            <FaUserLarge />
+            <p>마이페이지</p>
+          </li>
+        </NavLink>
+      </ul>
+    </>
   );
 };
 
