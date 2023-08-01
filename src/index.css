@@ -1,13 +1,59 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* font 설정 */
+@font-face {
+  font-family: "PreBlack";
+  src: url("./assets/fonts/Pretendard-Black.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PreExtraBold";
+  src: url("./assets/fonts/Pretendard-ExtraBold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PreBold";
+  src: url("./assets/fonts/Pretendard-Bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PreSemiBold";
+  src: url("./assets/fonts/Pretendard-SemiBold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PreMedium";
+  src: url("./assets/fonts/Pretendard-Medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PreRegular";
+  src: url("./assets/fonts/Pretendard-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PreLight";
+  src: url("./assets/fonts/Pretendard-Light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PreExtraLight";
+  src: url("./assets/fonts/Pretendard-ExtraLight.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PreThin";
+  src: url("./assets/fonts/Pretendard-Thin.otf") format("opentype");
 }
