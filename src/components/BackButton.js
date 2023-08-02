@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 const BackButton = () => {
   const navigate = useNavigate();
   return (
-    <div>
+    <>
       <FaAngleLeft size="24" color="#323232" onClick={() => navigate(-1)} />
-    </div>
+    </>
   );
 };
 

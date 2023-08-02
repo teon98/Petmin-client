@@ -4,16 +4,14 @@ import BackButton from "./BackButton";
 
 const BackTitleHeader = (props) => {
   return (
-    <div className={styles.NavBody}>
-      <BackButton
-        className={styles.goback}
-        align="left"
-        vertical-align="middle"
-      />
-      <div className={styles.title} align="center" vertical-align="middle">
-        {props.title}
+    <>
+      <div className={styles.NavBody}>
+        <div className={styles.goback}>
+          <BackButton />
+        </div>
+        <div className={styles.title}>{props.title}</div>
       </div>
-    </div>
+    </>
   );
 };
 
