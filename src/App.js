@@ -23,6 +23,8 @@ const App = () => {
           <Route path="chat" element={<Chat />} />
           <Route path="mypage" element={<Mypage />} />
         </Route>
+        {/* 계정 */}
+        <Route path="/auth" element={<MainBTNav />}></Route>
         {/* 알림페이지 */}
         <Route path="/alarm" element={<Alarm />}></Route>
         {/* 소개페이지 */}
