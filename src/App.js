@@ -11,6 +11,7 @@ import Alarm from "./pages/Alarm";
 import About from "./pages/banner/About";
 import Hospital from "./pages/banner/Hospital";
 import Register from "./pages/banner/Register";
+import Login from "./pages/User/Login";
 import Signup from "./pages/Signup";
 
 const App = () => {
@@ -23,6 +24,8 @@ const App = () => {
           <Route path="favorite" element={<Favorite />} />
           <Route path="chat" element={<Chat />} />
           <Route path="mypage" element={<Mypage />} />
+          {/* 로그인 */}
+          <Route path="/login" element={<Login />}></Route>
         </Route>
         {/* 계정 */}
         <Route path="/auth" element={<MainBTNav />}></Route>
