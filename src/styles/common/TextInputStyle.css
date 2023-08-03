@@ -1,0 +1,25 @@
+.textInputContainer {
+  width: 100%;
+  margin: auto;
+  margin-bottom: 50px;
+}
+
+.textInputLable {
+  color: black;
+  font-family: PreMedium;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.textInputValue {
+  height: 50px;
+  width: 100%;
+  border-style: none;
+  border-bottom: 1px solid #b3b3b3;
+  font-family: PreMedium;
+  font-weight: 500px;
+  font-size: 17px;
+  box-sizing: border-box;
+}

@@ -1,0 +1,19 @@
+.signupContainer {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.signupLable {
+  font-family: "PreBold";
+  font-size: 25px;
+  color: #323232;
+  line-height: normal;
+  margin-bottom: 50px;
+  margin-top: 20px;
+}
+.signupStep {
+  position: absolute;
+  right: 30px;
+}

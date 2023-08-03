@@ -13,6 +13,8 @@ import Hospital from "./pages/banner/Hospital";
 import Register from "./pages/banner/Register";
 import MypageMenu from "./pages/MypageMenu";
 import PSprofile from "./pages/petsitter/PSprofile";
+import Login from "./pages/User/Login";
+import Signup from "./pages/Signup";
 
 const App = () => {
   return (
@@ -26,6 +28,8 @@ const App = () => {
           <Route path="mypage" element={<Mypage />} />
           {/* 로그인 완료했을 때 보이는 마이페이지 */}
           <Route path="mypage2" element={<MypageMenu />} />
+          {/* 로그인 */}
+          <Route path="/login" element={<Login />}></Route>
         </Route>
         {/* 계정 */}
         <Route path="/auth" element={<MainBTNav />}></Route>
@@ -41,6 +45,8 @@ const App = () => {
         <Route path="/petsitterprfile" element={<MainBTNav />}>
           <Route path=":userID" element={<PSprofile />} />
         </Route>
+        {/* 회원가입 페이지 */}
+        <Route path="/signup" element={<Signup />}></Route>
       </Routes>
     </div>
   );
