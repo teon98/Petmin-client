@@ -13,6 +13,8 @@ import Hospital from "./pages/banner/Hospital";
 import Register from "./pages/banner/Register";
 import Login from "./pages/User/Login";
 import Signup from "./pages/Signup";
+import UserInfo from "./pages/User/UserInfo";
+import PetInfo from "./pages/User/PetInfo";
 
 const App = () => {
   return (
@@ -24,6 +26,10 @@ const App = () => {
           <Route path="favorite" element={<Favorite />} />
           <Route path="chat" element={<Chat />} />
           <Route path="mypage" element={<Mypage />} />
+          {/* 내 프로필 관리 */}
+          <Route path="myinfo" element={<UserInfo />} />
+          {/* 반려동물 프로필 관리 */}
+          <Route path="petinfo" element={<PetInfo />} />
           {/* 로그인 */}
           <Route path="/login" element={<Login />}></Route>
         </Route>
