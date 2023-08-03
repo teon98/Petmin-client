@@ -11,6 +11,7 @@ import Alarm from "./pages/Alarm";
 import About from "./pages/banner/About";
 import Hospital from "./pages/banner/Hospital";
 import Register from "./pages/banner/Register";
+import Signup from "./pages/Signup";
 
 const App = () => {
   return (
@@ -33,6 +34,8 @@ const App = () => {
         <Route path="/register" element={<Register />}></Route>
         {/* 병원페이지 */}
         <Route path="/hospital" element={<Hospital />}></Route>
+        {/* 회원가입 페이지 */}
+        <Route path="/signup" element={<Signup />}></Route>
       </Routes>
     </div>
   );
