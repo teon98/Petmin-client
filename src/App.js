@@ -14,6 +14,10 @@ import Register from "./pages/banner/Register";
 import MypageMenu from "./pages/MypageMenu";
 import PSprofile from "./pages/petsitter/PSprofile";
 import Login from "./pages/User/Login";
+import Signup from "./pages/Signup";
+import UserInfo from "./pages/User/UserInfo";
+import PetInfo from "./pages/User/PetInfo";
+import CardInfo from "./pages/User/CardInfo";
 import Signup1 from "./pages/User/Signup1";
 import Signup2 from "./pages/User/Signup2";
 
@@ -27,10 +31,16 @@ const App = () => {
           <Route path="favorite" element={<Favorite />} />
           <Route path="chat" element={<Chat />} />
           <Route path="mypage" element={<Mypage />} />
+          {/* 내 프로필 관리 */}
+          <Route path="myinfo" element={<UserInfo />} />
+          {/* 카드 관리 */}
+          <Route path="card" element={<CardInfo />} />
+          {/* 반려동물 프로필 관리 */}
+          <Route path="petinfo" element={<PetInfo />} />
           {/* 로그인 완료했을 때 보이는 마이페이지 */}
           <Route path="mypage2" element={<MypageMenu />} />
           {/* 로그인 */}
-          <Route path="/login" element={<Login />}></Route>
+          <Route path="login" element={<Login />}></Route>
         </Route>
         {/* 계정 */}
         <Route path="/auth" element={<MainBTNav />}></Route>
