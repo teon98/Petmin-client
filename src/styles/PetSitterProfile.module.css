@@ -1,0 +1,137 @@
+.title {
+  font-family: "PreSemiBold";
+  font-size: 17px;
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
+
+.subtitle {
+  font-family: "PreRegular";
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+#frame {
+  margin-bottom: 20px;
+}
+
+#about {
+  /* textarea css */
+  font-family: "PreRegular";
+  font-size: 15px;
+  border: solid 2px #b3b3b3;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  height: 70px;
+  resize: vertical;
+}
+
+.place {
+  font-family: "PreRegular";
+  font-size: 15px;
+}
+
+#frame input[type="radio"] {
+  display: none;
+}
+
+#frame input[type="radio"] + label {
+  display: inline-block;
+  border-radius: 5px;
+  border: 2px solid #b3b3b3;
+  margin-right: 10px;
+  padding: 7px 12px;
+  color: #8f8f8f;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  font-size: 15px;
+}
+
+#frame input[type="radio"]:hover + label {
+  color: #ff6666;
+  border: 2px solid #ff6666;
+}
+
+#frame input[type="radio"]:checked + label {
+  color: #ff6666;
+  border: 2px solid #ff6666;
+}
+
+.checkedStyle {
+  color: #ff6666;
+  border: 2px solid #ff6666;
+}
+
+.saveBT {
+  text-align: right;
+}
+
+.saveBT input[type="button"] {
+  font-family: "PreRegular";
+  background-color: #ff6666;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 7px 25px;
+  font-size: 15px;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+/* 펫시터 일정 등록 CSS */
+#frame span {
+  font-family: "PreRegular";
+  font-size: 13px;
+}
+
+#frame input[type="checkbox"] + label {
+  font-family: "PreRegular";
+}
+
+.datepickInput {
+  font-family: "PreMedium";
+  height: 40px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  color: #ff6666;
+  border-radius: 5px;
+  border: 2px solid #b3b3b3;
+}
+
+.datepickInput::placeholder {
+  color: #ff6666;
+}
+
+.timeBT {
+  font-family: "PreMedium";
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #b3b3b3;
+  padding: 5px 15px;
+  margin-right: 7px;
+  margin-bottom: 10px;
+  width: 70px;
+  color: #8f8f8f;
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+}
+
+.timeBT:hover {
+  border-color: #ff6666;
+  color: #ff6666;
+}
+
+.subtitle3 {
+  font-family: "PreMedium";
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+.timetable {
+  margin-bottom: 20px;
+}

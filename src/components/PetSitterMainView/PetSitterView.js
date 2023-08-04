@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import SearchAndFillter from "./SearchAndFillter";
 import PetSitterCardList from "./PetSitterCardList";
 
