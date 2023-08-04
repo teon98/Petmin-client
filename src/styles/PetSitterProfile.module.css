@@ -107,7 +107,7 @@
   color: #ff6666;
 }
 
-.timeBT {
+/* .timeBT {
   font-family: "PreMedium";
   background-color: white;
   border-radius: 5px;
@@ -124,7 +124,7 @@
 .timeBT:hover {
   border-color: #ff6666;
   color: #ff6666;
-}
+} */
 
 .subtitle3 {
   font-family: "PreMedium";
@@ -134,4 +134,36 @@
 
 .timetable {
   margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.timetable input[type="checkbox"] {
+  display: none;
+}
+
+.timetable input[type="checkbox"] + label {
+  font-family: "PreMedium";
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #b3b3b3;
+  padding: 7px 15px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  width: 40px;
+  text-align: center;
+  color: #8f8f8f;
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.timetable input[type="checkbox"]:hover + label {
+  border-color: #ff6666;
+  color: #ff6666;
+}
+
+.timetable input[type="checkbox"]:checked + label {
+  border-color: #ff6666;
+  color: #ff6666;
 }

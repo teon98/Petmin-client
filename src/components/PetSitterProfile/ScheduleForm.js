@@ -5,6 +5,7 @@ import "../../styles/daypickerCustom.css";
 import { usePopper } from "react-popper";
 import { format, isValid, parse } from "date-fns";
 import FocusTrap from "focus-trap-react";
+import axios from "axios";
 
 const ScheduleForm = () => {
   const [selected, setSelected] = useState("");
@@ -25,7 +26,7 @@ const ScheduleForm = () => {
   };
 
   const handleInputChange = (e) => {
-    console.log(e);
+    console.log(e.target.value);
     setInputValue(e.target.value);
     const date = parse(e.target.value, "y-MM-dd", new Date());
     if (isValid(date)) {
@@ -50,6 +51,80 @@ const ScheduleForm = () => {
     }
   };
 
+  const AM = ["6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00"];
+
+  const PM = [
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00",
+    "22:00",
+    "23:00",
+    "24:00",
+  ];
+
+  //선택한 시간 저장
+  const [scheduleTimeList, setScheduleTimeList] = useState([]);
+
+  const handleChange = (e) => {
+    console.log(e.target.id);
+    if (e.target.checked === true) {
+      setScheduleTimeList([...scheduleTimeList, e.target.id]);
+    } else if (e.target.checked === false) {
+      //삭제
+      for (var i = 0; i < scheduleTimeList.length; i++) {
+        if (scheduleTimeList[i] === e.target.id) {
+          scheduleTimeList.splice(i, 1);
+        }
+      }
+    }
+  };
+
+  const handleClick = () => {
+    console.log(scheduleTimeList);
+
+    var formData = new FormData();
+    formData.append("sitterId", "test11");
+    formData.append("scaduleDay", inputValue);
+    formData.append("scaduleHour", scheduleTimeList);
+    formData.append("dolbomOption", "산책");
+
+    axios
+      .post("/sitter/schedule", formData)
+      .then((res) => {
+        alert("일정이 등록되었습니다.");
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const allHandleClick = (e) => {
+    const value = e.target.checked;
+    console.log(value);
+    var timetable = document.querySelectorAll(
+      "#timetable input[type='checkbox']"
+    );
+    if (value) {
+      let alltimelist = [];
+      for (let i = 0; i < timetable.length; i++) {
+        alltimelist.push(timetable[i].id);
+        timetable[i].checked = true;
+        setScheduleTimeList(alltimelist);
+      }
+    } else {
+      for (let i = 0; i < timetable.length; i++) {
+        timetable[i].checked = false;
+        setScheduleTimeList([]);
+      }
+    }
+  };
   return (
     <div>
       <div id={style.frame}>
@@ -105,41 +180,38 @@ const ScheduleForm = () => {
         )}
       </div>
       <div id={style.frame} style={{ textAlign: "right" }}>
-        <input id="allday" type="checkbox" />
+        <input id="allday" type="checkbox" onClick={allHandleClick} />
         <label htmlFor="allday">종일 가능</label>
       </div>
-      <div>
+      <div id="timetable">
         <div className={style.subtitle3}>오전</div>
         <div className={style.timetable}>
-          <button className={style.timeBT}>6:00</button>
-          <button className={style.timeBT}>7:00</button>
-          <button className={style.timeBT}>8:00</button>
-          <button className={style.timeBT}>9:00</button>
-          <button className={style.timeBT}>10:00</button>
-          <button className={style.timeBT}>11:00</button>
-          <button className={style.timeBT}>12:00</button>
+          {AM.map((time) => {
+            return (
+              <div key={time}>
+                <input type="checkbox" id={time} onChange={handleChange} />
+                <label htmlFor={time}>{time}</label>
+              </div>
+            );
+          })}
         </div>
         <div className={style.subtitle3}>오후</div>
         <div className={style.timetable}>
-          <button className={style.timeBT}>13:00</button>
-          <button className={style.timeBT}>14:00</button>
-          <button className={style.timeBT}>15:00</button>
-          <button className={style.timeBT}>16:00</button>
-          <button className={style.timeBT}>17:00</button>
-          <button className={style.timeBT}>18:00</button>
-          <button className={style.timeBT}>19:00</button>
-          <button className={style.timeBT}>20:00</button>
-          <button className={style.timeBT}>21:00</button>
-          <button className={style.timeBT}>22:00</button>
-          <button className={style.timeBT}>23:00</button>
-          <button className={style.timeBT}>24:00</button>
+          {PM.map((time) => {
+            return (
+              <div key={time}>
+                <input type="checkbox" id={time} onChange={handleChange} />
+                <label htmlFor={time}>{time}</label>
+              </div>
+            );
+          })}
         </div>
         <div
           className={style.saveBT}
           id={style.frame}
           style={{ textAlign: "right" }}
         >
-          <input type="button" value="저장" />
+          <input type="button" value="저장" onClick={handleClick} />
         </div>
       </div>
     </div>
