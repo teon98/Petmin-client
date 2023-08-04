@@ -25,7 +25,7 @@ const PostBtn = styled.button`
     cursor: pointer;
   }
 `;
-const Post = () => {
+const Post = (props) => {
   // 팝업창 상태 관리
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -42,7 +42,7 @@ const Post = () => {
   return (
     <div>
       <PostBtn type="button" onClick={openPostCode}>
-        주소검색
+        {props.title}
       </PostBtn>
 
       <div id="popupDom">
