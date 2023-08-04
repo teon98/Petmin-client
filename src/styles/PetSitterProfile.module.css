@@ -60,6 +60,11 @@
   border: 2px solid #ff6666;
 }
 
+.checkedStyle {
+  color: #ff6666;
+  border: 2px solid #ff6666;
+}
+
 .saveBT {
   text-align: right;
 }
@@ -84,4 +89,49 @@
 
 #frame input[type="checkbox"] + label {
   font-family: "PreRegular";
+}
+
+.datepickInput {
+  font-family: "PreMedium";
+  height: 40px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  color: #ff6666;
+  border-radius: 5px;
+  border: 2px solid #b3b3b3;
+}
+
+.datepickInput::placeholder {
+  color: #ff6666;
+}
+
+.timeBT {
+  font-family: "PreMedium";
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #b3b3b3;
+  padding: 5px 15px;
+  margin-right: 7px;
+  margin-bottom: 10px;
+  width: 70px;
+  color: #8f8f8f;
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+}
+
+.timeBT:hover {
+  border-color: #ff6666;
+  color: #ff6666;
+}
+
+.subtitle3 {
+  font-family: "PreMedium";
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+.timetable {
+  margin-bottom: 20px;
 }
