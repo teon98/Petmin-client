@@ -18,6 +18,8 @@ import Signup from "./pages/Signup";
 import UserInfo from "./pages/User/UserInfo";
 import PetInfo from "./pages/User/PetInfo";
 import CardInfo from "./pages/User/CardInfo";
+import Signup1 from "./pages/User/Signup1";
+import Signup2 from "./pages/User/Signup2";
 
 const App = () => {
   return (
@@ -50,12 +52,14 @@ const App = () => {
         <Route path="/register" element={<Register />}></Route>
         {/* 병원페이지 */}
         <Route path="/hospital" element={<Hospital />}></Route>
+        {/* 회원가입 페이지 1*/}
+        <Route path="/signup1" element={<Signup1 />}></Route>
+        {/* 회원가입 페이지 2*/}
+        <Route path="/signup2" element={<Signup2 />}></Route>
         {/* 마이페이지 - 펫시터 프로필 관리 */}
         <Route path="/petsitterprfile" element={<MainBTNav />}>
           <Route path=":userID" element={<PSprofile />} />
         </Route>
-        {/* 회원가입 페이지 */}
-        <Route path="/signup" element={<Signup />}></Route>
       </Routes>
     </div>
   );
