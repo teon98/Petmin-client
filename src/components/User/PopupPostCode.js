@@ -3,19 +3,21 @@ import DaumPostcode from "react-daum-postcode";
 import { styled } from "styled-components";
 
 const PostBtn = styled.button`
-  margin: -225px 20px auto auto;
-  padding: 3px 10px;
+  margin: -335px -20px auto auto;
+  padding: 5px 10px;
   display: block;
-  border: 2px solid #b3b3b3;
   font-family: PreMedium;
   font-size: 18px;
-  border-radius: 5px;
-  color: #b3b3b3;
-  background: #fff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  background: #b3b3b3;
+  border: none;
+  color: #fff;
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background: #b3b3b3;
+    background: #ff8989;
+    border-color: #ff8989;
     color: #fff;
     cursor: pointer;
   }
@@ -46,10 +48,11 @@ const PopupPostCode = (props) => {
   const postCodeStyle = {
     display: "block",
     position: "absolute",
-    top: "10%",
+    top: "15%",
     width: "412px",
     height: "600px",
     padding: "7px",
+    marginLeft: "-268px",
   };
 
   return (
