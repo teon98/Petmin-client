@@ -12,7 +12,8 @@ import About from "./pages/banner/About";
 import Hospital from "./pages/banner/Hospital";
 import Register from "./pages/banner/Register";
 import Login from "./pages/User/Login";
-import Signup from "./pages/Signup";
+import Signup1 from "./pages/User/Signup1";
+import Signup2 from "./pages/User/Signup2";
 
 const App = () => {
   return (
@@ -37,8 +38,10 @@ const App = () => {
         <Route path="/register" element={<Register />}></Route>
         {/* 병원페이지 */}
         <Route path="/hospital" element={<Hospital />}></Route>
-        {/* 회원가입 페이지 */}
-        <Route path="/signup" element={<Signup />}></Route>
+        {/* 회원가입 페이지 1*/}
+        <Route path="/signup1" element={<Signup1 />}></Route>
+        {/* 회원가입 페이지 2*/}
+        <Route path="/signup2" element={<Signup2 />}></Route>
       </Routes>
     </div>
   );

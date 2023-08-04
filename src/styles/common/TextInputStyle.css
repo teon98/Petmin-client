@@ -1,7 +1,7 @@
 .textInputContainer {
   width: 100%;
   margin: auto;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .textInputLable {
@@ -22,4 +22,31 @@
   font-weight: 500px;
   font-size: 17px;
   box-sizing: border-box;
+}
+
+.emailValidText {
+  font-family: PreMedium;
+  font-size: 13px;
+  color: #ff8989;
+  margin-top: 10px;
+  height: 15px;
+}
+
+.forIdDuplicateBtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.duplicateCheckBtn {
+  display: block;
+  /* margin: 10px; */
+  width: 65px;
+  height: 30px;
+  background: #ff8989;
+  box-shadow: 0px 2px 5px rgba(red, green, blue, 0.25);
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: PreMedium;
+  border: none;
 }
