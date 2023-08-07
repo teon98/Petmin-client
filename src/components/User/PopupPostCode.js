@@ -1,7 +1,9 @@
 import React from "react";
 import DaumPostcode from "react-daum-postcode";
 import { styled } from "styled-components";
+import { useLocation } from "react-router";
 
+//myinfo일 때
 const PostBtn = styled.button`
   margin: -335px -20px auto auto;
   padding: 5px 10px;
@@ -23,7 +25,31 @@ const PostBtn = styled.button`
   }
 `;
 
+//signu3일때
+const PostSignBtn = styled.button`
+  margin: -94px -17px auto auto;
+  padding: 5px 10px;
+  display: block;
+  font-family: PreMedium;
+  font-size: 18px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  background: #b3b3b3;
+  border: none;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: #ff8989;
+    border-color: #ff8989;
+    color: #fff;
+    cursor: pointer;
+  }
+`;
+
 const PopupPostCode = (props) => {
+  const location = useLocation().pathname === "/myinfo";
+
   // 우편번호 검색 후 주소 클릭 시 실행될 함수, data callback 용
   const handlePostCode = (data) => {
     let fullAddress = data.address;
@@ -58,15 +84,27 @@ const PopupPostCode = (props) => {
   return (
     <div>
       <DaumPostcode style={postCodeStyle} onComplete={handlePostCode} />
-      <PostBtn
-        type="button"
-        onClick={() => {
-          props.onClose();
-        }}
-        className="postCode_btn"
-      >
-        닫기
-      </PostBtn>
+      {location ? (
+        <PostBtn
+          type="button"
+          onClick={() => {
+            props.onClose();
+          }}
+          className="postCode_btn"
+        >
+          닫기
+        </PostBtn>
+      ) : (
+        <PostSignBtn
+          type="button"
+          onClick={() => {
+            props.onClose();
+          }}
+          className="postCode_btn"
+        >
+          닫기
+        </PostSignBtn>
+      )}
     </div>
   );
 };
