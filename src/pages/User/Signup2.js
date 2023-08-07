@@ -1,10 +1,110 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import BackTitleHeader from "../../components/BackTitleHeader";
+import "../../styles/signup.css";
+import TextInputComponent from "../../components/TextInputComponent";
+import { useRecoilState } from "recoil";
+import { nametextAtom, agetextAtom, gendertextAtom } from "../../atom/atoms";
+import "../../styles/GenderRadioStyle.css";
+import PinkBtn from "../../components/User/PinkBtn";
+import { useNavigate } from "react-router-dom";
 
 function Signup2(props) {
+  //이름
+  const [nametext, setNametext] = useRecoilState(nametextAtom);
+  const [nameMessage, setNameMessage] = useState("");
+  const handleNameChange = (e) => {
+    setNametext(e.target.value);
+  };
+
+  //나이
+  const [agetext, setAgetext] = useRecoilState(agetextAtom);
+  const [ageValid, setAgeValid] = useState(false);
+  const [ageMessage, setAgeMessage] = useState("");
+  const handleAgeChange = (e) => {
+    setAgetext(e.target.value);
+    validateAge(e.target.value);
+  };
+
+  const validateAge = (age) => {
+    const agePattern = /^(?:[1-9][0-9]?|100)$/;
+    setAgeValid(agePattern.test(age));
+  };
+
+  useEffect(() => {
+    if (!ageValid && agetext !== "") {
+      setAgeMessage("1~100 사이로 입력해주세요");
+    } else {
+      setAgeMessage("");
+    }
+  }, [ageValid, agetext]);
+
+  //성별
+  const [gender, setGender] = useRecoilState(gendertextAtom);
+
+  const handleGenderChange = (e) => {
+    setGender(e.target.value);
+  };
+
+  //다음 페이지 이동
+  const navigate = useNavigate();
+  const signupNextPage = () => {
+    navigate("/signup3");
+  };
+
+  const [btnState, setBtnState] = useState(false);
+  useEffect(() => {
+    if (ageValid && agetext !== "" && nametext !== "" && gender !== "") {
+      setBtnState(true);
+    } else {
+      setBtnState(false);
+    }
+  }, [ageValid, agetext, nametext, gender]);
+
   return (
-    <div>
-      <p>회원가입 2번째 페이지</p>
-    </div>
+    <>
+      <BackTitleHeader title={"2/4"} className="signupStep" />
+      <div className="signupContainer">
+        <p className="signupLable">개인정보를 입력해주세요</p>
+        <TextInputComponent
+          lable={"이름"}
+          placeholder={"이름을 입력해주세요"}
+          onChange={handleNameChange}
+          value={nametext}
+          nameMessage={nameMessage}
+        />
+        <TextInputComponent
+          lable={"나이"}
+          placeholder={"나이를 입력해주세요"}
+          onChange={handleAgeChange}
+          value={agetext}
+          ageMessage={ageMessage}
+          type="number"
+        />
+
+        <p className="textInputLable">성별</p>
+        <label className={`radioBox ${gender === "남" ? "active" : ""}`}>
+          <input
+            type="radio"
+            name="gender"
+            value="남"
+            checked={gender === "남"}
+            onChange={handleGenderChange}
+          />
+          남
+        </label>
+        <label className={`radioBox ${gender === "여" ? "active" : ""}`}>
+          <input
+            type="radio"
+            name="gender"
+            value="여"
+            checked={gender === "여"}
+            onChange={handleGenderChange}
+          />
+          여
+        </label>
+        <PinkBtn title="다음으로" onClick={signupNextPage} active={btnState} />
+      </div>
+    </>
   );
 }
 

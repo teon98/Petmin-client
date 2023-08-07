@@ -5,10 +5,17 @@ import BackTitleHeader from "../../components/BackTitleHeader";
 import PinkBtn from "../../components/User/PinkBtn";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { RecoilRoot, useRecoilState } from "recoil";
+import {
+  emailtextAtom,
+  idtextAtom,
+  passwordtextAtom,
+  passwordChecktextAtom,
+} from "../../atom/atoms";
 
 function Signup1(props) {
   // 이메일
-  const [emailtext, setEmailtext] = useState("");
+  const [emailtext, setEmailtext] = useRecoilState(emailtextAtom);
   const [emailValid, setEmailValid] = useState(false);
   const [emailMessage, setEmailMessage] = useState("");
 
@@ -16,6 +23,7 @@ function Signup1(props) {
     setEmailtext(e.target.value);
     validateEmail(e.target.value);
   };
+
   const validateEmail = (email) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     setEmailValid(emailPattern.test(email));
@@ -31,7 +39,7 @@ function Signup1(props) {
   }, [emailValid, emailtext]);
 
   // 아이디
-  const [idtext, setIdtext] = useState("");
+  const [idtext, setIdtext] = useRecoilState(idtextAtom);
   const [idValid, setIdVaild] = useState(false);
   const [idCheckClicked, setIdCheckClicked] = useState(false);
   const [idMessage, setIdMessage] = useState("");
@@ -70,7 +78,7 @@ function Signup1(props) {
   };
 
   //비밀번호
-  const [passwordtext, setPasswordtext] = useState("");
+  const [passwordtext, setPasswordtext] = useRecoilState(passwordtextAtom);
   const [passwordType, setPasswordType] = useState("password");
   const [passwordValid, setPasswordValid] = useState(false);
   const [passwordMessage, setPasswordMessage] = useState("");
@@ -101,7 +109,9 @@ function Signup1(props) {
   };
 
   //비밀번호 체크
-  const [passwordChecktext, setPasswordChecktext] = useState("");
+  const [passwordChecktext, setPasswordChecktext] = useRecoilState(
+    passwordChecktextAtom
+  );
   const [passwordCheckType, setPasswordCheckType] = useState("password");
   const [passwordCheckValid, setPasswordCheckValid] = useState(false);
   const [passwordCheckMessage, setPasswordCheckMessage] = useState("");
@@ -134,8 +144,6 @@ function Signup1(props) {
   //다음페이지로 이동
   const navigate = useNavigate();
   const signupNextPage = () => {
-    console.log("다음 페이지로 이동");
-    // setActive(!active);
     navigate("/signup2");
   };
 
@@ -168,56 +176,62 @@ function Signup1(props) {
     passwordChecktext,
     idCheckClicked,
   ]);
-  console.log("!idValid: " + !idValid);
+
   return (
     <>
-      <BackTitleHeader title={"1/4"} className="signupStep" />
-      {/* 이거 왼쪽가는 걸로 바꿔주세요 */}
-      <div className="signupContainer">
-        <p className="signupLable">
-          이메일과 비밀번호를
-          <br />
-          입력해주세요
-        </p>
-        <TextInputComponent
-          lable={"이메일"}
-          value={emailtext}
-          onChange={handleEmailChange}
-          placeholder={"이메일 주소를 입력해주세요"}
-          type="email"
-          emailMessage={emailMessage}
-        />
-        <TextInputComponent
-          lable={"아이디"}
-          value={idtext}
-          onChange={handelIdChange}
-          placeholder={"아이디를 입력해주세요"}
-          onClick={handleIdCheckClick}
-          idMessage={idMessage}
-        />
-        <TextInputComponent
-          lable={"비밀번호"}
-          value={passwordtext}
-          onChange={handlePasswordChange}
-          placeholder={"영문, 숫자, 특수문자 조합 8~20자리"}
-          type={passwordType}
-          passwordTypeImageClick={passwordTypeImageClick}
-          passwordMessage={passwordMessage}
-        />
-        <TextInputComponent
-          lable={"비밀번호 확인"}
-          value={passwordChecktext}
-          onChange={handlePasswordCheckChange}
-          placeholder={"비밀번호를 다시 입력해주세요"}
-          type={passwordCheckType}
-          passwordCheckTypeImageClick={passwordCheckTypeImageClick}
-          passwordCheckMessage={passwordCheckMessage}
-        />
+      <RecoilRoot>
+        <BackTitleHeader title={"1/4"} className="signupStep" />
+        {/* 이거 왼쪽가는 걸로 바꿔주세요 */}
+        <div className="signupContainer">
+          <p className="signupLable">
+            이메일과 비밀번호를
+            <br />
+            입력해주세요
+          </p>
+          <TextInputComponent
+            lable={"이메일"}
+            value={emailtext}
+            onChange={handleEmailChange}
+            placeholder={"이메일 주소를 입력해주세요"}
+            type="email"
+            emailMessage={emailMessage}
+          />
+          <TextInputComponent
+            lable={"아이디"}
+            value={idtext}
+            onChange={handelIdChange}
+            placeholder={"아이디를 입력해주세요"}
+            onClick={handleIdCheckClick}
+            idMessage={idMessage}
+          />
+          <TextInputComponent
+            lable={"비밀번호"}
+            value={passwordtext}
+            onChange={handlePasswordChange}
+            placeholder={"영문, 숫자, 특수문자 조합 8~20자리"}
+            type={passwordType}
+            passwordTypeImageClick={passwordTypeImageClick}
+            passwordMessage={passwordMessage}
+          />
+          <TextInputComponent
+            lable={"비밀번호 확인"}
+            value={passwordChecktext}
+            onChange={handlePasswordCheckChange}
+            placeholder={"비밀번호를 다시 입력해주세요"}
+            type={passwordCheckType}
+            passwordCheckTypeImageClick={passwordCheckTypeImageClick}
+            passwordCheckMessage={passwordCheckMessage}
+          />
 
-        {/* 트루일때만 버튼 클릭됨 */}
-        {/* 모든 항목이 작성되어야 핑크색 되고 다음으로 넘어갈 수 있도록 */}
-        <PinkBtn title="다음으로" onClick={signupNextPage} active={btnState} />
-      </div>
+          {/* 트루일때만 버튼 클릭됨 */}
+          {/* 모든 항목이 작성되어야 핑크색 되고 다음으로 넘어갈 수 있도록 */}
+          <PinkBtn
+            title="다음으로"
+            onClick={signupNextPage}
+            active={btnState}
+          />
+        </div>
+      </RecoilRoot>
     </>
   );
 }

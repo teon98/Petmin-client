@@ -15,11 +15,15 @@ function TextInputComponent({
   passwordCheckTypeImageClick = {},
   passwordMessage = {},
   passwordCheckMessage = {},
+  ageMessage = {},
+  nameMessage = {},
 }) {
   const isPasswordInput = lable === "비밀번호";
   const isPasswordCheckInput = lable === "비밀번호 확인";
   const isEmailInput = lable === "이메일";
   const isIdInput = lable === "아이디";
+  const isNameInput = lable === "이름";
+  const isAgeInput = lable === "나이";
 
   return (
     <div className="textInputContainer">
@@ -50,6 +54,8 @@ function TextInputComponent({
       {isPasswordCheckInput && (
         <p className="emailValidText">{passwordCheckMessage}</p>
       )}
+      {isAgeInput && <p className="emailValidText">{ageMessage}</p>}
+      {isNameInput && <p className="emailValidText">{nameMessage}</p>}
     </div>
   );
 }
