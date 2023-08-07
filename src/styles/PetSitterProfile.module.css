@@ -81,6 +81,29 @@
   cursor: pointer;
 }
 
+.filebox label {
+  display: inline-block;
+  border-radius: 5px;
+  border: 2px solid #b3b3b3;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+}
+
+.filebox input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
+.fileItem {
+}
+
 /* 펫시터 일정 등록 CSS */
 #frame span {
   font-family: "PreRegular";
@@ -172,4 +195,9 @@
   color: #323232;
   font-family: "PreRegular";
   font-size: 16px;
+}
+
+.timetable input[type="checkbox"]:disabled + label {
+  border-color: #17a1fa;
+  color: #17a1fa;
 }
