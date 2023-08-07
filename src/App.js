@@ -69,7 +69,9 @@ const App = () => {
             <Route path="signup3" element={<Signup3 />}></Route>
           </Route>
           {/* 회원가입 페이지 4*/}
-          <Route path="/signup4" element={<Signup4 />}></Route>
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/signup4" element={<Signup4 />}></Route>
+          </Route>
           {/* 마이페이지 - 펫시터 프로필 관리 */}
           <Route path="/petsitterprfile" element={<MainBTNav />}>
             <Route path=":userID" element={<PSprofile />} />
