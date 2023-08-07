@@ -27,6 +27,11 @@ const Info = styled.div`
       }
     }
   }
+  .inputContainer .detail {
+    input {
+      pointer-events: auto;
+    }
+  }
 `;
 
 function UserInfo(props) {
@@ -44,6 +49,9 @@ function UserInfo(props) {
           <div className="inputAddr">
             <TextInputComponent lable="내 주소" value="ltm0718@shinee.com" />
             <Post title="수정하기" />
+          </div>
+          <div className="detail">
+            <TextInputComponent lable="상세 주소" value="ltm0718@shinee.com" />
           </div>
           <TextInputComponent lable="선호 동네" value="ltm0718@shinee.com" />
         </div>
