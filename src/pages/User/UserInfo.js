@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/MypageMenu.module.css";
 import { styled } from "styled-components";
 import BackTitleHeader from "../../components/BackTitleHeader";
@@ -27,9 +27,18 @@ const Info = styled.div`
       }
     }
   }
+  .inputContainer .detail {
+    input {
+      pointer-events: auto;
+    }
+  }
 `;
 
 function UserInfo(props) {
+  const [detailAddr, setDetailAddr] = useState("");
+  const onChange = (e) => {
+    setDetailAddr(e.target.value);
+  };
   return (
     <div>
       <BackTitleHeader />
@@ -43,7 +52,15 @@ function UserInfo(props) {
           <TextInputComponent lable="이메일" value="ltm0718@shinee.com" />
           <div className="inputAddr">
             <TextInputComponent lable="내 주소" value="ltm0718@shinee.com" />
-            <Post title="수정하기" />
+            <Post title="검색하기" />
+          </div>
+          <div className="detail">
+            <TextInputComponent
+              lable="상세 주소"
+              placeholder={"홍대"}
+              value={detailAddr}
+              onChange={onChange}
+            />
           </div>
           <TextInputComponent lable="선호 동네" value="ltm0718@shinee.com" />
         </div>
