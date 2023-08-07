@@ -70,14 +70,14 @@ function Signup2(props) {
           placeholder={"이름을 입력해주세요"}
           onChange={handleNameChange}
           value={nametext}
-          nameMessage={nameMessage}
+          message={nameMessage}
         />
         <TextInputComponent
           lable={"나이"}
           placeholder={"나이를 입력해주세요"}
           onChange={handleAgeChange}
           value={agetext}
-          ageMessage={ageMessage}
+          message={ageMessage}
           type="number"
         />
 

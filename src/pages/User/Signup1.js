@@ -179,59 +179,53 @@ function Signup1(props) {
 
   return (
     <>
-      <RecoilRoot>
-        <BackTitleHeader title={"1/4"} className="signupStep" />
-        {/* 이거 왼쪽가는 걸로 바꿔주세요 */}
-        <div className="signupContainer">
-          <p className="signupLable">
-            이메일과 비밀번호를
-            <br />
-            입력해주세요
-          </p>
-          <TextInputComponent
-            lable={"이메일"}
-            value={emailtext}
-            onChange={handleEmailChange}
-            placeholder={"이메일 주소를 입력해주세요"}
-            type="email"
-            emailMessage={emailMessage}
-          />
-          <TextInputComponent
-            lable={"아이디"}
-            value={idtext}
-            onChange={handelIdChange}
-            placeholder={"아이디를 입력해주세요"}
-            onClick={handleIdCheckClick}
-            idMessage={idMessage}
-          />
-          <TextInputComponent
-            lable={"비밀번호"}
-            value={passwordtext}
-            onChange={handlePasswordChange}
-            placeholder={"영문, 숫자, 특수문자 조합 8~20자리"}
-            type={passwordType}
-            passwordTypeImageClick={passwordTypeImageClick}
-            passwordMessage={passwordMessage}
-          />
-          <TextInputComponent
-            lable={"비밀번호 확인"}
-            value={passwordChecktext}
-            onChange={handlePasswordCheckChange}
-            placeholder={"비밀번호를 다시 입력해주세요"}
-            type={passwordCheckType}
-            passwordCheckTypeImageClick={passwordCheckTypeImageClick}
-            passwordCheckMessage={passwordCheckMessage}
-          />
+      <BackTitleHeader title={"1/4"} className="signupStep" />
+      {/* 이거 왼쪽가는 걸로 바꿔주세요 */}
+      <div className="signupContainer">
+        <p className="signupLable">
+          이메일과 비밀번호를
+          <br />
+          입력해주세요
+        </p>
+        <TextInputComponent
+          lable={"이메일"}
+          value={emailtext}
+          onChange={handleEmailChange}
+          placeholder={"이메일 주소를 입력해주세요"}
+          type="email"
+          message={emailMessage}
+        />
+        <TextInputComponent
+          lable={"아이디"}
+          value={idtext}
+          onChange={handelIdChange}
+          placeholder={"아이디를 입력해주세요"}
+          onClick={handleIdCheckClick}
+          message={idMessage}
+        />
+        <TextInputComponent
+          lable={"비밀번호"}
+          value={passwordtext}
+          onChange={handlePasswordChange}
+          placeholder={"영문, 숫자, 특수문자 조합 8~20자리"}
+          type={passwordType}
+          passwordTypeImageClick={passwordTypeImageClick}
+          message={passwordMessage}
+        />
+        <TextInputComponent
+          lable={"비밀번호 확인"}
+          value={passwordChecktext}
+          onChange={handlePasswordCheckChange}
+          placeholder={"비밀번호를 다시 입력해주세요"}
+          type={passwordCheckType}
+          passwordCheckTypeImageClick={passwordCheckTypeImageClick}
+          message={passwordCheckMessage}
+        />
 
-          {/* 트루일때만 버튼 클릭됨 */}
-          {/* 모든 항목이 작성되어야 핑크색 되고 다음으로 넘어갈 수 있도록 */}
-          <PinkBtn
-            title="다음으로"
-            onClick={signupNextPage}
-            active={btnState}
-          />
-        </div>
-      </RecoilRoot>
+        {/* 트루일때만 버튼 클릭됨 */}
+        {/* 모든 항목이 작성되어야 핑크색 되고 다음으로 넘어갈 수 있도록 */}
+        <PinkBtn title="다음으로" onClick={signupNextPage} active={btnState} />
+      </div>
     </>
   );
 }

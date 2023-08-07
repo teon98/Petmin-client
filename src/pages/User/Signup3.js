@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import BackTitleHeader from "../../components/BackTitleHeader";
 import "../../styles/signup.css";
 import Post from "../../components/User/Post";
 import TextInputComponent from "../../components/TextInputComponent";
+import { useRecoilState } from "recoil";
+import { addresstextAtom, detailaddresstextAtom } from "../../atom/atoms";
 
 function Signup3(props) {
+  //지번주소
+  const [addresstext, setAddresstext] = useRecoilState(addresstextAtom);
+
+  //상세주소
+  const [detailaddresstext, setDetailaddresstext] = useRecoilState(
+    detailaddresstextAtom
+  );
+  const handleDetailAddressChange = (e) => {
+    setDetailaddresstext(e.target.value);
+  };
   return (
     <>
       <BackTitleHeader title={"3/4"} className="signupStep" />
@@ -13,12 +25,9 @@ function Signup3(props) {
         <TextInputComponent
           lable={"주소"}
           placeholder={"주소를 입력해주세요"}
+          value={addresstext}
         />
-        <TextInputComponent
-          lable={"상세주소"}
-          placeholder={"상세주소를 입력해주세요"}
-        />
-        <Post />
+        {/* <Post title="주소검색" /> */}
       </div>
     </>
   );

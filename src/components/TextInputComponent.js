@@ -9,21 +9,13 @@ function TextInputComponent({
   placeholder = {},
   type = {},
   onClick = {},
-  idMessage = {},
-  emailMessage = {},
   passwordTypeImageClick = {},
   passwordCheckTypeImageClick = {},
-  passwordMessage = {},
-  passwordCheckMessage = {},
-  ageMessage = {},
-  nameMessage = {},
+  message = "",
 }) {
   const isPasswordInput = lable === "비밀번호";
   const isPasswordCheckInput = lable === "비밀번호 확인";
-  const isEmailInput = lable === "이메일";
   const isIdInput = lable === "아이디";
-  const isNameInput = lable === "이름";
-  const isAgeInput = lable === "나이";
 
   return (
     <div className="textInputContainer">
@@ -48,14 +40,7 @@ function TextInputComponent({
         placeholder={placeholder}
         type={type}
       />
-      {isIdInput && <p className="emailValidText">{idMessage}</p>}
-      {isEmailInput && <p className="emailValidText">{emailMessage}</p>}
-      {isPasswordInput && <p className="emailValidText">{passwordMessage}</p>}
-      {isPasswordCheckInput && (
-        <p className="emailValidText">{passwordCheckMessage}</p>
-      )}
-      {isAgeInput && <p className="emailValidText">{ageMessage}</p>}
-      {isNameInput && <p className="emailValidText">{nameMessage}</p>}
+      <p className="emailValidText">{message}</p>
     </div>
   );
 }

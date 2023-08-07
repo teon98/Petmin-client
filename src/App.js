@@ -14,7 +14,6 @@ import Register from "./pages/banner/Register";
 import MypageMenu from "./pages/MypageMenu";
 import PSprofile from "./pages/petsitter/PSprofile";
 import Login from "./pages/User/Login";
-import Signup from "./pages/Signup";
 import UserInfo from "./pages/User/UserInfo";
 import PetInfo from "./pages/User/PetInfo";
 import CardInfo from "./pages/User/CardInfo";
