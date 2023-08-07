@@ -56,7 +56,8 @@ const MainBTNav = () => {
           </li>
         </NavLink>
         <NavLink
-          to="/chat"
+          // to="/chat"
+          to="/rooms"
           className={({ isActive }) => {
             return isActive
               ? `${styles.activeFooterBT}`
