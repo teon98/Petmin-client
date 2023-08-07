@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import style from "../../styles/PetSitterProfile.module.css";
 import { useState } from "react";
 import axios from "axios";
@@ -6,7 +6,31 @@ import axios from "axios";
 const BasicInfoForm = () => {
   const [about, setAbout] = useState("");
   const [place, setPlace] = useState("");
-  const [placeImg, setPlaceImg] = useState([]);
+  const [placeImg, setPlaceImg] = useState([""]);
+
+  useEffect(() => {
+    var placetype = document.querySelectorAll(".placetype input[type='radio']");
+
+    axios
+      .get("/sitter/getSitter", {
+        params: {
+          userId: "test11",
+        },
+      })
+      .then((res) => {
+        //console.log(res.data);
+        setAbout(res.data.sitterMsg);
+        for (let i = 0; i < placetype.length; i++) {
+          if (placetype[i].id === res.data.sitterHousetype) {
+            placetype[i].checked = true;
+          }
+        }
+        setPlace(res.data.sitterHousetype);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   //이미지 배열 받기
   const imagesRef = useRef();
@@ -40,7 +64,7 @@ const BasicInfoForm = () => {
 
     var formData = new FormData();
     //태영: userID는 추후 로그인한 사용자로 변경
-    formData.append("userId", "sampleUser12345ㅇㅇ");
+    formData.append("userId", "test11");
 
     for (var i = 0; i < placeImg.length; i++) {
       formData.append("sitterHouse", placeImg[i]);
@@ -50,7 +74,7 @@ const BasicInfoForm = () => {
     formData.append("sitterMsg", about);
 
     axios
-      .post("/sitter/insert", formData, {
+      .post("/sitter/update", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -73,37 +97,38 @@ const BasicInfoForm = () => {
           placeholder="펫시터 님을 소개해주세요!"
           onChange={handleChange}
           name="about"
-        />
+          defaultValue={about}
+        ></textarea>
       </div>
       <div className={style.subtitle}>거주형태</div>
       {/* 거주형태 radio */}
-      <div id={style.frame}>
+      <div id={style.frame} className="placetype">
         <input
-          id="option1"
+          id="마당있는집"
           type="radio"
           name="place"
           onChange={handleChange}
           value="마당있는집"
         />
-        <label htmlFor="option1">마당있는집</label>
+        <label htmlFor="마당있는집">마당있는집</label>
 
         <input
-          id="option2"
+          id="아파트"
           type="radio"
           name="place"
           onChange={handleChange}
           value="아파트"
         />
-        <label htmlFor="option2">아파트</label>
+        <label htmlFor="아파트">아파트</label>
 
         <input
-          id="option3"
+          id="단독주택"
           type="radio"
           name="place"
           onChange={handleChange}
           value="단독주택"
         />
-        <label htmlFor="option3">단독주택</label>
+        <label htmlFor="단독주택">단독주택</label>
       </div>
       <div className={style.subtitle}>거주지 이미지</div>
       {/* 거주지 이미지 file input */}
