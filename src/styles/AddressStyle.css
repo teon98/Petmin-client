@@ -1,0 +1,9 @@
+.inputAddr {
+  display: flex;
+  justify-content: space-around;
+
+  input {
+    display: inline-block;
+    margin-left: 0;
+  }
+}

@@ -3,7 +3,7 @@ import DaumPostcode from "react-daum-postcode";
 import { styled } from "styled-components";
 
 const PostBtn = styled.button`
-  margin: -335px -20px auto auto;
+  margin: -95px 0px auto auto;
   padding: 5px 10px;
   display: block;
   font-family: PreMedium;
