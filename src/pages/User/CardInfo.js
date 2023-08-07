@@ -122,7 +122,7 @@ function CardInfo(props) {
     setCardPass(() => value);
 
     //cardnumber의 모든 항목 길이가 4인지 확인
-    const isCardNumberValid = Object.keys(cardNumber).every(
+    const isCardNumberValid = Object.values(cardNumber).every(
       (val) => val.length === 4
     );
 
