@@ -38,6 +38,12 @@ const App = () => {
             <Route path="mypage2" element={<MypageMenu />} />
             {/* 로그인 */}
             <Route path="/login" element={<Login />}></Route>
+            {/* 내 정보 */}
+            <Route path="myinfo" element={<UserInfo />}></Route>
+            {/* 카드 정보 */}
+            <Route path="card" element={<CardInfo />}></Route>
+            {/* 펫 정보 */}
+            <Route path="petinfo" element={<PetInfo />}></Route>
           </Route>
           {/* 계정 */}
           <Route path="/auth" element={<MainBTNav />}></Route>
