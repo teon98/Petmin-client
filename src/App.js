@@ -23,6 +23,7 @@ import { RecoilRoot } from "recoil";
 import Counter from "./pages/User/Counter";
 import Signup3 from "./pages/User/Signup3";
 import Signup4 from "./pages/User/Signup4";
+import ChatList from "./pages/ChatList";
 
 const App = () => {
   return (
@@ -33,7 +34,8 @@ const App = () => {
             <Route index element={<Main />} />
             <Route path="check" element={<Check />} />
             <Route path="favorite" element={<Favorite />} />
-            <Route path="chat" element={<Chat />} />
+            <Route path="rooms" element={<ChatList />} />
+            <Route path="/room/:chat" element={<Chat />} />
             <Route path="mypage" element={<Mypage />} />
             {/* 로그인 완료했을 때 보이는 마이페이지 */}
             <Route path="mypage2" element={<MypageMenu />} />
