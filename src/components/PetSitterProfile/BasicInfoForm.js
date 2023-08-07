@@ -40,7 +40,7 @@ const BasicInfoForm = () => {
 
     var formData = new FormData();
     //태영: userID는 추후 로그인한 사용자로 변경
-    formData.append("userId", "sampleUser12345");
+    formData.append("userId", "sampleUser12345ㅇㅇ");
 
     for (var i = 0; i < placeImg.length; i++) {
       formData.append("sitterHouse", placeImg[i]);
