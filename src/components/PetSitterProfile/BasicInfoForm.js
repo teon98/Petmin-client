@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef } from "react";
 import style from "../../styles/PetSitterProfile.module.css";
 import { useState } from "react";
 import axios from "axios";
+import { FaImages } from "react-icons/fa6";
 
 const BasicInfoForm = () => {
   const [about, setAbout] = useState("");
@@ -132,14 +133,24 @@ const BasicInfoForm = () => {
       </div>
       <div className={style.subtitle}>거주지 이미지</div>
       {/* 거주지 이미지 file input */}
-      <div id={style.frame}>
+      <div id={style.frame} className={style.filebox}>
+        <label for="file">
+          <div>
+            <FaImages color="#B3B3B3" size={20} />
+          </div>
+          <div style={{ color: "#FF6666", fontFamily: "PreRegular" }}>
+            (0/3)
+          </div>
+        </label>
         <input
+          id="file"
           name="placeImg"
           type="file"
           multiple
           ref={imagesRef}
           onChange={handleChange}
         />
+        <div className={style.fileItem}></div>
       </div>
 
       <div className={style.saveBT} id={style.frame}>
