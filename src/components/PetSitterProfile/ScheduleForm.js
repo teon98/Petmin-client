@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "../../styles/PetSitterProfile.module.css";
 import { DayPicker } from "react-day-picker";
 import "../../styles/daypickerCustom.css";
@@ -85,14 +85,32 @@ const ScheduleForm = () => {
     }
   };
 
+  //기존 일정 가져오기
+  useEffect(() => {
+    axios
+      .get("/sitter/getSchedule", {
+        params: {
+          sitterID: "test11",
+          scheduleDay: inputValue,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
   const handleClick = () => {
     console.log(scheduleTimeList);
+    //console.log(type);
 
     var formData = new FormData();
     formData.append("sitterId", "test11");
-    formData.append("scaduleDay", inputValue);
-    formData.append("scaduleHour", scheduleTimeList);
-    formData.append("dolbomOption", "산책");
+    formData.append("scheduleDay", inputValue);
+    formData.append("scheduleHour", scheduleTimeList);
+    formData.append("dolbomOption", type);
 
     axios
       .post("/sitter/schedule", formData)
@@ -107,7 +125,7 @@ const ScheduleForm = () => {
 
   const allHandleClick = (e) => {
     const value = e.target.checked;
-    console.log(value);
+    //console.log(value);
     var timetable = document.querySelectorAll(
       "#timetable input[type='checkbox']"
     );
@@ -123,6 +141,18 @@ const ScheduleForm = () => {
         timetable[i].checked = false;
         setScheduleTimeList([]);
       }
+    }
+  };
+  //돌봄 형태
+  const [type, setType] = useState("");
+
+  const typeChange = (e) => {
+    const {
+      target: { name, value },
+    } = e;
+
+    if (name === "type") {
+      setType(value);
     }
   };
   return (
@@ -205,6 +235,25 @@ const ScheduleForm = () => {
               </div>
             );
           })}
+        </div>
+        <div className={style.subtitle3}>돌봄 형태</div>
+        <div className={style.typetable}>
+          <input
+            id="type1"
+            value="산책"
+            type="radio"
+            name="type"
+            onChange={typeChange}
+          />
+          <label htmlFor="type1">산책</label>
+          <input
+            id="type2"
+            value="돌봄"
+            type="radio"
+            name="type"
+            onChange={typeChange}
+          />
+          <label htmlFor="type2">돌봄</label>
         </div>
         <div
           className={style.saveBT}

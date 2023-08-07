@@ -39,3 +39,13 @@ export const gendertextAtom = atom({
   key: "gendertext",
   default: "",
 });
+
+export const addresstextAtom = atom({
+  key: "addresstext",
+  default: "",
+});
+
+export const detailaddresstextAtom = atom({
+  key: "detailaddresstext",
+  default: "",
+});
