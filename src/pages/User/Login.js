@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logoImg from "../../assets/images/logo.png";
+import { useRecoilState } from "recoil";
+import { idtextAtom, nametextAtom } from "../../atom/atoms";
 
 const LoginForm = styled.div`
   margin-top: 50%;
@@ -50,7 +52,10 @@ const LoginForm = styled.div`
 `;
 
 function Login(props) {
-  const [userId, setUserId] = useState("");
+  //recoil로 저장
+  const [userId, setUserId] = useRecoilState(idtextAtom);
+  const [userName, setUserName] = useRecoilState(nametextAtom);
+
   const [pwd, setPwd] = useState("");
   const [btnState, setBtnState] = useState(false);
   const [msg, setMsg] = useState("");
@@ -92,7 +97,10 @@ function Login(props) {
         if (res.data === "") {
           setMsg(() => "아이디 혹은 비밀번호를 확인해주세요.");
         } else {
-          nav("/", { state: res.data });
+          //recoil로 ID, Name만 저장 후 메인화면으로 넘김
+          setUserId(() => res.data.userId);
+          setUserName(() => res.data.userName);
+          nav("/");
         }
       })
       .catch((err) => {
