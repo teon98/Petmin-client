@@ -7,20 +7,20 @@
   box-shadow: 41px 41px 82px #c9c9c9, -41px -41px 82px #ffffff;
 }
 /* input 기본 스타일 초기화 */
-input {
+#ipt {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
 
 /* IE10 이상에서 input box 에 추가된 지우기 버튼 제거 */
-input::-ms-clear {
+#ipt::-ms-clear {
   display: none;
 }
 
 /* input type number 에서 화살표 제거 */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+#ipt[type="number"]::-webkit-inner-spin-button,
+#ipt[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
