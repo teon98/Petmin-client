@@ -173,3 +173,8 @@
   font-family: "PreRegular";
   font-size: 16px;
 }
+
+.timetable input[type="checkbox"]:disabled + label {
+  border-color: #17a1fa;
+  color: #17a1fa;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import style from "../../styles/PetSitterProfile.module.css";
 import { DayPicker } from "react-day-picker";
 import "../../styles/daypickerCustom.css";
@@ -8,8 +8,12 @@ import FocusTrap from "focus-trap-react";
 import axios from "axios";
 
 const ScheduleForm = () => {
+  //오늘 날짜 알아오기 - 초기화를 위해
+  let today = new Date();
+  today = format(today, "y-MM-dd");
+
   const [selected, setSelected] = useState("");
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(today);
   const [isPopperOpen, setIsPopperOpen] = useState(false);
 
   const popperRef = useRef(null);
@@ -90,17 +94,41 @@ const ScheduleForm = () => {
     axios
       .get("/sitter/getSchedule", {
         params: {
-          sitterID: "test11",
+          sitterId: "test11",
           scheduleDay: inputValue,
         },
       })
       .then((res) => {
-        console.log(res.data);
+        //테이블 돌기
+        var timetable = document.querySelectorAll(
+          "#timetable input[type='checkbox']"
+        );
+
+        //테이블 초기화
+        for (let z = 0; z < timetable.length; z++) {
+          timetable[z].checked = false;
+          timetable[z].disabled = false;
+        }
+
+        for (let i = 0; i < res.data.length; i++) {
+          console.log(res.data[i].Hour["Hour2"]);
+          console.log(res.data[i].Hour["dolbomStatus"]);
+
+          for (let j = 0; j < timetable.length; j++) {
+            if (res.data[i].Hour["Hour2"] === timetable[j].id) {
+              if (!res.data[i].Hour["dolbomStatus"]) {
+                timetable[j].checked = true;
+              } else {
+                timetable[j].disabled = true;
+              }
+            }
+          }
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, [inputValue]);
 
   const handleClick = () => {
     console.log(scheduleTimeList);
@@ -144,7 +172,7 @@ const ScheduleForm = () => {
     }
   };
   //돌봄 형태
-  const [type, setType] = useState("");
+  const [type, setType] = useState("산책");
 
   const typeChange = (e) => {
     const {
@@ -173,6 +201,7 @@ const ScheduleForm = () => {
             ref={buttonRef}
             onClick={handleButtonClick}
             className={style.datepickInput}
+            id="todayDate"
           />
           {/* <button type="button">날짜 선택하기</button> */}
         </div>
