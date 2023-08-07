@@ -22,6 +22,7 @@ import Signup2 from "./pages/User/Signup2";
 import { RecoilRoot } from "recoil";
 import Counter from "./pages/User/Counter";
 import Signup3 from "./pages/User/Signup3";
+import Signup4 from "./pages/User/Signup4";
 
 const App = () => {
   return (
@@ -56,11 +57,19 @@ const App = () => {
           {/* 병원페이지 */}
           <Route path="/hospital" element={<Hospital />}></Route>
           {/* 회원가입 페이지 1*/}
-          <Route path="/signup1" element={<Signup1 />}></Route>
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/signup1" element={<Signup1 />}></Route>
+          </Route>
           {/* 회원가입 페이지 2*/}
-          <Route path="/signup2" element={<Signup2 />}></Route>
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/signup2" element={<Signup2 />}></Route>
+          </Route>
           {/* 회원가입 페이지 3*/}
-          <Route path="/signup3" element={<Signup3 />}></Route>
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="signup3" element={<Signup3 />}></Route>
+          </Route>
+          {/* 회원가입 페이지 4*/}
+          <Route path="/signup4" element={<Signup4 />}></Route>
           {/* 마이페이지 - 펫시터 프로필 관리 */}
           <Route path="/petsitterprfile" element={<MainBTNav />}>
             <Route path=":userID" element={<PSprofile />} />
