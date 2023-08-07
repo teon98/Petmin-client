@@ -1,9 +1,14 @@
 import React from "react";
 import DaumPostcode from "react-daum-postcode";
 import { styled } from "styled-components";
+import { useLocation } from "react-router";
 
 const PostBtn = styled.button`
-  margin: -335px -20px auto auto;
+  margin: ${
+    useLocation.pathname === "/signup3"
+      ? " -85px 0px auto auto;"
+      : "-335px -20px auto auto;"
+  }
   padding: 5px 10px;
   display: block;
   font-family: PreMedium;
