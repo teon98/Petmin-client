@@ -7,7 +7,7 @@ import { FaImages } from "react-icons/fa6";
 const BasicInfoForm = () => {
   const [about, setAbout] = useState("");
   const [place, setPlace] = useState("");
-  const [placeImg, setPlaceImg] = useState([""]);
+  const [placecount, setPlaceCount] = useState(0);
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const BasicInfoForm = () => {
     axios
       .get("/sitter/getSitter", {
         params: {
-          userId: "지만2",
+          userId: "test12",
         },
       })
       .then((res) => {
@@ -28,6 +28,20 @@ const BasicInfoForm = () => {
           }
         }
         setPlace(res.data.sitterHousetype);
+
+        //S3로 저장된 이미지 불러오기
+        //저장된 형태 [이미지,이미지]
+        let sitterHouse = res.data.sitterHouse.slice(1, -1);
+        let sitterHouse_arr = sitterHouse.split(",");
+        let previews_arr = [];
+        setPlaceCount(sitterHouse_arr.length); //이미지 갯수
+        for (let i = 0; i < sitterHouse_arr.length; i++) {
+          previews_arr.push({
+            imagePreviewUrl: sitterHouse_arr[i],
+            fileObject: sitterHouse_arr[i],
+          });
+        }
+        setPreviews(previews_arr);
       })
       .catch((err) => {
         console.log(err);
@@ -36,9 +50,11 @@ const BasicInfoForm = () => {
 
   //이미지 배열 받기
   const imagesRef = useRef();
+  const [previews, setPreviews] = useState([]);
 
+  //업로드된 이미지 미리보기
   const handleChange = useCallback((e) => {
-    //console.log(imagesRef.current.files);
+    console.log(imagesRef.current.files);
     const {
       target: { name, value },
     } = e;
@@ -50,33 +66,46 @@ const BasicInfoForm = () => {
       setPlace(value);
     }
     if (name === "placeImg") {
-      var imageList = [];
-      for (var i = 0; i < imagesRef.current.files.length; i++) {
-        imageList.push(imagesRef.current.files[i]);
+      let image_temp2 = []; //미리보기를 위해 FileReader로 읽은 이미지 URL이 들어간다.
+      setPlaceCount(
+        imagesRef.current.files.length <= 3 ? imagesRef.current.files.length : 3
+      ); //이미지 갯수
+
+      for (let i = 0; i < imagesRef.current.files.length; i++) {
+        //미리보기 구현
+        let file = imagesRef.current.files[i];
+        console.log(file);
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          image_temp2.push({
+            imagePreviewUrl: reader.result,
+            fileObject: file,
+          });
+          setPreviews(image_temp2);
+        };
       }
-      //console.log(imageList);
-      setPlaceImg(imageList);
     }
   }, []);
 
   const handlePost = () => {
-    console.log(about);
-    console.log(place);
-    console.log(placeImg);
+    console.log("about", about);
+    console.log("place", place);
+    console.log("prviewImg", previews);
 
     var formData = new FormData();
     //태영: userID는 추후 로그인한 사용자로 변경
-    formData.append("userId", "지만2");
+    formData.append("userId", "test12");
 
-    for (var i = 0; i < placeImg.length; i++) {
-      formData.append("sitterHouse", placeImg[i]);
+    for (var i = 0; i < previews.length; i++) {
+      formData.append("sitterHouse", previews[i].fileObject);
       setCount(1);
     }
 
     formData.append("sitterHousetype", place);
     formData.append("sitterMsg", about);
 
-    if (count == 1) {
+    if (count === 1) {
       axios
         .post("/sitter/update", formData, {
           headers: {
@@ -106,6 +135,15 @@ const BasicInfoForm = () => {
         });
     }
   };
+
+  const handleImgItemChange = (deleteUrl) => {
+    setPreviews(previews.filter((item) => item.imagePreviewUrl !== deleteUrl));
+  };
+
+  useEffect(() => {
+    setPlaceCount(previews.length);
+  }, [previews]);
+
   return (
     <div>
       <div className={style.subtitle}>자기소개</div>
@@ -157,7 +195,7 @@ const BasicInfoForm = () => {
             <FaImages color="#B3B3B3" size={20} />
           </div>
           <div style={{ color: "#FF6666", fontFamily: "PreRegular" }}>
-            (0/3)
+            ({placecount}/3)
           </div>
         </label>
         <input
@@ -168,24 +206,15 @@ const BasicInfoForm = () => {
           ref={imagesRef}
           onChange={handleChange}
         />
-        <div className={style.fileItem}>
-          <img
-            src="https://petminbucket.s3.ap-northeast-2.amazonaws.com/house/5f993afe-6413-4947-a97e-df6c36342958"
-            alt="test"
-          />
-        </div>
-        <div className={style.fileItem}>
-          <img
-            src="https://petminbucket.s3.ap-northeast-2.amazonaws.com/house/5f993afe-6413-4947-a97e-df6c36342958"
-            alt="test"
-          />
-        </div>
-        <div className={style.fileItem}>
-          <img
-            src="https://petminbucket.s3.ap-northeast-2.amazonaws.com/house/5f993afe-6413-4947-a97e-df6c36342958"
-            alt="test"
-          />
-        </div>
+        {previews.map((itemSrc, index) => (
+          <div
+            className={style.fileItem}
+            key={index}
+            onClick={() => handleImgItemChange(itemSrc.imagePreviewUrl)}
+          >
+            <img src={itemSrc.imagePreviewUrl} alt="test" />
+          </div>
+        ))}
       </div>
 
       <div className={style.saveBT} id={style.frame}>
