@@ -1,0 +1,44 @@
+.textInputContainer {
+  width: 100%;
+  margin: auto;
+  margin-bottom: 0px;
+}
+
+.textInputLable {
+  color: black;
+  font-family: PreMedium;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  /* margin-right: 20px; */
+}
+
+.textInputValue {
+  height: 50px;
+  width: 100%;
+  border-style: none;
+  border-bottom: 1px solid #b3b3b3;
+  font-family: PreMedium;
+  font-weight: 500px;
+  font-size: 17px;
+  box-sizing: border-box;
+}
+
+.emailValidText {
+  font-family: PreMedium;
+  font-size: 13px;
+  color: #ff8989;
+  margin-top: 10px;
+  height: 15px;
+}
+
+#formargin p {
+  display: inline-block;
+  width: 20%;
+}
+
+#formargin input {
+  display: inline-block;
+  width: 80%;
+}
