@@ -64,11 +64,21 @@ const Info = styled.div`
       border-radius: 50%;
     }
   }
+  .inputContainer .detail {
+    input {
+      pointer-events: auto;
+    }
+  }
 `;
 
 function UserInfo(props) {
   const [imgFile, setImgFile] = useState("");
   const imgRef = useRef();
+
+  const [detailAddr, setDetailAddr] = useState("");
+  const onChange = (e) => {
+    setDetailAddr(e.target.value);
+  };
 
   //이미지 업로드 input의 onChange
   const saveImgFile = (e) => {
@@ -101,13 +111,20 @@ function UserInfo(props) {
           />
         </form>
         <div className="inputContainer">
-          {/* <TextInputComponent lable="이메일" value="ltm0718@shinee.com" /> */}
+          <TextInputComponent lable="이메일" value="ltm0718@shinee.com" />
           <div className="inputAddr">
-            {/* <TextInputComponent lable="내 주소" value="ltm0718@shinee.com" /> */}
-            <Post title="수정하기" />
+            <TextInputComponent lable="내 주소" value="ltm0718@shinee.com" />
+            <Post title="검색하기" />
           </div>
-          {/* <TextInputComponent lable="상세 주소" value="ltm0718@shinee.com" /> */}
-          {/* <TextInputComponent lable="선호 동네" value="ltm0718@shinee.com" /> */}
+          <div className="detail">
+            <TextInputComponent
+              lable="상세 주소"
+              placeholder={"홍대"}
+              value={detailAddr}
+              onChange={onChange}
+            />
+          </div>
+          <TextInputComponent lable="선호 동네" value="ltm0718@shinee.com" />
         </div>
       </Info>
     </div>
