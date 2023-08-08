@@ -10,10 +10,6 @@ const BasicInfoForm = () => {
   const [placeImg, setPlaceImg] = useState([]);
   const [placecount, setPlaceCount] = useState(0);
 
-  //이미지 배열 받기
-  const imagesRef = useRef();
-  const [previews, setPreviews] = useState([]);
-
   useEffect(() => {
     var placetype = document.querySelectorAll(".placetype input[type='radio']");
 
@@ -33,18 +29,32 @@ const BasicInfoForm = () => {
         }
         setPlace(res.data.sitterHousetype);
 
-        console.log(res.data.sitterHouse);
-        let imageArray = res.data.sitterHouse.slice(1, -1).split(",");
-        setPreviews(imageArray);
-        setPlaceCount(imageArray.length);
+        //S3로 저장된 이미지 불러오기
+        //저장된 형태 [이미지,이미지]
+        let sitterHouse = res.data.sitterHouse.slice(1, -1);
+        let sitterHouse_arr = sitterHouse.split(",");
+        let previews_arr = [];
+        setPlaceCount(sitterHouse_arr.length); //이미지 갯수
+        for (let i = 0; i < sitterHouse_arr.length; i++) {
+          previews_arr.push({
+            imagePreviewUrl: sitterHouse_arr[i],
+            fileObject: "awsS3Img",
+          });
+        }
+        setPreviews(previews_arr);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  //이미지 배열 받기
+  const imagesRef = useRef();
+  const [previews, setPreviews] = useState([]);
+
+  //업로드된 이미지 미리보기
   const handleChange = useCallback((e) => {
-    //console.log(imagesRef.current.files);
+    console.log(imagesRef.current.files);
     const {
       target: { name, value },
     } = e;
@@ -56,33 +66,27 @@ const BasicInfoForm = () => {
       setPlace(value);
     }
     if (name === "placeImg") {
-      //업로드된 이미지 미리보기 (추가)
-      // var imageList = [];
-      // for (var i = 0; i < imagesRef.current.files.length; i++) {
-      //   imageList.push(imagesRef.current.files[i]);
-      // }
-      // //console.log(imageList);
-      // setPlaceImg(imageList);
-      // console.log(imagesRef.current.files);
+      let image_temp = []; //File 객체가 들어간다.
+      let image_temp2 = []; //미리보기를 위해 FileReader로 읽은 이미지 URL이 들어간다.
+      setPlaceCount(
+        imagesRef.current.files.length <= 3 ? imagesRef.current.files.length : 3
+      ); //이미지 갯수
+      for (let i = 0; i < 3; i++) {
+        image_temp.push(imagesRef.current.files[i]);
 
-      let imageView = [];
-      let imageView2 = [];
-
-      for (let i = 0; i < imagesRef.current.files.length; i++) {
-        console.log(imagesRef.current.files[i]);
-        imageView.push(imagesRef.current.files[i]);
-
+        //미리보기 구현
         let file = imagesRef.current.files[i];
 
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          imageView2.push(reader.result);
-          setPreviews(imageView2);
+        reader.onload = () => {
+          image_temp2.push({
+            imagePreviewUrl: reader.result,
+            fileObject: file,
+          });
+          setPreviews(image_temp2);
         };
       }
-      //console.log(imageView);
-      setPlaceImg(imageView);
     }
   }, []);
 
@@ -96,8 +100,8 @@ const BasicInfoForm = () => {
     //태영: userID는 추후 로그인한 사용자로 변경
     formData.append("userId", "test12");
 
-    for (var i = 0; i < placeImg.length; i++) {
-      formData.append("sitterHouse", placeImg[i]);
+    for (var i = 0; i < previews.length; i++) {
+      formData.append("sitterHouse", previews[i].fileObject);
     }
 
     formData.append("sitterHousetype", place);
@@ -118,11 +122,14 @@ const BasicInfoForm = () => {
       });
   };
 
-  // 이미지 클릭시 삭제
-  const handleDeleteImg = (e) => {
-    console.dir(e.target);
-    setPreviews(previews.filter((i) => e.target.src !== i));
+  const handleImgItemChange = (deleteUrl) => {
+    setPreviews(previews.filter((item) => item.imagePreviewUrl !== deleteUrl));
   };
+
+  useEffect(() => {
+    setPlaceCount(previews.length);
+  }, [previews]);
+
   return (
     <div>
       <div className={style.subtitle}>자기소개</div>
@@ -186,8 +193,12 @@ const BasicInfoForm = () => {
           onChange={handleChange}
         />
         {previews.map((itemSrc, index) => (
-          <div className={style.fileItem} key={index} onClick={handleDeleteImg}>
-            <img src={itemSrc} alt="test" />
+          <div
+            className={style.fileItem}
+            key={index}
+            onClick={() => handleImgItemChange(itemSrc.imagePreviewUrl)}
+          >
+            <img src={itemSrc.imagePreviewUrl} alt="test" />
           </div>
         ))}
       </div>
