@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PopupDom from "./PopupDom";
 import PopupPostCode from "./PopupPostCode";
 import { styled } from "styled-components";
+import { useLocation } from "react-router-dom";
 /* Rectangle 24 */
 
 const PostBtn = styled.button`
@@ -28,6 +29,8 @@ const PostBtn = styled.button`
 const Post = (props) => {
   // 팝업창 상태 관리
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [addr, setAddr] = useState("");
+  const nav = useLocation();
 
   // 팝업창 열기
   const openPostCode = () => {
@@ -41,6 +44,10 @@ const Post = (props) => {
 
   return (
     <div>
+      {/* /myinfo일때만 input 창 보이기 */}
+      {nav.pathname === "/myinfo" && (
+        <input readOnly value={addr} placeholder={props.placeholder} />
+      )}
       <PostBtn type="button" onClick={openPostCode}>
         {props.title}
       </PostBtn>
@@ -48,7 +55,7 @@ const Post = (props) => {
       <div id="popupDom">
         {isPopupOpen && (
           <PopupDom>
-            <PopupPostCode onClose={closePostCode} />
+            <PopupPostCode onClose={closePostCode} setAddr={setAddr} />
           </PopupDom>
         )}
       </div>
