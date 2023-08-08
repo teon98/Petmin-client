@@ -134,7 +134,7 @@ const BasicInfoForm = () => {
       <div className={style.subtitle}>거주지 이미지</div>
       {/* 거주지 이미지 file input */}
       <div id={style.frame} className={style.filebox}>
-        <label for="file">
+        <label htmlFor="file">
           <div>
             <FaImages color="#B3B3B3" size={20} />
           </div>
@@ -150,7 +150,24 @@ const BasicInfoForm = () => {
           ref={imagesRef}
           onChange={handleChange}
         />
-        <div className={style.fileItem}></div>
+        <div className={style.fileItem}>
+          <img
+            src="https://petminbucket.s3.ap-northeast-2.amazonaws.com/house/5f993afe-6413-4947-a97e-df6c36342958"
+            alt="test"
+          />
+        </div>
+        <div className={style.fileItem}>
+          <img
+            src="https://petminbucket.s3.ap-northeast-2.amazonaws.com/house/5f993afe-6413-4947-a97e-df6c36342958"
+            alt="test"
+          />
+        </div>
+        <div className={style.fileItem}>
+          <img
+            src="https://petminbucket.s3.ap-northeast-2.amazonaws.com/house/5f993afe-6413-4947-a97e-df6c36342958"
+            alt="test"
+          />
+        </div>
       </div>
 
       <div className={style.saveBT} id={style.frame}>
