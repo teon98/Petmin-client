@@ -7,8 +7,12 @@ import MainHeader from "../components/MainHeader";
 import PetSitterView from "../components/PetSitterMainView/PetSitterView";
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { idtextAtom } from "../atom/atoms";
 
 const Main = () => {
+  const [userId] = useRecoilState(idtextAtom);
+  console.log(userId);
   const navigate = useNavigate();
   return (
     <div className={style.mainbody}>
