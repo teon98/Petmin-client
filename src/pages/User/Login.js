@@ -127,7 +127,7 @@ function Login(props) {
       />
       <PinkBtn title="로그인 하기" onClick={onLogin} active={btnState} />
       <p>
-        아직 계정이 없으신가요? <Link to="/signup">회원가입하기</Link>
+        아직 계정이 없으신가요? <Link to="/signup1">회원가입하기</Link>
       </p>
       <p className="errMsg">{msg}</p>
     </LoginForm>
