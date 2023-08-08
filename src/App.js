@@ -24,6 +24,9 @@ import Counter from "./pages/User/Counter";
 import Signup3 from "./pages/User/Signup3";
 import Signup4 from "./pages/User/Signup4";
 import ChatList from "./pages/ChatList";
+import PStest from "./pages/petsitter/PStest";
+import TestVideo from "./pages/petsitter/TestVideo";
+import TestPage from "./pages/petsitter/TestPage";
 
 const App = () => {
   return (
@@ -71,10 +74,18 @@ const App = () => {
             <Route path="signup3" element={<Signup3 />}></Route>
           </Route>
           {/* 회원가입 페이지 4*/}
-          <Route path="/signup4" element={<Signup4 />}></Route>
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/signup4" element={<Signup4 />}></Route>
+          </Route>
           {/* 마이페이지 - 펫시터 프로필 관리 */}
           <Route path="/petsitterprfile" element={<MainBTNav />}>
             <Route path=":userID" element={<PSprofile />} />
+          </Route>
+          {/*마이페이지 -  실버 펫시터 시험*/}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/petsittertest" element={<PStest />}></Route>
+            <Route path="/petsittertestvideo" element={<TestVideo />}></Route>
+            <Route path="/petsittertestpage" element={<TestPage />}></Route>
           </Route>
           {/* 리코일 실험용*/}
           <Route path="/recoiltest" element={<Counter />} />
