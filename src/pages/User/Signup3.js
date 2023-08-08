@@ -5,13 +5,17 @@ import "../../styles/AddressStyle.css";
 import Post from "../../components/User/Post";
 import TextInputComponent from "../../components/TextInputComponent";
 import { useRecoilState } from "recoil";
-import { addresstextAtom, detailaddresstextAtom } from "../../atom/atoms";
+import {
+  addresstextAtom,
+  detailaddresstextAtom,
+  fullAddressAtom,
+} from "../../atom/atoms";
 import PinkBtn from "../../components/User/PinkBtn";
 import { useNavigate } from "react-router-dom";
 
 function Signup3(props) {
   //지번주소
-  const [addresstext, setAddresstext] = useRecoilState(addresstextAtom);
+  const [addresstext] = useRecoilState(fullAddressAtom);
 
   //상세주소
   const [detailaddresstext, setDetailaddresstext] = useRecoilState(
@@ -48,9 +52,7 @@ function Signup3(props) {
           value={detailaddresstext}
           onChange={handleDetailAddressChange}
         />
-
         <PinkBtn title="다음으로" onClick={signupNextPage} active={true} />
-        {/* <Post title="주소검색" /> */}
       </div>
     </>
   );

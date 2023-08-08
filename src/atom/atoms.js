@@ -40,10 +40,10 @@ export const gendertextAtom = atom({
   default: "",
 });
 
-export const addresstextAtom = atom({
-  key: "addresstext",
-  default: "",
-});
+// export const addresstextAtom = atom({
+//   key: "addresstext",
+//   default: "",
+// });
 
 export const detailaddresstextAtom = atom({
   key: "detailaddresstext",
@@ -72,5 +72,10 @@ export const preference4Atom = atom({
 
 export const preference5Atom = atom({
   key: "preference5",
+  default: "",
+});
+
+export const fullAddressAtom = atom({
+  key: "fullAddress",
   default: "",
 });
