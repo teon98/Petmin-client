@@ -9,14 +9,14 @@ const BasicInfoForm = () => {
   const [place, setPlace] = useState("");
   const [placecount, setPlaceCount] = useState(0);
   const [count, setCount] = useState(0);
-
+  var house = "";
   useEffect(() => {
     var placetype = document.querySelectorAll(".placetype input[type='radio']");
 
     axios
       .get("/sitter/getSitter", {
         params: {
-          userId: "test12",
+          userId: "지만2",
         },
       })
       .then((res) => {
@@ -55,6 +55,8 @@ const BasicInfoForm = () => {
   //업로드된 이미지 미리보기
   const handleChange = useCallback((e) => {
     console.log(imagesRef.current.files);
+    house = "[";
+    setCount(1);
     const {
       target: { name, value },
     } = e;
@@ -87,6 +89,9 @@ const BasicInfoForm = () => {
       }
     }
   }, []);
+  for (var i = 0; i < previews.length; i++) {
+    house += previews[i].fileObject;
+  }
 
   const handlePost = () => {
     console.log("about", about);
@@ -95,17 +100,17 @@ const BasicInfoForm = () => {
 
     var formData = new FormData();
     //태영: userID는 추후 로그인한 사용자로 변경
-    formData.append("userId", "test12");
+    formData.append("userId", "지만2");
 
     for (var i = 0; i < previews.length; i++) {
       formData.append("sitterHouse", previews[i].fileObject);
-      setCount(1);
+      formData.append("house", previews[i].fileObject);
     }
 
     formData.append("sitterHousetype", place);
     formData.append("sitterMsg", about);
 
-    if (count === 1) {
+    if (count == 1) {
       axios
         .post("/sitter/update", formData, {
           headers: {
@@ -113,7 +118,7 @@ const BasicInfoForm = () => {
           },
         })
         .then((res) => {
-          alert("자기소개가 수정되었습니다!");
+          alert("자기소개가 수정되었습니다1!");
           console.log(res.data);
         })
         .catch((err) => {
@@ -127,7 +132,7 @@ const BasicInfoForm = () => {
           },
         })
         .then((res) => {
-          alert("자기소개가 수정되었습니다!");
+          alert("자기소개가 수정되었습니다2!");
           console.log(res.data);
         })
         .catch((err) => {
