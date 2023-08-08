@@ -7,7 +7,12 @@ import { FaImages } from "react-icons/fa6";
 const BasicInfoForm = () => {
   const [about, setAbout] = useState("");
   const [place, setPlace] = useState("");
-  const [placeImg, setPlaceImg] = useState([""]);
+  const [placeImg, setPlaceImg] = useState([]);
+  const [placecount, setPlaceCount] = useState(0);
+
+  //이미지 배열 받기
+  const imagesRef = useRef();
+  const [previews, setPreviews] = useState([]);
 
   useEffect(() => {
     var placetype = document.querySelectorAll(".placetype input[type='radio']");
@@ -15,7 +20,7 @@ const BasicInfoForm = () => {
     axios
       .get("/sitter/getSitter", {
         params: {
-          userId: "test11",
+          userId: "test12",
         },
       })
       .then((res) => {
@@ -27,14 +32,16 @@ const BasicInfoForm = () => {
           }
         }
         setPlace(res.data.sitterHousetype);
+
+        console.log(res.data.sitterHouse);
+        let imageArray = res.data.sitterHouse.slice(1, -1).split(",");
+        setPreviews(imageArray);
+        setPlaceCount(imageArray.length);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
-  //이미지 배열 받기
-  const imagesRef = useRef();
 
   const handleChange = useCallback((e) => {
     //console.log(imagesRef.current.files);
@@ -49,23 +56,45 @@ const BasicInfoForm = () => {
       setPlace(value);
     }
     if (name === "placeImg") {
-      var imageList = [];
-      for (var i = 0; i < imagesRef.current.files.length; i++) {
-        imageList.push(imagesRef.current.files[i]);
+      //업로드된 이미지 미리보기 (추가)
+      // var imageList = [];
+      // for (var i = 0; i < imagesRef.current.files.length; i++) {
+      //   imageList.push(imagesRef.current.files[i]);
+      // }
+      // //console.log(imageList);
+      // setPlaceImg(imageList);
+      // console.log(imagesRef.current.files);
+
+      let imageView = [];
+      let imageView2 = [];
+
+      for (let i = 0; i < imagesRef.current.files.length; i++) {
+        console.log(imagesRef.current.files[i]);
+        imageView.push(imagesRef.current.files[i]);
+
+        let file = imagesRef.current.files[i];
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          imageView2.push(reader.result);
+          setPreviews(imageView2);
+        };
       }
-      //console.log(imageList);
-      setPlaceImg(imageList);
+      //console.log(imageView);
+      setPlaceImg(imageView);
     }
   }, []);
 
   const handlePost = () => {
-    console.log(about);
-    console.log(place);
-    console.log(placeImg);
+    console.log("about", about);
+    console.log("place", place);
+    console.log("placeImg", placeImg);
+    console.log("prviewImg", previews);
 
     var formData = new FormData();
     //태영: userID는 추후 로그인한 사용자로 변경
-    formData.append("userId", "test11");
+    formData.append("userId", "test12");
 
     for (var i = 0; i < placeImg.length; i++) {
       formData.append("sitterHouse", placeImg[i]);
@@ -87,6 +116,12 @@ const BasicInfoForm = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  // 이미지 클릭시 삭제
+  const handleDeleteImg = (e) => {
+    console.dir(e.target);
+    setPreviews(previews.filter((i) => e.target.src !== i));
   };
   return (
     <div>
@@ -139,7 +174,7 @@ const BasicInfoForm = () => {
             <FaImages color="#B3B3B3" size={20} />
           </div>
           <div style={{ color: "#FF6666", fontFamily: "PreRegular" }}>
-            (0/3)
+            ({placecount}/3)
           </div>
         </label>
         <input
@@ -150,24 +185,11 @@ const BasicInfoForm = () => {
           ref={imagesRef}
           onChange={handleChange}
         />
-        <div className={style.fileItem}>
-          <img
-            src="https://petminbucket.s3.ap-northeast-2.amazonaws.com/house/5f993afe-6413-4947-a97e-df6c36342958"
-            alt="test"
-          />
-        </div>
-        <div className={style.fileItem}>
-          <img
-            src="https://petminbucket.s3.ap-northeast-2.amazonaws.com/house/5f993afe-6413-4947-a97e-df6c36342958"
-            alt="test"
-          />
-        </div>
-        <div className={style.fileItem}>
-          <img
-            src="https://petminbucket.s3.ap-northeast-2.amazonaws.com/house/5f993afe-6413-4947-a97e-df6c36342958"
-            alt="test"
-          />
-        </div>
+        {previews.map((itemSrc, index) => (
+          <div className={style.fileItem} key={index} onClick={handleDeleteImg}>
+            <img src={itemSrc} alt="test" />
+          </div>
+        ))}
       </div>
 
       <div className={style.saveBT} id={style.frame}>
