@@ -54,6 +54,7 @@ const BasicInfoForm = () => {
 
   //업로드된 이미지 미리보기
   const handleChange = useCallback((e) => {
+    setCount(1);
     console.log(imagesRef.current.files);
     const {
       target: { name, value },
@@ -95,45 +96,44 @@ const BasicInfoForm = () => {
 
     var formData = new FormData();
     //태영: userID는 추후 로그인한 사용자로 변경
-    formData.append("userId", "test12");
+    formData.append("userId", "test13");
 
     for (var i = 0; i < previews.length; i++) {
       formData.append("sitterHouse", previews[i].fileObject);
-      setCount(1);
     }
 
     formData.append("sitterHousetype", place);
     formData.append("sitterMsg", about);
 
-    if (count === 1) {
-      axios
-        .post("/sitter/update", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          alert("자기소개가 수정되었습니다!");
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      axios
-        .post("/sitter/update2", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          alert("자기소개가 수정되었습니다!");
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    // if (count === 1) {
+    //   axios
+    //     .post("/sitter/update", formData, {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     })
+    //     .then((res) => {
+    //       alert("자기소개가 수정되었습니다!");
+    //       console.log(res.data);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // } else {
+    //   axios
+    //     .post("/sitter/update2", formData, {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     })
+    //     .then((res) => {
+    //       alert("자기소개가 수정되었습니다!");
+    //       console.log(res.data);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // }
   };
 
   const handleImgItemChange = (deleteUrl) => {
