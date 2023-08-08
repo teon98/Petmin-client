@@ -18,8 +18,11 @@ const PStest = () => {
   const closeModal = () => {
     setModalIsOpen(false);
   };
-  const gonotice = () => {
-    navi("/petsitterprofile");
+  const gotest = () => {
+    navi("/petsittertestpage");
+  };
+  const govideo = () => {
+    navi("/petsittertestvideo");
   };
 
   return (
@@ -32,17 +35,66 @@ const PStest = () => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        className={style.modal}
+        style={{
+          overlay: {
+            height: "100%",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+          },
+          content: {
+            position: "absolute",
+            top: "200px",
+            left: "40px",
+            right: "40px",
+            bottom: "200px",
+            border: "1px solid #ccc",
+            background: "#fff",
+            overflow: "auto",
+            WebkitOverflowScrolling: "touch",
+            borderRadius: "4px",
+            outline: "none",
+            padding: "20px",
+          },
+        }}
+        //className={style.modal}
       >
-        <h2>실버 펫시터 유의사항</h2>
-        <p>모달 내용</p>
-        <button onClick={closeModal}>닫기</button>
+        <div>
+          <h1 style={{ textAlign: "center", fontWeight: "bold" }}>
+            실버 펫시터 유의사항
+          </h1>
+          <br />
+          <br />
+          <div style={{ textAlign: "center" }}>
+            <li>본 시험을 펫민의 실버 펫시터 자격을 위한 시험입니다.</li>
+            <br />
+            <li>동영상을 시청하고 시험을 봐주세요.</li>
+            <br />
+            <li>시험 점수에 따라 관리자가 등급을 부여합니다.</li>
+            <br />
+            <li>시험 중에는 타인과의 커뮤니케이션을 제한해주세요.</li>
+            <br />
+            <li>
+              문제가 발생하거나 불편한 점이 있으면 즉시 펫민에게 알려주세요.
+            </li>
+            <br />
+            <br />
+            <br />
+            <br />
+            <button style={{ alignContent: "center" }} onClick={closeModal}>
+              닫기
+            </button>
+          </div>
+        </div>
       </Modal>
-      <div className={style.silver} onClick={gonotice}>
+      <div className={style.silver} onClick={govideo}>
         <img src={youtube}></img>
         <p>실버 펫시터 시험 동영상</p>
       </div>
-      <div className={style.silver} onClick={gonotice}>
+      <div className={style.silver} onClick={gotest}>
         <img src={test}></img>
         <p>실버 펫시터 시험</p>
       </div>
