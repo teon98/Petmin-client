@@ -7,8 +7,8 @@ import { FaImages } from "react-icons/fa6";
 const BasicInfoForm = () => {
   const [about, setAbout] = useState("");
   const [place, setPlace] = useState("");
-  const [placeImg, setPlaceImg] = useState([]);
   const [placecount, setPlaceCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     var placetype = document.querySelectorAll(".placetype input[type='radio']");
@@ -93,7 +93,6 @@ const BasicInfoForm = () => {
   const handlePost = () => {
     console.log("about", about);
     console.log("place", place);
-    console.log("placeImg", placeImg);
     console.log("prviewImg", previews);
 
     var formData = new FormData();
@@ -102,24 +101,41 @@ const BasicInfoForm = () => {
 
     for (var i = 0; i < previews.length; i++) {
       formData.append("sitterHouse", previews[i].fileObject);
+      setCount(1);
     }
 
     formData.append("sitterHousetype", place);
     formData.append("sitterMsg", about);
 
-    axios
-      .post("/sitter/update", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        alert("자기소개가 수정되었습니다!");
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (count == 1) {
+      axios
+        .post("/sitter/update", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          alert("자기소개가 수정되었습니다!");
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .post("/sitter/update2", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          alert("자기소개가 수정되었습니다!");
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const handleImgItemChange = (deleteUrl) => {
