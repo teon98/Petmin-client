@@ -38,7 +38,7 @@ const BasicInfoForm = () => {
         for (let i = 0; i < sitterHouse_arr.length; i++) {
           previews_arr.push({
             imagePreviewUrl: sitterHouse_arr[i],
-            fileObject: "awsS3Img",
+            fileObject: sitterHouse_arr[i],
           });
         }
         setPreviews(previews_arr);
@@ -66,17 +66,15 @@ const BasicInfoForm = () => {
       setPlace(value);
     }
     if (name === "placeImg") {
-      let image_temp = []; //File 객체가 들어간다.
       let image_temp2 = []; //미리보기를 위해 FileReader로 읽은 이미지 URL이 들어간다.
       setPlaceCount(
         imagesRef.current.files.length <= 3 ? imagesRef.current.files.length : 3
       ); //이미지 갯수
-      for (let i = 0; i < 3; i++) {
-        image_temp.push(imagesRef.current.files[i]);
 
+      for (let i = 0; i < imagesRef.current.files.length; i++) {
         //미리보기 구현
         let file = imagesRef.current.files[i];
-
+        console.log(file);
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
@@ -107,7 +105,7 @@ const BasicInfoForm = () => {
     formData.append("sitterHousetype", place);
     formData.append("sitterMsg", about);
 
-    if (count == 1) {
+    if (count === 1) {
       axios
         .post("/sitter/update", formData, {
           headers: {
