@@ -38,7 +38,7 @@ const App = () => {
             <Route path="check" element={<Check />} />
             <Route path="favorite" element={<Favorite />} />
             <Route path="rooms" element={<ChatList />} />
-            <Route path="/room/:chat" element={<Chat />} />
+            <Route path="/room/:room/:userId" element={<Chat />} />
             <Route path="mypage" element={<Mypage />} />
             {/* 로그인 완료했을 때 보이는 마이페이지 */}
             <Route path="mypage2" element={<MypageMenu />} />

@@ -1,20 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { dummy } from "./banner/dummy";
 import defaut from "../assets/images/Main/default.png";
 import { useNavigate } from "react-router-dom";
+import { idtextAtom } from "../atom/atoms";
+import { useRecoilState } from "recoil";
+import axios from "axios";
 
 const ChatList = () => {
   const navigate = useNavigate();
+  const [startId, setStartId] = useRecoilState(idtextAtom);
+  let [chatList, setChatList] = useState([]);
+
+  async function getRoomList() {
+    const url = `/chat/chatlist/${startId}`;
+
+    await axios
+      .get(url, {
+        headers: {
+          "Content-Type": `application/json`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.map((el) => console.log(el)));
+        setChatList(res.data);
+      })
+      .catch((ex) => {
+        console.log("requset fail : " + ex);
+      });
+  }
+
+  useEffect(() => {
+    getRoomList();
+  }, []);
 
   return (
     <ul>
-      {dummy?.map((data, idx) => {
+      {chatList?.map((data, idx) => {
+        console.log(data);
         return (
           <li
             onClick={() => {
               // navigate(`/${userNick}`);
-              navigate(`/room/${data.chatroomNo}`);
-              console.log(data.chatroomNo);
+              navigate(`/room/${data.chatroomId}/${data.receiver.userId}`);
+              //   console.log(data.chatroomNo);
             }}
             key={idx}
             style={{
@@ -46,7 +74,7 @@ const ChatList = () => {
                   fontSize: "1.4rem",
                 }}
               >
-                {data.chatroomNo}
+                {data.chatroomId}
               </div>
               <div
                 style={{
