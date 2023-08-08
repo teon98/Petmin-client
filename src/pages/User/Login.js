@@ -4,13 +4,15 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logoImg from "../../assets/images/logo.png";
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import {
   idtextAtom,
   nametextAtom,
   agetextAtom,
-  detailaddresstextAtom,
-  fullAddressAtom,
+  emailtextAtom,
+  gendertextAtom,
+  userDetailAddrAtom,
+  userAddrAtom,
 } from "../../atom/atoms";
 
 const LoginForm = styled.div`
@@ -62,9 +64,10 @@ function Login(props) {
   const [userId, setUserId] = useRecoilState(idtextAtom);
   const [userName, setUserName] = useRecoilState(nametextAtom);
   const [userAge, setUserAge] = useRecoilState(agetextAtom);
-  const [gender, setGender] = useRecoilState(detailaddresstextAtom);
-  const [detailAddr, setDetailAddr] = useRecoilState(detailaddresstextAtom);
-  const [fullAddr, setFullAddr] = useRecoilState(fullAddressAtom);
+  const [gender, setGender] = useRecoilState(gendertextAtom);
+  const [detailAddr, setDetailAddr] = useRecoilState(userDetailAddrAtom);
+  const [fullAddr, setFullAddr] = useRecoilState(userAddrAtom);
+  const [email, setEmail] = useRecoilState(emailtextAtom);
 
   const [pwd, setPwd] = useState("");
   const [btnState, setBtnState] = useState(false);
@@ -113,7 +116,9 @@ function Login(props) {
           setGender(() => res.data.userSex);
           setDetailAddr(() => res.data.userDetailAddress);
           setFullAddr(() => res.data.userAddress);
+          setEmail(() => res.data.userEmail);
           setPwd(() => "");
+          console.log(res.data);
           nav("/");
         }
       })
