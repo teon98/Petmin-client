@@ -1,3 +1,11 @@
+### 깃 올리는 방법 
+1. git status -> 로컬이랑 현재 나의 변경사항의 차이를 보여줌
+2. git add . -> 올릴 파일들을 올릴준비
+3. git commit -m "" ->깃 로컬에 올릴준비 ㅇㅅㅇ?
+4. git remote -v -> 내 컴퓨터와 연결된 깃 주소들 보여줌
+5. git push origin main -> 내 origin 주소의 main 브런치에 푸쉬
+6. 깃으로 가서 pull requests -> 원격의 dev로 내 로컬의 main에서 머지
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

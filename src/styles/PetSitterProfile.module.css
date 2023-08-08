@@ -101,9 +101,23 @@
   border: 0;
 }
 
-.fileItem {
+.filebox {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
+.fileItem {
+  width: 70px;
+  height: 70px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.fileItem img {
+  width: 100%;
+  height: 100%;
+  border-radius: 7px;
+}
 /* 펫시터 일정 등록 CSS */
 #frame span {
   font-family: "PreRegular";

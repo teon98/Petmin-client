@@ -5,7 +5,7 @@ import BackTitleHeader from "../../components/BackTitleHeader";
 import PinkBtn from "../../components/User/PinkBtn";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { RecoilRoot, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import {
   emailtextAtom,
   idtextAtom,

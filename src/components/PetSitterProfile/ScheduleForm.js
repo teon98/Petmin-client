@@ -94,7 +94,7 @@ const ScheduleForm = () => {
     axios
       .get("/sitter/getSchedule", {
         params: {
-          sitterId: "test11",
+          sitterId: "지만",
           scheduleDay: inputValue,
         },
       })
@@ -135,7 +135,7 @@ const ScheduleForm = () => {
     //console.log(type);
 
     var formData = new FormData();
-    formData.append("sitterId", "test11");
+    formData.append("sitterId", "지만");
     formData.append("scheduleDay", inputValue);
     formData.append("scheduleHour", scheduleTimeList);
     formData.append("dolbomOption", type);

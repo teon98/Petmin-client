@@ -4,14 +4,13 @@ import "../../styles/signup.css";
 import TextInputComponent from "../../components/TextInputComponent";
 import { useRecoilState } from "recoil";
 import { nametextAtom, agetextAtom, gendertextAtom } from "../../atom/atoms";
-import "../../styles/GenderRadioStyle.css";
 import PinkBtn from "../../components/User/PinkBtn";
 import { useNavigate } from "react-router-dom";
+import RadioComponent from "../../components/RadioComponent";
 
 function Signup2(props) {
   //이름
   const [nametext, setNametext] = useRecoilState(nametextAtom);
-  const [nameMessage, setNameMessage] = useState("");
   const handleNameChange = (e) => {
     setNametext(e.target.value);
   };
@@ -40,10 +39,15 @@ function Signup2(props) {
 
   //성별
   const [gender, setGender] = useRecoilState(gendertextAtom);
-
-  const handleGenderChange = (e) => {
-    setGender(e.target.value);
+  const handleRadioChange = (e) => {
+    const value = e.target.value;
+    setGender(value);
   };
+
+  const genderOptions = [
+    { name: "gender", value: "남", label: "남" },
+    { name: "gender", value: "여", label: "여" },
+  ];
 
   //다음 페이지 이동
   const navigate = useNavigate();
@@ -70,7 +74,6 @@ function Signup2(props) {
           placeholder={"이름을 입력해주세요"}
           onChange={handleNameChange}
           value={nametext}
-          message={nameMessage}
         />
         <TextInputComponent
           lable={"나이"}
@@ -81,27 +84,13 @@ function Signup2(props) {
           type="number"
         />
 
-        <p className="textInputLable">성별</p>
-        <label className={`radioBox ${gender === "남" ? "active" : ""}`}>
-          <input
-            type="radio"
-            name="gender"
-            value="남"
-            checked={gender === "남"}
-            onChange={handleGenderChange}
-          />
-          남
-        </label>
-        <label className={`radioBox ${gender === "여" ? "active" : ""}`}>
-          <input
-            type="radio"
-            name="gender"
-            value="여"
-            checked={gender === "여"}
-            onChange={handleGenderChange}
-          />
-          여
-        </label>
+        <RadioComponent
+          lable={"성별"}
+          options={genderOptions}
+          selectedValue={gender}
+          onChange={handleRadioChange}
+        />
+
         <PinkBtn title="다음으로" onClick={signupNextPage} active={btnState} />
       </div>
     </>

@@ -2,6 +2,8 @@ import React from "react";
 import DaumPostcode from "react-daum-postcode";
 import { styled } from "styled-components";
 import { useLocation } from "react-router";
+import { fullAddressAtom } from "../../atom/atoms";
+import { useRecoilState } from "recoil";
 
 //myinfo일 때
 const PostBtn = styled.button`
@@ -27,7 +29,7 @@ const PostBtn = styled.button`
 
 //signu3일때
 const PostSignBtn = styled.button`
-  margin: -94px -17px auto auto;
+  margin: -95px -30px auto auto;
   padding: 5px 10px;
   display: block;
   font-family: PreMedium;
@@ -49,10 +51,11 @@ const PostSignBtn = styled.button`
 
 const PopupPostCode = (props) => {
   const location = useLocation().pathname === "/myinfo";
-
+  let [fullAddress, setFullAddress] = useRecoilState(fullAddressAtom);
   // 우편번호 검색 후 주소 클릭 시 실행될 함수, data callback 용
   const handlePostCode = (data) => {
-    let fullAddress = data.address;
+    // let fullAddress = data.address;
+    fullAddress = data.address;
     let extraAddress = "";
 
     if (data.addressType === "R") {
@@ -68,6 +71,7 @@ const PopupPostCode = (props) => {
     console.log(data);
     console.log(fullAddress);
     console.log(data.zonecode);
+    setFullAddress(fullAddress);
     props.onClose();
   };
 
