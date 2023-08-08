@@ -93,3 +93,16 @@ export const fullAddressAtom = atom({
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
+
+//user의 진짜 주소
+export const userAddrAtom = atom({
+  key: "userAdd",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const userDetailAddrAtom = atom({
+  key: "userDetailAdd",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});

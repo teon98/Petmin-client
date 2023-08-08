@@ -87,7 +87,7 @@ function UserInfo(props) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setImgFile(reader.result);
+      setImgFile(file);
     };
   };
 
