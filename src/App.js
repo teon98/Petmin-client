@@ -24,6 +24,7 @@ import Counter from "./pages/User/Counter";
 import Signup3 from "./pages/User/Signup3";
 import Signup4 from "./pages/User/Signup4";
 import ChatList from "./pages/ChatList";
+import PStest from "./pages/petsitter/PStest";
 
 const App = () => {
   return (
@@ -75,6 +76,10 @@ const App = () => {
           {/* 마이페이지 - 펫시터 프로필 관리 */}
           <Route path="/petsitterprfile" element={<MainBTNav />}>
             <Route path=":userID" element={<PSprofile />} />
+          </Route>
+          {/*마이페이지 -  실버 펫시터 시험*/}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/petsittertest" element={<PStest />}></Route>
           </Route>
           {/* 리코일 실험용*/}
           <Route path="/recoiltest" element={<Counter />} />

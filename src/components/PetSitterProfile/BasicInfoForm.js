@@ -8,6 +8,7 @@ const BasicInfoForm = () => {
   const [about, setAbout] = useState("");
   const [place, setPlace] = useState("");
   const [placeImg, setPlaceImg] = useState([""]);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     var placetype = document.querySelectorAll(".placetype input[type='radio']");
@@ -15,7 +16,7 @@ const BasicInfoForm = () => {
     axios
       .get("/sitter/getSitter", {
         params: {
-          userId: "test11",
+          userId: "지만2",
         },
       })
       .then((res) => {
@@ -65,28 +66,45 @@ const BasicInfoForm = () => {
 
     var formData = new FormData();
     //태영: userID는 추후 로그인한 사용자로 변경
-    formData.append("userId", "test11");
+    formData.append("userId", "지만2");
 
     for (var i = 0; i < placeImg.length; i++) {
       formData.append("sitterHouse", placeImg[i]);
+      setCount(1);
     }
 
     formData.append("sitterHousetype", place);
     formData.append("sitterMsg", about);
 
-    axios
-      .post("/sitter/update", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        alert("자기소개가 수정되었습니다!");
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (count == 1) {
+      axios
+        .post("/sitter/update", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          alert("자기소개가 수정되었습니다!");
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .post("/sitter/update2", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          alert("자기소개가 수정되었습니다!");
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
   return (
     <div>
@@ -134,7 +152,7 @@ const BasicInfoForm = () => {
       <div className={style.subtitle}>거주지 이미지</div>
       {/* 거주지 이미지 file input */}
       <div id={style.frame} className={style.filebox}>
-        <label for="file">
+        <label htmlFor="file">
           <div>
             <FaImages color="#B3B3B3" size={20} />
           </div>
