@@ -4,7 +4,9 @@ import RadioComponent from "../../components/RadioComponent";
 import { useRecoilState } from "recoil";
 import {
   agetextAtom,
+  detailaddresstextAtom,
   emailtextAtom,
+  fullAddressAtom,
   gendertextAtom,
   idtextAtom,
   nametextAtom,
@@ -82,12 +84,14 @@ function Signup4(props) {
   ];
 
   //회원가입 완료 버튼
-  const [emailtext, setEmailtext] = useRecoilState(emailtextAtom);
+  const [emailtext] = useRecoilState(emailtextAtom);
   const [idtext, setIdtext] = useRecoilState(idtextAtom);
-  const [passwordtext, setPasswordtext] = useRecoilState(passwordtextAtom);
-  const [nametext, setNametext] = useRecoilState(nametextAtom);
-  const [agetext, setAgetext] = useRecoilState(agetextAtom);
-  const [gendertext, setGendertext] = useRecoilState(gendertextAtom);
+  const [passwordtext] = useRecoilState(passwordtextAtom);
+  const [nametext] = useRecoilState(nametextAtom);
+  const [agetext] = useRecoilState(agetextAtom);
+  const [gendertext] = useRecoilState(gendertextAtom);
+  const [fullAddress] = useRecoilState(fullAddressAtom);
+  const [detailAddress] = useRecoilState(detailaddresstextAtom);
   //주소는 아직 보류
 
   const navigate = useNavigate();
@@ -96,13 +100,13 @@ function Signup4(props) {
       url: "http://localhost:8888/signup",
       method: "post",
       data: {
-        //메일은 테이블에 없는데 왜 받은겨
         userId: idtext,
         userPass: passwordtext,
         userName: nametext,
         userAge: agetext,
-        //userAddress: "부천",
+        userAddress: fullAddress + " " + detailAddress,
         userSex: gendertext,
+        userEmail: emailtext,
       },
     })
       .then((res) => {
@@ -130,6 +134,7 @@ function Signup4(props) {
       .catch((err) => {
         console.log(err);
       });
+    setIdtext("");
   };
 
   const [btnState, setBtnState] = useState(false);
@@ -197,6 +202,8 @@ function Signup4(props) {
         <p>{nametext}</p>
         <p>{agetext}</p>
         <p>{gendertext}</p>
+        <p>{fullAddress}</p>
+        <p>{detailAddress}</p>
         <PinkBtn title="완료하기" active={btnState} onClick={SignUpBtn} />
       </div>
     </>
