@@ -6,6 +6,7 @@ import Post from "../../components/User/Post";
 import TextInputComponent from "../../components/TextInputComponent";
 import UserImg from "../../assets/images/person.png";
 import PhotoCamera from "../../assets/images/photo_camera.png";
+import PinkBtn from "../../components/User/PinkBtn";
 
 const Info = styled.div`
   div {
@@ -90,6 +91,10 @@ function UserInfo(props) {
     };
   };
 
+  const onClick = (e) => {
+    console.log();
+  };
+
   return (
     <div>
       <BackTitleHeader />
@@ -126,6 +131,7 @@ function UserInfo(props) {
           </div>
           <TextInputComponent lable="선호 동네" value="ltm0718@shinee.com" />
         </div>
+        <PinkBtn title="수정하기" onClick={onClick} active={true} />
       </Info>
     </div>
   );
