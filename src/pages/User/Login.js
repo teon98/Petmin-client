@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PinkBtn from "../../components/User/PinkBtn";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logoImg from "../../assets/images/logo.png";
-import { useRecoilState } from "recoil";
-import { idtextAtom, nametextAtom } from "../../atom/atoms";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import {
+  idtextAtom,
+  nametextAtom,
+  agetextAtom,
+  detailaddresstextAtom,
+  fullAddressAtom,
+} from "../../atom/atoms";
 
 const LoginForm = styled.div`
   margin-top: 50%;
@@ -55,6 +61,10 @@ function Login(props) {
   //recoil로 저장
   const [userId, setUserId] = useRecoilState(idtextAtom);
   const [userName, setUserName] = useRecoilState(nametextAtom);
+  const [userAge, setUserAge] = useRecoilState(agetextAtom);
+  const [gender, setGender] = useRecoilState(detailaddresstextAtom);
+  const [detailAddr, setDetailAddr] = useRecoilState(detailaddresstextAtom);
+  const [fullAddr, setFullAddr] = useRecoilState(fullAddressAtom);
 
   const [pwd, setPwd] = useState("");
   const [btnState, setBtnState] = useState(false);
@@ -97,9 +107,13 @@ function Login(props) {
         if (res.data === "") {
           setMsg(() => "아이디 혹은 비밀번호를 확인해주세요.");
         } else {
-          //recoil로 ID, Name만 저장 후 메인화면으로 넘김
           setUserId(() => res.data.userId);
           setUserName(() => res.data.userName);
+          setUserAge(() => res.data.userAge);
+          setGender(() => res.data.userSex);
+          setDetailAddr(() => res.data.userDetailAddress);
+          setFullAddr(() => res.data.userAddress);
+          setPwd(() => "");
           nav("/");
         }
       })
