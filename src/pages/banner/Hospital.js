@@ -36,7 +36,7 @@ export default function Hospital() {
       .get(`/hospitals/maplist?searchTerm=${loc}`)
       .then((res) => {
         setMList(res.data.hospitals);
-        setIsValid(false);
+        // setIsValid(false);
       })
       .catch((err) => {
         console.log(err);
@@ -160,7 +160,7 @@ export default function Hospital() {
     // 지도의 우측에 확대 축소 컨트롤을 추가한다
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
   }, [mList]);
-  const [isValid, setIsValid] = useState(true);
+  // const [isValid, setIsValid] = useState(true);
 
   return (
     <div>
@@ -253,7 +253,8 @@ export default function Hospital() {
         style={{
           width: "100vw",
           height: "100vh",
-          maxHeight: !isValid ? "500px" : "1000px",
+          // maxHeight: !isValid ? "500px" : "1000px",
+          maxHeight: "500px",
         }}
       ></div>
 
