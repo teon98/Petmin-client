@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BackTitleHeader from "../../components/BackTitleHeader";
-import RadioComponent from "../../components/RadioComponent";
-import { useRecoilState } from "recoil";
+import PreferenceRadioComponent from "../../components/RadioComponent";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import {
   agetextAtom,
   detailaddresstextAtom,
@@ -10,6 +10,7 @@ import {
   gendertextAtom,
   idtextAtom,
   nametextAtom,
+  passwordChecktextAtom,
   passwordtextAtom,
   preference1Atom,
   preference2Atom,
@@ -85,14 +86,29 @@ function Signup4(props) {
 
   //회원가입 완료 버튼
   const [emailtext] = useRecoilState(emailtextAtom);
-  const [idtext, setIdtext] = useRecoilState(idtextAtom);
+  const [idtext] = useRecoilState(idtextAtom);
   const [passwordtext] = useRecoilState(passwordtextAtom);
   const [nametext] = useRecoilState(nametextAtom);
   const [agetext] = useRecoilState(agetextAtom);
   const [gendertext] = useRecoilState(gendertextAtom);
   const [fullAddress] = useRecoilState(fullAddressAtom);
   const [detailAddress] = useRecoilState(detailaddresstextAtom);
-  //주소는 아직 보류
+
+  //회원가입 완료 후 값 리셋
+  const resetEmail = useResetRecoilState(emailtextAtom);
+  const resetId = useResetRecoilState(idtextAtom);
+  const resetName = useResetRecoilState(nametextAtom);
+  const resetAge = useResetRecoilState(agetextAtom);
+  const resetGender = useResetRecoilState(gendertextAtom);
+  const resetFullAddress = useResetRecoilState(fullAddressAtom);
+  const resetDetailaddress = useResetRecoilState(detailaddresstextAtom);
+  const resetPassword = useResetRecoilState(passwordtextAtom);
+  const resetPasswordCheck = useResetRecoilState(passwordChecktextAtom);
+  const resetPreference1 = useResetRecoilState(preference1Atom);
+  const resetPreference2 = useResetRecoilState(preference2Atom);
+  const resetPreference3 = useResetRecoilState(preference3Atom);
+  const resetPreference4 = useResetRecoilState(preference4Atom);
+  const resetPreference5 = useResetRecoilState(preference5Atom);
 
   const navigate = useNavigate();
   const SignUpBtn = () => {
@@ -104,18 +120,22 @@ function Signup4(props) {
         userPass: passwordtext,
         userName: nametext,
         userAge: agetext,
-        userAddress: fullAddress + " " + detailAddress,
+        userAddress: fullAddress,
+        userDetailAddress: detailAddress,
         userSex: gendertext,
         userEmail: emailtext,
       },
     })
       .then((res) => {
         console.log(res.data);
+        SavePreference();
       })
       .catch((err) => {
         console.log(err);
       });
+  };
 
+  const SavePreference = () => {
     axios({
       url: `http://localhost:8888/preferenceSave/${idtext}`,
       method: "post",
@@ -129,12 +149,25 @@ function Signup4(props) {
     })
       .then((res) => {
         console.log(res.data);
+        resetEmail();
+        resetId();
+        resetName();
+        resetAge();
+        resetGender();
+        resetFullAddress();
+        resetDetailaddress();
+        resetPassword();
+        resetPasswordCheck();
+        resetPreference1();
+        resetPreference2();
+        resetPreference3();
+        resetPreference4();
+        resetPreference5();
         navigate("/login");
       })
       .catch((err) => {
         console.log(err);
       });
-    setIdtext("");
   };
 
   const [btnState, setBtnState] = useState(false);
@@ -161,49 +194,43 @@ function Signup4(props) {
           <br />
           선택해주세요
         </p>
-        <p className="smallLable">선호하는 펫시터</p>
         {/* 펫시터 성별 */}
-        <RadioComponent
+        <PreferenceRadioComponent
           options={petSitterGenderOptions}
           selectedValue={preference1}
           onChange={petSitterGenderChange}
+          lable={"선호하는 펫시터"}
         />
         {/* 연령대 */}
-        <RadioComponent
+        <PreferenceRadioComponent
           options={petSitterAgeOptions}
           selectedValue={preference2}
           onChange={petSitterAgeChange}
         />
 
         {/* 주택유형*/}
-        <RadioComponent
+        <PreferenceRadioComponent
           options={petSitterHouseOptions}
           selectedValue={preference3}
           onChange={petSitterHouseChange}
         />
 
-        <p className="smallLable">선호하는 펫시터의 펫</p>
         {/* 펫시터의 강아지 성별*/}
-        <RadioComponent
-          options={petSitterDogGenderOptions}
-          selectedValue={preference4}
-          onChange={petSitterDogGenderChange}
-        />
+        <div style={{ marginTop: "30px", marginBottom: "30px" }}>
+          <PreferenceRadioComponent
+            options={petSitterDogGenderOptions}
+            selectedValue={preference4}
+            onChange={petSitterDogGenderChange}
+            lable={"선호하는 펫시터의 펫"}
+          />
 
-        {/* 펫시터의 강아지 크기*/}
-        <RadioComponent
-          options={petSitterDogSizeOptions}
-          selectedValue={preference5}
-          onChange={petSitterDogSizeChange}
-        />
-        <p>{emailtext}</p>
-        <p>{idtext}</p>
-        <p>{passwordtext}</p>
-        <p>{nametext}</p>
-        <p>{agetext}</p>
-        <p>{gendertext}</p>
-        <p>{fullAddress}</p>
-        <p>{detailAddress}</p>
+          {/* 펫시터의 강아지 크기*/}
+          <PreferenceRadioComponent
+            options={petSitterDogSizeOptions}
+            selectedValue={preference5}
+            onChange={petSitterDogSizeChange}
+          />
+        </div>
         <PinkBtn title="완료하기" active={btnState} onClick={SignUpBtn} />
       </div>
     </>
