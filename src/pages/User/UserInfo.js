@@ -14,6 +14,7 @@ import {
   idtextAtom,
   userAddrAtom,
   userDetailAddrAtom,
+  userImgAtom,
 } from "../../atom/atoms";
 import { useRecoilState } from "recoil";
 import axios from "axios";
@@ -85,7 +86,7 @@ const Info = styled.div`
 function UserInfo(props) {
   const [userId, setUserId] = useRecoilState(idtextAtom);
   //화면에 띄울 img
-  const [imgFile, setImgFile] = useState("");
+  const [imgFile, setImgFile] = useRecoilState(userImgAtom);
   //img 경로? 인듯
   const [imgUrl, setImgUrl] = useState("");
   //DB에서 가져온 주소
@@ -98,6 +99,7 @@ function UserInfo(props) {
   const [searchAddr, setSearchAddr] = useRecoilState(fullAddressAtom);
 
   const [email, setEmail] = useRecoilState(emailtextAtom);
+  const [msg, setMsg] = useState("");
   const imgRef = useRef();
 
   const onChange = (e) => {
@@ -117,16 +119,39 @@ function UserInfo(props) {
 
   const onClick = (e) => {
     var formdata = new FormData();
-    formdata.append("userImg", imgUrl);
-    formdata.append("userId", "adminID");
-    formdata.append("userAddress", searchAddr);
-    formdata.append("userDetailAddress", subDetailAddr);
+    //이미지는 수정 안했을 경우
+    if (imgUrl === "") {
+      axios({
+        method: "put",
+        url: "/user/updateInfo",
+        data: {
+          userId: userId,
+          userAddress: searchAddr,
+          userDetailAddress: subDetailAddr,
+        },
+      }).then((res) => {
+        setAddr(searchAddr);
+        setDetailAddr(subDetailAddr);
+      });
+    } else {
+      //이미지 수정 했을 경우
+      formdata.append("userImg", imgUrl);
+      formdata.append("userId", userId);
+      formdata.append("userAddress", searchAddr);
+      formdata.append("userDetailAddress", subDetailAddr);
 
-    axios.put("/user/updateInfo", formdata, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+      axios
+        .put("/user/updateInfoAll", formdata, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          setAddr(searchAddr);
+          setDetailAddr(subDetailAddr);
+          setImgFile(res.data.userImg);
+        });
+    }
   };
 
   return (
@@ -163,6 +188,7 @@ function UserInfo(props) {
           </div>
         </div>
         <PinkBtn title="수정하기" onClick={onClick} active={true} />
+        <p>{msg}</p>
       </Info>
     </div>
   );

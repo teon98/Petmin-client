@@ -106,3 +106,9 @@ export const userDetailAddrAtom = atom({
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
+
+export const userImgAtom = atom({
+  key: "userImg",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
