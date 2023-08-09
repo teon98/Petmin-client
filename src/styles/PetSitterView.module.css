@@ -55,7 +55,7 @@
 }
 
 #calendar input[type="text"]::placeholder {
-  color: #ff8989;
+  color: #c7c7c7;
 }
 
 .typetable input[type="radio"] {
@@ -96,5 +96,9 @@
 }
 
 #text1 {
+  font-family: "PreRegular";
+}
+
+#sorryFrame {
   font-family: "PreRegular";
 }

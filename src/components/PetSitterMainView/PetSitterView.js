@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import PetSitterCardList from "./PetSitterCardList";
 import style from "../../styles/PetSitterView.module.css";
 import { format, isValid, parse } from "date-fns";
@@ -27,21 +27,22 @@ const PetSitterView = () => {
     setLocation(e.target.value);
   };
 
+  //오늘 날짜 알아오기 - 초기화를 위해
+  let today = new Date();
+  today = format(today, "y-MM-dd");
+
   //돌봄 형태
-  const [caretype, setCareType] = useState("산책");
+  const [caretype, setCareType] = useState("");
 
   const careTypeChange = (e) => {
-    const {
-      target: { name, value },
-    } = e;
-
-    if (name === "caretype") {
-      setCareType(value);
+    console.log(e.target.name);
+    if (e.target.name === "caretype") {
+      setCareType(e.target.value);
     }
   };
 
   //날짜 Pick을 위한 코드 ---------------Start-----------------------
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [isPopperOpen, setIsPopperOpen] = useState(false);
 
@@ -77,6 +78,16 @@ const PetSitterView = () => {
     if (date) {
       setInputValue(format(date, "y-MM-dd"));
       closePopper();
+      //날짜 배열 중에 선택된 날짜가 포함되어 있으면 그 날짜로 필터링
+      let findDate = format(date, "y-MM-dd");
+      console.log("originList", originList);
+      setPetSitterList(
+        originList.filter((item) => {
+          console.log("item", item.scheduleDay);
+          console.log("findDate", findDate);
+          return item.scheduleDay.includes(findDate);
+        })
+      );
     } else {
       setInputValue("");
     }
@@ -84,7 +95,9 @@ const PetSitterView = () => {
   //----------DatePicker-----end-------------//////////////////////////////
 
   //펫시터 목록
-  const [petSitterList, setPetSitterList] = useState([]);
+  const [petSitterList, setPetSitterList] = useState([]); //막 바뀌는 친구
+  const [originList, setOriginList] = useState([]); //필터링 할 때 원본 보존할 친구
+
   //날짜 필터링
   const [dateFilter, setDateFilter] = useState("");
 
@@ -92,6 +105,8 @@ const PetSitterView = () => {
   const [dolbumType, setDolbumType] = useState("");
 
   //시터 정보 목록 가져오는 요청
+  //로그인한 사용자의 닉네임과 주소가 들어가도록 한다.
+  //태양: 추후 recoil로 받아온 정보가 들어오게 하기
   useEffect(() => {
     axios
       .get("/dolbom/filter", {
@@ -101,21 +116,42 @@ const PetSitterView = () => {
         },
       })
       .then((res) => {
-        setPetSitterList(res.data);
-        setLoading(false);
         console.log(res.data);
+        setPetSitterList(res.data);
+        setOriginList(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  //사용자 정보에 저장되어있지 않은 다른 위치를 검색할 때
+  const anotherLocationSearch = useCallback(() => {
+    console.log(location);
+    setLoading(true);
+    axios
+      .get("/dolbom/filter", {
+        params: {
+          userId: "으악",
+          userAddress: location,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setPetSitterList(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [location]);
+
   return (
     <div className={style.petsitterview}>
       {/* 주소 검색 창 */}
       <div className={style.locationSearchBar}>
         <FaLocationDot color="#C7C7C7" size={25} />
-
         <input
           type="text"
           value={location}
@@ -126,6 +162,7 @@ const PetSitterView = () => {
           type="button"
           value="검색"
           id={style.locationSearchButton}
+          onClick={anotherLocationSearch}
         ></input>
       </div>
       <div id={style.FillterBar}>
@@ -141,7 +178,7 @@ const PetSitterView = () => {
         <div ref={popperRef} id={style.calendar}>
           <input
             type="text"
-            placeholder={format(new Date(), "y-MM-dd")}
+            placeholder={"날짜검색"}
             value={inputValue}
             onChange={handleInputChange}
             onClick={handleButtonClick}
@@ -192,7 +229,7 @@ const PetSitterView = () => {
               id="산책"
               value="산책"
               type="radio"
-              name="type"
+              name="caretype"
               onChange={careTypeChange}
             />
             <label htmlFor="산책">산책</label>
@@ -200,7 +237,7 @@ const PetSitterView = () => {
               id="돌봄"
               value="돌봄"
               type="radio"
-              name="type"
+              name="caretype"
               onChange={careTypeChange}
             />
             <label htmlFor="돌봄">돌봄</label>
@@ -221,6 +258,10 @@ const PetSitterView = () => {
             color="#e15b64"
           />
           <p id={style.text1}>조건에 맞는 펫시터를 찾고 있어요:)</p>
+        </div>
+      ) : petSitterList.length === 0 ? (
+        <div id={style.sorryFrame}>
+          검색 조건에 맞는 펫시터를 찾지 못했습니다😭
         </div>
       ) : (
         <PetSitterCardList petSitterList={petSitterList} />
