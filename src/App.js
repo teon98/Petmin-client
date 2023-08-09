@@ -6,7 +6,6 @@ import Main from "./pages/Main";
 import Check from "./pages/Check";
 import Favorite from "./pages/Favorite";
 import Chat from "./pages/Chat";
-import Mypage from "./pages/Mypage";
 import Alarm from "./pages/Alarm";
 import About from "./pages/banner/About";
 import Hospital from "./pages/banner/Hospital";
@@ -36,9 +35,8 @@ const App = () => {
             <Route path="favorite" element={<Favorite />} />
             <Route path="rooms" element={<ChatList />} />
             <Route path="/room/:chat" element={<Chat />} />
-            <Route path="mypage" element={<Mypage />} />
             {/* 로그인 완료했을 때 보이는 마이페이지 */}
-            <Route path="mypage2" element={<MypageMenu />} />
+            <Route path="mypage" element={<MypageMenu />} />
             {/* 로그인 */}
             <Route path="/login" element={<Login />}></Route>
             {/* 내 정보 */}
