@@ -72,6 +72,7 @@ const PopupPostCode = (props) => {
     console.log(fullAddress);
     console.log(data.zonecode);
     setFullAddress(fullAddress);
+    props.setAddr(fullAddress);
     props.onClose();
   };
 

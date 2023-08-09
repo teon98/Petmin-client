@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BackTitleHeader from "../../components/BackTitleHeader";
 import "../../styles/signup.css";
 import "../../styles/AddressStyle.css";
@@ -26,6 +26,15 @@ function Signup3(props) {
   };
 
   //다음 페이지 이동
+  const [btnState, setBtnState] = useState(false);
+  useEffect(() => {
+    if (addresstext !== "" && detailaddresstext !== "") {
+      setBtnState(true);
+    } else {
+      setBtnState(false);
+    }
+  }, [addresstext, detailaddresstext]);
+
   const navigate = useNavigate();
   const signupNextPage = () => {
     navigate("/signup4");
@@ -52,7 +61,7 @@ function Signup3(props) {
           value={detailaddresstext}
           onChange={handleDetailAddressChange}
         />
-        <PinkBtn title="다음으로" onClick={signupNextPage} active={true} />
+        <PinkBtn title="다음으로" onClick={signupNextPage} active={btnState} />
       </div>
     </>
   );

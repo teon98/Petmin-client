@@ -24,6 +24,7 @@ import Counter from "./pages/User/Counter";
 import Signup3 from "./pages/User/Signup3";
 import Signup4 from "./pages/User/Signup4";
 import ChatList from "./pages/ChatList";
+import PetRegistration from "./pages/User/PetRegistration";
 import PStest from "./pages/petsitter/PStest";
 import TestVideo from "./pages/petsitter/TestVideo";
 import TestPage from "./pages/petsitter/TestPage";
@@ -76,6 +77,13 @@ const App = () => {
           {/* 회원가입 페이지 4*/}
           <Route path="/" element={<MainBTNav />}>
             <Route path="/signup4" element={<Signup4 />}></Route>
+          </Route>
+          {/* 반려동물 등록 페이지 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route
+              path="/petregistration"
+              element={<PetRegistration />}
+            ></Route>
           </Route>
           {/* 마이페이지 - 펫시터 프로필 관리 */}
           <Route path="/petsitterprfile" element={<MainBTNav />}>

@@ -84,12 +84,14 @@ function Signup2(props) {
           type="number"
         />
 
-        <RadioComponent
-          lable={"성별"}
-          options={genderOptions}
-          selectedValue={gender}
-          onChange={handleRadioChange}
-        />
+        <div style={{ marginBottom: "30px" }}>
+          <RadioComponent
+            lable={"성별"}
+            options={genderOptions}
+            selectedValue={gender}
+            onChange={handleRadioChange}
+          />
+        </div>
 
         <PinkBtn title="다음으로" onClick={signupNextPage} active={btnState} />
       </div>
