@@ -30,7 +30,7 @@ const Chat = () => {
   const msgBox = chatt.map((item, idx) => (
     <div
       key={idx}
-      className={item.startId === startId.toString() ? "other" : "me"}
+      className={item.startId === startId.toString() ? "me" : "other"}
     >
       <span>
         <b>{item.name}</b>
@@ -63,7 +63,8 @@ const Chat = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        console.log(res.data.chatHistory[0].startId.userId);
+        // console.log(res.data.startId);
         if (
           res.data.message ===
           "상담 신청 내역이 있습니다. 이전 채팅방에 입장합니다."
@@ -73,12 +74,13 @@ const Chat = () => {
             // const hName = history.myname;
             const hMsg = history.msg;
             const hRoom = res.data.chatroomId;
+            const Sid = history.startId.userId;
             let hDate = history.chatDate;
             hDate = new Date(hDate).toLocaleDateString();
             const historyChat = {
               msg: hMsg,
               // userName,
-              startId: "ckdrua12",
+              startId: Sid,
               // receiverId: receiverId,
               chatroomId: hRoom,
               // chat,
@@ -102,8 +104,10 @@ const Chat = () => {
   }, [msgBox]);
 
   useEffect(() => {
+    // console.log(location.pathname);
     webSocketLogin();
-    // makeRoom(startId, receiverId);
+    console.log(startId, receiverId, "startId, receiverIdstartId, receiverId");
+    makeRoom(startId, receiverId);
     // makeRoom(receiverId, startId);
   }, [webSocketLogin]);
 
@@ -186,7 +190,7 @@ const Chat = () => {
       <div id="AllComponents">
         {/* <div id="chat-wrap"> */}
         <div id="chatt">
-          <h1 id="title">WebSocket Chatting</h1>
+          <h1 id="title">{receiverId}</h1>
           <br />
           <div id="talk">
             <div className="talk-shadow"></div>
