@@ -16,7 +16,7 @@ const BasicInfoForm = () => {
     axios
       .get("/sitter/getSitter", {
         params: {
-          userId: "지만2",
+          userId: "test11",
         },
       })
       .then((res) => {
@@ -55,7 +55,6 @@ const BasicInfoForm = () => {
   //업로드된 이미지 미리보기
   const handleChange = useCallback((e) => {
     console.log(imagesRef.current.files);
-    house = "[";
     setCount(1);
     const {
       target: { name, value },
@@ -89,9 +88,6 @@ const BasicInfoForm = () => {
       }
     }
   }, []);
-  for (var i = 0; i < previews.length; i++) {
-    house += previews[i].fileObject;
-  }
 
   const handlePost = () => {
     console.log("about", about);
@@ -100,7 +96,7 @@ const BasicInfoForm = () => {
 
     var formData = new FormData();
     //태영: userID는 추후 로그인한 사용자로 변경
-    formData.append("userId", "지만2");
+    formData.append("userId", "test11");
 
     for (var i = 0; i < previews.length; i++) {
       formData.append("sitterHouse", previews[i].fileObject);
