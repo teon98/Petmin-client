@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { styled } from "styled-components";
 
 function PinkBtn(props) {
   const { title, active } = props;
@@ -8,23 +9,27 @@ function PinkBtn(props) {
     props.onClick();
   };
 
-  const btnActive = {
-    display: "block",
-    margin: "10px auto",
-    width: "100%",
-    height: "40px",
-    background: !active ? "#B3B3B3" : "#ff8989",
-    boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.25)",
-    borderRadius: "10px",
-    color: " #ffffff",
-    fontFamily: "PreMedium",
-    border: "none",
-  };
+  const BtnActive = styled.button`
+    display: block;
+    margin: 10px auto;
+    width: 100%;
+    height: 40px;
+    background: ${!active ? "#B3B3B3" : "#ff8989"};
+    boxshadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    color: #ffffff;
+    font-family: PreMedium;
+    border: none;
+
+    &:hover {
+      ${active && "cursor: pointer;"};
+    }
+  `;
 
   return (
-    <button style={btnActive} onClick={onClick} disabled={!active}>
+    <BtnActive onClick={onClick} disabled={!active}>
       {title}
-    </button>
+    </BtnActive>
   );
 }
 
