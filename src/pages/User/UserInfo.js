@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../../styles/MypageMenu.module.css";
 import { styled } from "styled-components";
 import BackTitleHeader from "../../components/BackTitleHeader";
@@ -7,6 +7,16 @@ import TextInputComponent from "../../components/TextInputComponent";
 import UserImg from "../../assets/images/person.png";
 import PhotoCamera from "../../assets/images/photo_camera.png";
 import PinkBtn from "../../components/User/PinkBtn";
+import {
+  detailaddresstextAtom,
+  emailtextAtom,
+  fullAddressAtom,
+  idtextAtom,
+  userAddrAtom,
+  userDetailAddrAtom,
+} from "../../atom/atoms";
+import { useRecoilState } from "recoil";
+import axios from "axios";
 
 const Info = styled.div`
   div {
@@ -73,12 +83,25 @@ const Info = styled.div`
 `;
 
 function UserInfo(props) {
+  const [userId, setUserId] = useRecoilState(idtextAtom);
+  //화면에 띄울 img
   const [imgFile, setImgFile] = useState("");
+  //img 경로? 인듯
+  const [imgUrl, setImgUrl] = useState("");
+  //DB에서 가져온 주소
+  const [addr, setAddr] = useRecoilState(userAddrAtom);
+  const [detailAddr, setDetailAddr] = useRecoilState(userDetailAddrAtom);
+  //수정하지 않는다면 DB값으로 써야 함. 그러므로 Recoil을 함부로 변화시키지 않으려고 sub만듬
+  const [subAddr, setSbuAddr] = useState(addr);
+  const [subDetailAddr, setSubdetailAddr] = useState(detailAddr);
+  //검색한 주소
+  const [searchAddr, setSearchAddr] = useRecoilState(fullAddressAtom);
+
+  const [email, setEmail] = useRecoilState(emailtextAtom);
   const imgRef = useRef();
 
-  const [detailAddr, setDetailAddr] = useState("");
   const onChange = (e) => {
-    setDetailAddr(e.target.value);
+    setSubdetailAddr(() => e.target.value);
   };
 
   //이미지 업로드 input의 onChange
@@ -87,12 +110,23 @@ function UserInfo(props) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
+      setImgUrl(file);
       setImgFile(reader.result);
     };
   };
 
   const onClick = (e) => {
-    console.log();
+    var formdata = new FormData();
+    formdata.append("userImg", imgUrl);
+    formdata.append("userId", "adminID");
+    formdata.append("userAddress", searchAddr);
+    formdata.append("userDetailAddress", subDetailAddr);
+
+    axios.put("/user/updateInfo", formdata, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   };
 
   return (
@@ -100,7 +134,7 @@ function UserInfo(props) {
       <BackTitleHeader />
       <Info>
         <div id={styles.title} style={{ display: "inline-block" }}>
-          태민님,
+          {userId}님,
           <br />
           안녕하세요!
         </div>
@@ -116,20 +150,17 @@ function UserInfo(props) {
           />
         </form>
         <div className="inputContainer">
-          <TextInputComponent lable="이메일" value="ltm0718@shinee.com" />
+          <TextInputComponent lable="이메일" value={email} />
           <div className="inputAddr">
-            <TextInputComponent lable="내 주소" value="ltm0718@shinee.com" />
-            <Post title="검색하기" />
+            <Post title="검색하기" placeholder={addr} />
           </div>
           <div className="detail">
             <TextInputComponent
               lable="상세 주소"
-              placeholder={"홍대"}
-              value={detailAddr}
+              value={subDetailAddr}
               onChange={onChange}
             />
           </div>
-          <TextInputComponent lable="선호 동네" value="ltm0718@shinee.com" />
         </div>
         <PinkBtn title="수정하기" onClick={onClick} active={true} />
       </Info>
