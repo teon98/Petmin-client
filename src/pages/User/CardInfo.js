@@ -90,6 +90,7 @@ function CardInfo(props) {
             num3: userCardNumber[2],
             num4: userCardNumber[3],
           });
+          setSuccess(true);
         }
       })
       .catch((err) => {
@@ -206,9 +207,7 @@ function CardInfo(props) {
         />
       </div>
       <PinkBtn
-        title={
-          userCard.length === 0 || !success ? btnTextValue[0] : btnTextValue[1]
-        }
+        title={!success ? btnTextValue[0] : btnTextValue[1]}
         active={btnState}
         onClick={onClick}
       />
