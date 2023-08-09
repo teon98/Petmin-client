@@ -13,7 +13,7 @@ const ChatList = () => {
   let [chatList, setChatList] = useState([]);
 
   async function getRoomList() {
-    const url = `/chat/chatlist/${startId}`;
+    const url = `/chat/chatlist/?userId=${startId}`;
 
     await axios
       .get(url, {

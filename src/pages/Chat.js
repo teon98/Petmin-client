@@ -103,6 +103,10 @@ const Chat = () => {
     scrollRef.current.scrollIntoView({ behavior: "smooth" });
   }, [msgBox]);
 
+  // useEffect(() => {
+  //   webSocketLogin();
+  // }, []);
+
   useEffect(() => {
     // console.log(location.pathname);
     webSocketLogin();
@@ -121,6 +125,7 @@ const Chat = () => {
     console.log(chatt, startId.toString(), "chatt@@@");
     console.log(socketData, "socketData");
     if (socketData !== undefined) {
+      // console.log(socketData, "socketData");
       const tempData = chatt.concat(socketData);
       console.log(tempData, "tempData");
       setChatt(tempData);
@@ -164,17 +169,28 @@ const Chat = () => {
 
       const temp = JSON.stringify(data);
       console.log(temp, "temp");
+      console.log(data, "data");
+      // if (data !== undefined) {
+      //   const tempData = chatt.concat(data);
+      //   console.log(tempData, "tempData");
+      //   setChatt(tempData);
+      // }
 
       if (ws.current.readyState === 0) {
         //readyState는 웹 소켓 연결 상태를 나타냄
         ws.current.onopen = () => {
           //webSocket이 맺어지고 난 후, 실행
           console.log(ws.current.readyState);
-          ws.current.send(temp);
+          ws.current.send(temp, "@@@@@@");
           console.log(ws);
         };
       } else {
         ws.current.send(temp);
+        if (data !== undefined) {
+          const tempData = chatt.concat(data);
+          console.log(tempData, "tempData");
+          setChatt(tempData);
+        }
       }
     } else {
       alert("메세지를 입력하세요.");
