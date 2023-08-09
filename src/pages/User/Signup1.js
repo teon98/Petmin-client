@@ -57,7 +57,7 @@ function Signup1(props) {
     } else {
       setIdMessage("");
     }
-  }, [idCheckClicked, idValid]);
+  }, [idCheckClicked, idValid, idtext]);
 
   const IdDuplicateCheck = () => {
     axios({

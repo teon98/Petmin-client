@@ -1,0 +1,157 @@
+.basicLable {
+  color: black;
+  font-family: PreMedium;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.chapterLable {
+  color: black;
+  font-family: PreMedium;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 30px;
+}
+.basicPetImage {
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  width: 112px; /* 원래는 72px*/
+  height: 112px;
+  object-fit: cover;
+}
+#bwhite {
+  background-color: white;
+}
+.registerContainer {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.lastRegisterContainer {
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom: 40px;
+}
+.labelWithIcon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-left: -20px;
+  background-image: url("../assets/images/photo_camera.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: pointer;
+}
+
+.imageNone {
+  display: none;
+}
+
+.GenderCon {
+  margin-bottom: 25px;
+}
+
+.GenderPtag {
+  display: inline-block;
+  width: 20%;
+}
+
+.GenderRCom {
+  display: inline-block;
+  width: 80%;
+}
+
+.test {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 40px;
+}
+
+.petIntro {
+  width: 314px;
+  height: 121px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 2px solid #b3b3b3;
+  font-family: PreMedium;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  padding: 10px;
+}
+
+.checkListContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.checkListContent {
+  border: 2px solid #b3b3b3;
+  width: 147px;
+  height: 118px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+}
+
+.checkListContent:hover {
+  border: 2px solid #ff8989; /* 커서를 올렸을 때 border 색상 변경 */
+}
+
+.checkListText1 {
+  text-align: center;
+  color: #323232;
+  text-align: center;
+  font-family: PreMedium;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.checkListText2 {
+  color: #ff8989;
+  text-align: center;
+  font-family: PreMedium;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 5px;
+}
+
+.cautionContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.cautionLable {
+  color: #323232;
+  font-family: PreMedium;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 10px;
+}
+
+.cautionContent {
+  color: #323232;
+  font-family: PreThin;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
