@@ -4,6 +4,8 @@ import BackTitleHeader from "../../components/BackTitleHeader";
 import PinkBtn from "../../components/User/PinkBtn";
 import styled from "styled-components";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { idtextAtom, userCardAtom } from "../../atom/atoms";
 
 const CardForm = styled.div`
   .mb {
@@ -64,6 +66,8 @@ function CardInfo(props) {
   });
   const [userCard, setUserCard] = useState([]);
   const [msg, setMsg] = useState("");
+  const [userId] = useRecoilState(idtextAtom);
+  const [success, setSuccess] = useState(false);
 
   //페이지 로딩 시 유저 정보 가져오기
   useEffect(() => {
@@ -71,7 +75,7 @@ function CardInfo(props) {
       url: "/user",
       method: "get",
       params: {
-        userId: "admin",
+        userId: userId,
       },
     })
       .then((res) => {
@@ -86,6 +90,7 @@ function CardInfo(props) {
             num3: userCardNumber[2],
             num4: userCardNumber[3],
           });
+          setSuccess(true);
         }
       })
       .catch((err) => {
@@ -154,7 +159,7 @@ function CardInfo(props) {
       url: "/user/cardRegister",
       method: "put",
       data: {
-        userId: "admin",
+        userId: userId,
         userCard: cardNumberStr,
         userCardpass: cardPass,
       },
@@ -163,6 +168,7 @@ function CardInfo(props) {
         setBtnState(false);
         setCardPass("");
         setMsg(() => "");
+        setSuccess(true);
       })
       .catch((err) => {
         console.log(err);
@@ -201,7 +207,7 @@ function CardInfo(props) {
         />
       </div>
       <PinkBtn
-        title={userCard.length === 0 ? btnTextValue[0] : btnTextValue[1]}
+        title={!success ? btnTextValue[0] : btnTextValue[1]}
         active={btnState}
         onClick={onClick}
       />
