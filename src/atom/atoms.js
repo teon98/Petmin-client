@@ -94,6 +94,25 @@ export const fullAddressAtom = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+//user의 진짜 주소
+export const userAddrAtom = atom({
+  key: "userAdd",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const userDetailAddrAtom = atom({
+  key: "userDetailAdd",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const userImgAtom = atom({
+  key: "userImg",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const petNameAtom = atom({
   key: "petName",
   default: "",
