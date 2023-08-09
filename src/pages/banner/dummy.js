@@ -103,7 +103,7 @@ export const dummy = [
     receiver: {
       userId: "ckdrua76",
       userPass: "",
-      userName: "추추추",
+      userName: "김창겸",
       userAge: null,
       userAddress: null,
       userSex: null,
@@ -117,9 +117,9 @@ export const dummy = [
   {
     chatroomNo: 2,
     sender: {
-      userId: "ckdrua13",
+      userId: "ckdrua12",
       userPass: "",
-      userName: "홍길동",
+      userName: "주용준",
       userAge: null,
       userAddress: null,
       userSex: null,
@@ -130,9 +130,9 @@ export const dummy = [
       userUpdateTime: null,
     },
     receiver: {
-      userId: "ckdrua76",
+      userId: "ckdrua34",
       userPass: "",
-      userName: "추추추",
+      userName: "강태영",
       userAge: null,
       userAddress: null,
       userSex: null,
@@ -146,9 +146,9 @@ export const dummy = [
   {
     chatroomNo: 3,
     sender: {
-      userId: "ckdrua11",
+      userId: "ckdrua56",
       userPass: "",
-      userName: "김창겸",
+      userName: "유지만",
       userAge: null,
       userAddress: null,
       userSex: null,
@@ -159,9 +159,9 @@ export const dummy = [
       userUpdateTime: null,
     },
     receiver: {
-      userId: "ckdrua76",
+      userId: "ckdrua12",
       userPass: "",
-      userName: "추추추",
+      userName: "주용준",
       userAge: null,
       userAddress: null,
       userSex: null,
@@ -175,9 +175,9 @@ export const dummy = [
   {
     chatroomNo: 4,
     sender: {
-      userId: "ckdrua14",
+      userId: "ckdrua12",
       userPass: "",
-      userName: "김갑수",
+      userName: "주용준",
       userAge: null,
       userAddress: null,
       userSex: null,
@@ -188,9 +188,9 @@ export const dummy = [
       userUpdateTime: null,
     },
     receiver: {
-      userId: "ckdrua76",
+      userId: "ckdrua11",
       userPass: "",
-      userName: "추추추",
+      userName: "이찬혁",
       userAge: null,
       userAddress: null,
       userSex: null,
@@ -204,9 +204,9 @@ export const dummy = [
   {
     chatroomNo: 5,
     sender: {
-      userId: "ckdrua15",
+      userId: "ckdrua12",
       userPass: "",
-      userName: "너구리",
+      userName: "주용준",
       userAge: null,
       userAddress: null,
       userSex: null,
@@ -217,9 +217,9 @@ export const dummy = [
       userUpdateTime: null,
     },
     receiver: {
-      userId: "ckdrua76",
+      userId: "ckdrua22",
       userPass: "",
-      userName: "추추추",
+      userName: "전은정",
       userAge: null,
       userAddress: null,
       userSex: null,
