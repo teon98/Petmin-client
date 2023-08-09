@@ -42,3 +42,14 @@
   display: inline-block;
   width: 80%;
 }
+
+#formargin2 p {
+  display: inline-block;
+  width: 20%;
+}
+
+#formargin2 input {
+  display: inline-block;
+  width: 20%;
+  text-align: center;
+}
