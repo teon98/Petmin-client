@@ -19,9 +19,6 @@ const PetSitterView = () => {
   //사용자 위치
   const [location, setLocation] = useState("서울 마포구 상암동");
 
-  // 펫시터 정보 get
-  useEffect(() => {}, []);
-
   //주소 변경
   const handleChange = (e) => {
     setLocation(e.target.value);
@@ -35,9 +32,15 @@ const PetSitterView = () => {
   const [caretype, setCareType] = useState("");
 
   const careTypeChange = (e) => {
-    console.log(e.target.name);
+    //console.log(e.target.name);
     if (e.target.name === "caretype") {
       setCareType(e.target.value);
+      setPetSitterList(
+        petSitterList.filter((item) => {
+          console.log("item", item.dolbomOption);
+          return item.dolbomOption.includes(e.target.value);
+        })
+      );
     }
   };
 
