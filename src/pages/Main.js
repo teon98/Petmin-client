@@ -5,15 +5,14 @@ import { FaBell } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import MainHeader from "../components/MainHeader";
 import PetSitterView from "../components/PetSitterMainView/PetSitterView";
-import { FaPlus } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { FaArrowUp } from "react-icons/fa6";
 import { useRecoilState } from "recoil";
 import { idtextAtom } from "../atom/atoms";
 
 const Main = () => {
   const [userId] = useRecoilState(idtextAtom);
-  console.log(userId);
-  const navigate = useNavigate();
+  console.log(`현재 로그인한 유저는 ${userId} 입니다.`);
+
   return (
     <div className={style.mainbody}>
       {/* 알림 Header */}
@@ -38,10 +37,10 @@ const Main = () => {
       <div
         className={style.flexBT}
         onClick={() => {
-          navigate("/petsitter");
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }}
       >
-        <FaPlus size="40" id={style.plusIcon} color="white" />
+        <FaArrowUp size="30" id={style.plusIcon} color="white" />
       </div>
     </div>
   );
