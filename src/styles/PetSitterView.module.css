@@ -1,2 +1,100 @@
 @media (min-width: 500px) {
 }
+
+.petsitterview {
+  padding: 20px;
+  margin-bottom: 70px;
+}
+
+.locationSearchBar {
+  border-radius: 10px;
+  border: 2px solid #c7c7c7;
+  display: flex;
+  align-items: center;
+  padding: 0px 15px;
+}
+.locationSearch {
+  border: none;
+  font-family: "PreSemiBold";
+  color: #2a2a2a;
+  font-size: 17px;
+  padding: 15px;
+}
+
+#locationSearchButton {
+  border: none;
+  font-family: "PreRegular";
+  background: #c7c7c7;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;
+  transition: all 0.3s ease 0s;
+}
+
+#locationSearchButton:hover {
+  background: #ff8989;
+}
+
+#FillterBar {
+  display: flex;
+  margin: 10px 0px;
+  align-items: center;
+}
+
+#calendar input[type="text"] {
+  font-family: "PreRegular";
+  border-radius: 10px;
+  border: 2px solid #c7c7c7;
+  padding: 7px 15px;
+  font-size: 15px;
+  width: 120px;
+  text-align: center;
+  color: #ff8989;
+}
+
+#calendar input[type="text"]::placeholder {
+  color: #ff8989;
+}
+
+.typetable input[type="radio"] {
+  display: none;
+}
+
+.typetable input[type="radio"] + label {
+  font-family: "PreRegular";
+  border: 2px solid #c7c7c7;
+  border-radius: 10px;
+  padding: 7px 15px;
+  font-size: 15px;
+  color: #c7c7c7;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.typetable input[type="radio"]:hover + label {
+  color: #ff8989;
+  border-color: #ff8989;
+  transition: all 0.3s ease 0s;
+}
+
+.typetable input[type="radio"]:checked + label {
+  color: #ff8989;
+  border-color: #ff8989;
+  transition: all 0.3s ease 0s;
+}
+
+#moveRight {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.loadingAnimation {
+  text-align: center;
+}
+
+#text1 {
+  font-family: "PreRegular";
+}
