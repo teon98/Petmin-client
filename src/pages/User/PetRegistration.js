@@ -71,6 +71,8 @@ function PetRegistration(props) {
 
   //펫 프로필 이미지
   const [imgFile, setImgFile] = useRecoilState(petProfileImgAtom);
+  //img 경로? 인듯
+  const [imgUrl, setImgUrl] = useState("");
   const imgRef = useRef();
 
   const saveImgFile = (e) => {
@@ -78,6 +80,7 @@ function PetRegistration(props) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
+      setImgUrl(file);
       setImgFile(reader.result);
     };
   };
@@ -94,19 +97,22 @@ function PetRegistration(props) {
 
   //펫 프로필 저장
   const savePetProfile = () => {
-    axios({
-      url: `http://localhost:8888/petProfileSave/${userId}`,
-      method: "post",
-      data: {
-        petName: petName,
-        petAge: petAge,
-        petSpecies: petSpecies,
-        petWeight: petWeight,
-        petSex: petGender,
-        //petImg: imgFile,
-        petMsg: petMsg,
-      },
-    })
+    var formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("petName", petName);
+    formData.append("petAge", petAge);
+    formData.append("petSpecies", petSpecies);
+    formData.append("petWeight", petWeight);
+    formData.append("petSex", petGender);
+    formData.append("petImg", imgUrl);
+    formData.append("petMsg", petMsg);
+
+    axios
+      .post("/petProfileSave", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((res) => {
         console.log(res.data);
       })

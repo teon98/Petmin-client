@@ -28,7 +28,7 @@ import PetRegistration from "./pages/User/PetRegistration";
 import PStest from "./pages/petsitter/PStest";
 import TestVideo from "./pages/petsitter/TestVideo";
 import TestPage from "./pages/petsitter/TestPage";
-import PetTendency from "./pages/User/PetTendency";
+import PetTendency1 from "./pages/User/PetTendency1";
 import PetVaccine from "./pages/User/PetVaccine";
 
 const App = () => {
@@ -89,7 +89,7 @@ const App = () => {
           </Route>
           {/* 반려동물 성향 설문지 */}
           <Route path="/" element={<MainBTNav />}>
-            <Route path="/pettendency" element={<PetTendency />}></Route>
+            <Route path="/pettendency" element={<PetTendency1 />}></Route>
           </Route>
           {/* 반려동물 예방접종 설문지 */}
           <Route path="/" element={<MainBTNav />}>
