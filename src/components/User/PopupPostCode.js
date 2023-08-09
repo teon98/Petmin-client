@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 
 //myinfo일 때
 const PostBtn = styled.button`
-  margin: -335px -20px auto auto;
+  margin: -405px -20px auto auto;
   padding: 5px 10px;
   display: block;
   font-family: PreMedium;
@@ -72,6 +72,7 @@ const PopupPostCode = (props) => {
     console.log(fullAddress);
     console.log(data.zonecode);
     setFullAddress(fullAddress);
+    props.setAddr(fullAddress);
     props.onClose();
   };
 
@@ -82,7 +83,7 @@ const PopupPostCode = (props) => {
     width: "412px",
     height: "600px",
     padding: "7px",
-    marginLeft: "-268px",
+    marginLeft: location ? "-47px" : "-268px",
   };
 
   return (

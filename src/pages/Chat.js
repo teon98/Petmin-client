@@ -3,24 +3,35 @@ import React, { useCallback, useRef, useState, useEffect } from "react";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import "../styles/chat.scss";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { idtextAtom, nametextAtom } from "../atom/atoms";
 const Chat = () => {
-  let { chat } = useParams();
+  let { room } = useParams();
+
+  const location = useLocation();
+  const receiverId = decodeURI(
+    location.pathname.split("/")[location.pathname.split("/").length - 1]
+  );
   const [msg, setMsg] = useState("");
   const [name, setName] = useState("");
   const [chatt, setChatt] = useState([]);
   const [chkLog, setChkLog] = useState(false);
   const [socketData, setSocketData] = useState();
-  const [userId, setUserId] = useRecoilState(idtextAtom);
+  const [startId, setStartId] = useRecoilState(idtextAtom);
   const [userName, setUserName] = useRecoilState(nametextAtom);
 
   const ws = useRef(null); //webSocket을 담는 변수,
   //컴포넌트가 변경될 때 객체가 유지되어야하므로 'ref'로 저장
 
+  //스크롤
+  const scrollRef = useRef();
+
   const msgBox = chatt.map((item, idx) => (
-    <div key={idx} className={item.name === name ? "me" : "other"}>
+    <div
+      key={idx}
+      className={item.startId === startId.toString() ? "me" : "other"}
+    >
       <span>
         <b>{item.name}</b>
       </span>{" "}
@@ -28,14 +39,90 @@ const Chat = () => {
       <span>{item.msg}</span>
     </div>
   ));
+  const webSocketLogin = useCallback(() => {
+    console.log("test");
+    ws.current = new WebSocket(`ws://localhost:8888/socket/chatt/${room}`);
+    // ws.current = new WebSocket(`ws://localhost:8888/socket/chatt`);
+
+    ws.current.onmessage = (message) => {
+      const dataSet = JSON.parse(message.data);
+      setSocketData(dataSet);
+    };
+  }, [room]);
+
+  async function makeRoom(s, r) {
+    const url = "/chat/chatting";
+    axios
+      .get(url, {
+        headers: {
+          "Content-Type": `application/json`,
+        },
+        params: {
+          sender: s,
+          receiver: r,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.chatHistory[0].startId.userId);
+        // console.log(res.data.startId);
+        if (
+          res.data.message ===
+          "상담 신청 내역이 있습니다. 이전 채팅방에 입장합니다."
+        ) {
+          let historylist = [];
+          res.data.chatHistory.map((history) => {
+            // const hName = history.myname;
+            const hMsg = history.msg;
+            const hRoom = res.data.chatroomId;
+            const Sid = history.startId.userId;
+            let hDate = history.chatDate;
+            hDate = new Date(hDate).toLocaleDateString();
+            const historyChat = {
+              msg: hMsg,
+              // userName,
+              startId: Sid,
+              // receiverId: receiverId,
+              chatroomId: hRoom,
+              // chat,
+              date: new Date().toLocaleString(),
+            };
+            historylist.push(historyChat);
+          });
+          console.log(historylist, "historylist##");
+          setChatt(historylist);
+        }
+        // setRoom(res.data.room);
+        // setMyname(res.data.myname);
+      })
+      .catch((ex) => {
+        console.log("requset fail : " + ex);
+      });
+  }
 
   useEffect(() => {
-    console.log(userId, userName);
-    console.log(chat, "CHeck NUM");
-    console.log(socketData);
+    scrollRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [msgBox]);
+
+  useEffect(() => {
+    // console.log(location.pathname);
+    webSocketLogin();
+    console.log(startId, receiverId, "startId, receiverIdstartId, receiverId");
+    makeRoom(startId, receiverId);
+    // makeRoom(receiverId, startId);
+  }, [webSocketLogin]);
+
+  useEffect(() => {
+    console.log(
+      startId,
+      userName,
+      receiverId,
+      "startId, userName, receiverId,"
+    );
+    console.log(chatt, startId.toString(), "chatt@@@");
+    console.log(socketData, "socketData");
     if (socketData !== undefined) {
       const tempData = chatt.concat(socketData);
-      console.log(tempData);
+      console.log(tempData, "tempData");
       setChatt(tempData);
     }
   }, [socketData]);
@@ -44,27 +131,10 @@ const Chat = () => {
         ${reset}
     `;
 
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
   const onText = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setMsg(event.target.value);
   };
-
-  const webSocketLogin = useCallback(() => {
-    console.log("test");
-    ws.current = new WebSocket(`ws://localhost:8888/socket/chatt/${chat}`);
-    // ws.current = new WebSocket(`ws://localhost:8888/socket/chatt`);
-
-    ws.current.onmessage = (message) => {
-      const dataSet = JSON.parse(message.data);
-      setSocketData(dataSet);
-    };
-  });
 
   const send = useCallback(() => {
     // webSocketLogin();
@@ -79,16 +149,21 @@ const Chat = () => {
     //   setChkLog(true);
     // }
 
-    webSocketLogin();
+    // webSocketLogin();
 
     if (msg !== "") {
       const data = {
-        name,
-        msg,
+        msg: msg,
+        // userName,
+        startId: startId,
+        receiverId: receiverId,
+        chatroomId: room,
+        // chat,
         date: new Date().toLocaleString(),
       }; //전송 데이터(JSON)
 
       const temp = JSON.stringify(data);
+      console.log(temp, "temp");
 
       if (ws.current.readyState === 0) {
         //readyState는 웹 소켓 연결 상태를 나타냄
@@ -107,13 +182,7 @@ const Chat = () => {
       return;
     }
     setMsg("");
-  });
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
+  }, [msg, startId, receiverId, room]);
 
   return (
     <>
@@ -121,11 +190,12 @@ const Chat = () => {
       <div id="AllComponents">
         {/* <div id="chat-wrap"> */}
         <div id="chatt">
-          <h1 id="title">WebSocket Chatting</h1>
+          <h1 id="title">{receiverId}</h1>
           <br />
           <div id="talk">
             <div className="talk-shadow"></div>
             {msgBox}
+            <div ref={scrollRef}></div>
           </div>
           {/* <input
             disabled={chkLog}
@@ -138,6 +208,7 @@ const Chat = () => {
           <input
             // disabled={chkLog}
             disabled={true}
+            // className="ipt"
             placeholder="이름을 입력하세요."
             type="text"
             id="name"
@@ -152,10 +223,20 @@ const Chat = () => {
               onKeyDown={(ev) => {
                 if (ev.keyCode === 13) {
                   send();
+                  console.log("onKeyDown");
                 }
               }}
             ></textarea>
-            <input type="button" value="전송" id="btnSend" onClick={send} />
+            <input
+              // className="ipt"
+              type="button"
+              value="전송"
+              id="btnSend"
+              onClick={() => {
+                send();
+                console.log("onClick");
+              }}
+            />
           </div>
         </div>
       </div>

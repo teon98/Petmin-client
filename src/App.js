@@ -24,9 +24,12 @@ import Counter from "./pages/User/Counter";
 import Signup3 from "./pages/User/Signup3";
 import Signup4 from "./pages/User/Signup4";
 import ChatList from "./pages/ChatList";
+import PetRegistration from "./pages/User/PetRegistration";
 import PStest from "./pages/petsitter/PStest";
 import TestVideo from "./pages/petsitter/TestVideo";
 import TestPage from "./pages/petsitter/TestPage";
+import PetTendency1 from "./pages/User/PetTendency1";
+import PetVaccine from "./pages/User/PetVaccine";
 
 const App = () => {
   return (
@@ -38,7 +41,7 @@ const App = () => {
             <Route path="check" element={<Check />} />
             <Route path="favorite" element={<Favorite />} />
             <Route path="rooms" element={<ChatList />} />
-            <Route path="/room/:chat" element={<Chat />} />
+            <Route path="/room/:room/:userId" element={<Chat />} />
             <Route path="mypage" element={<Mypage />} />
             {/* 로그인 완료했을 때 보이는 마이페이지 */}
             <Route path="mypage2" element={<MypageMenu />} />
@@ -76,6 +79,21 @@ const App = () => {
           {/* 회원가입 페이지 4*/}
           <Route path="/" element={<MainBTNav />}>
             <Route path="/signup4" element={<Signup4 />}></Route>
+          </Route>
+          {/* 반려동물 등록 페이지 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route
+              path="/petregistration"
+              element={<PetRegistration />}
+            ></Route>
+          </Route>
+          {/* 반려동물 성향 설문지 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/pettendency" element={<PetTendency1 />}></Route>
+          </Route>
+          {/* 반려동물 예방접종 설문지 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/petvaccine" element={<PetVaccine />}></Route>
           </Route>
           {/* 마이페이지 - 펫시터 프로필 관리 */}
           <Route path="/petsitterprfile" element={<MainBTNav />}>
