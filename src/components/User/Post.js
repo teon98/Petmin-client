@@ -3,6 +3,7 @@ import PopupDom from "./PopupDom";
 import PopupPostCode from "./PopupPostCode";
 import { styled } from "styled-components";
 import { useLocation } from "react-router-dom";
+import TextInputComponent from "../TextInputComponent";
 /* Rectangle 24 */
 
 const PostBtn = styled.button`
@@ -16,8 +17,11 @@ const PostBtn = styled.button`
   border: none;
   transition: all 0.2s ease-in-out;
   width: 100px;
-  margin-top: 25px;
+  margin-top: 20px;
   margin-left: 10px;
+  .my {
+    margin-top: 0;
+  }
 
   &:hover {
     background: #ff8989;
@@ -26,11 +30,41 @@ const PostBtn = styled.button`
     cursor: pointer;
   }
 `;
+
+const PostInput = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  align-items: center;
+
+  p {
+    width: 100%;
+    font-family: PreMedium;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+
+  input {
+    height: 50px;
+    display: inline-block;
+    width: 60%;
+    border-style: none;
+    border-bottom: 1px solid #b3b3b3;
+    font-family: PreMedium;
+    font-weight: 500px;
+    font-size: 17px;
+    box-sizing: border-box;
+    margin-right: 10px;
+  }
+`;
 const Post = (props) => {
   // 팝업창 상태 관리
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [addr, setAddr] = useState("");
   const nav = useLocation();
+  const myinfo = nav.pathname === "/myinfo";
 
   // 팝업창 열기
   const openPostCode = () => {
@@ -45,12 +79,24 @@ const Post = (props) => {
   return (
     <div>
       {/* /myinfo일때만 input 창 보이기 */}
-      {nav.pathname === "/myinfo" && (
-        <input readOnly value={addr} placeholder={props.placeholder} />
+      {myinfo && (
+        <PostInput>
+          <p className="textInputLable">주소</p>{" "}
+          <input readOnly value={addr} placeholder={props.placeholder} />
+          <PostBtn type="button" onClick={openPostCode}>
+            {props.title}
+          </PostBtn>
+        </PostInput>
       )}
-      <PostBtn type="button" onClick={openPostCode}>
-        {props.title}
-      </PostBtn>
+      {nav.pathname !== "/myinfo" && (
+        <PostBtn
+          type="button"
+          onClick={openPostCode}
+          className={myinfo ? "my" : ""}
+        >
+          {props.title}
+        </PostBtn>
+      )}
 
       <div id="popupDom">
         {isPopupOpen && (

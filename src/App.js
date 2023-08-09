@@ -28,6 +28,8 @@ import PetRegistration from "./pages/User/PetRegistration";
 import PStest from "./pages/petsitter/PStest";
 import TestVideo from "./pages/petsitter/TestVideo";
 import TestPage from "./pages/petsitter/TestPage";
+import PetTendency1 from "./pages/User/PetTendency1";
+import PetVaccine from "./pages/User/PetVaccine";
 
 const App = () => {
   return (
@@ -84,6 +86,14 @@ const App = () => {
               path="/petregistration"
               element={<PetRegistration />}
             ></Route>
+          </Route>
+          {/* 반려동물 성향 설문지 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/pettendency" element={<PetTendency1 />}></Route>
+          </Route>
+          {/* 반려동물 예방접종 설문지 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/petvaccine" element={<PetVaccine />}></Route>
           </Route>
           {/* 마이페이지 - 펫시터 프로필 관리 */}
           <Route path="/petsitterprfile" element={<MainBTNav />}>
