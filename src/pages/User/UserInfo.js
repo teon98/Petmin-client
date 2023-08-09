@@ -19,6 +19,18 @@ import {
 import { useRecoilState } from "recoil";
 import axios from "axios";
 
+const Msg = styled.p`
+  font-size: 12px;
+  font-family: PreMedium;
+  text-align: center;
+  margin-top: 20px;
+  display: none;
+
+  &.successMsg {
+    display: block;
+    color: red;
+  }
+`;
 const Info = styled.div`
   div {
     line-height: 35px;
@@ -35,7 +47,7 @@ const Info = styled.div`
       }
     }
 
-    .inputAddr {
+    &.inputAddr {
       display: flex;
       justify-content: space-around;
 
@@ -99,7 +111,7 @@ function UserInfo(props) {
   const [searchAddr, setSearchAddr] = useRecoilState(fullAddressAtom);
 
   const [email, setEmail] = useRecoilState(emailtextAtom);
-  const [msg, setMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState(false);
   const imgRef = useRef();
 
   const onChange = (e) => {
@@ -117,6 +129,15 @@ function UserInfo(props) {
     };
   };
 
+  //정보 수정완료 메시지 띄우고, 2초 후에 다시 안보이게
+  const changeSuccessMsg = useEffect(() => {
+    if (successMsg) {
+      setTimeout(() => {
+        setSuccessMsg(false);
+      }, 2000);
+    }
+  }, [successMsg]);
+
   const onClick = (e) => {
     var formdata = new FormData();
     //이미지는 수정 안했을 경우
@@ -132,6 +153,7 @@ function UserInfo(props) {
       }).then((res) => {
         setAddr(searchAddr);
         setDetailAddr(subDetailAddr);
+        setSuccessMsg(true);
       });
     } else {
       //이미지 수정 했을 경우
@@ -150,6 +172,7 @@ function UserInfo(props) {
           setAddr(searchAddr);
           setDetailAddr(subDetailAddr);
           setImgFile(res.data.userImg);
+          setSuccessMsg(true);
         });
     }
   };
@@ -188,7 +211,9 @@ function UserInfo(props) {
           </div>
         </div>
         <PinkBtn title="수정하기" onClick={onClick} active={true} />
-        <p>{msg}</p>
+        <Msg className={successMsg ? "successMsg" : ""}>
+          정보수정이 완료되었습니다.
+        </Msg>
       </Info>
     </div>
   );
