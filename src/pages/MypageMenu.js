@@ -20,7 +20,7 @@ const MypageMenu = () => {
       <div
         className={styles.menuitem}
         onClick={() => {
-          navigate("/petinfo");
+          navigate("/petlist");
         }}
       >
         반려동물 프로필 관리
