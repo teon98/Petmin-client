@@ -4,11 +4,19 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { idtextAtom } from "../atom/atoms";
 import styles2 from "../styles/Alarm.module.css";
+import { useNavigate } from "react-router";
 
 const Check = () => {
   const [userId] = useRecoilState(idtextAtom);
   const [msg, setMsg] = useState("");
+  const nav = useNavigate();
+
   useEffect(() => {
+    //로그인 안되어있으면 로그인으로
+    if (userId === "") {
+      nav("/login");
+    }
+
     axios({
       url: "/dolbom/checkSitter",
       params: { userId: "test11" },
