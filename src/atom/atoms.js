@@ -112,3 +112,51 @@ export const userImgAtom = atom({
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
+
+export const petNameAtom = atom({
+  key: "petName",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petGenderAtom = atom({
+  key: "petGender",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petAgeAtom = atom({
+  key: "petAge",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petWeightAtom = atom({
+  key: "petWeight",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petSpeciesAtom = atom({
+  key: "petSpecies",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petMsgAtom = atom({
+  key: "petMsg",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const isCheckedAtom = atom({
+  key: "isChecked",
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petProfileImgAtom = atom({
+  key: "petProfileImg",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
