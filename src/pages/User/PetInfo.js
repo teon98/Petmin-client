@@ -4,7 +4,7 @@ import styles from "../../styles/MypageMenu.module.css";
 import { useRecoilState } from "recoil";
 import { idtextAtom } from "../../atom/atoms";
 import axios from "axios";
-import PictureImg from "../../assets/images/picture.png";
+import PetDefaultImg from "../../assets/images/basicPetImage.png";
 import { styled } from "styled-components";
 import { Navigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
@@ -60,7 +60,7 @@ function PetInfo(props) {
       {petList &&
         petList.map((item, index) => (
           <Info key={index}>
-            <img src={PictureImg} alt="펫" />
+            <img src={item.petImg ? item.petImg : PetDefaultImg} alt="펫" />
             <div className="petinfo">
               <p>
                 {item.petName} <span>({item.petAge}세)</span>
