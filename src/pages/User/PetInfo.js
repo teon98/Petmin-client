@@ -6,7 +6,7 @@ import { idtextAtom } from "../../atom/atoms";
 import axios from "axios";
 import PetDefaultImg from "../../assets/images/basicPetImage.png";
 import { styled } from "styled-components";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import style from "../../styles/Main.module.css";
 
@@ -43,6 +43,7 @@ const Info = styled.div`
 function PetInfo(props) {
   const [userId] = useRecoilState(idtextAtom);
   const [petList, setPetList] = useState([]);
+  const nav = useNavigate();
 
   useEffect(() => {
     axios({
@@ -73,7 +74,7 @@ function PetInfo(props) {
         className={style.flexBT}
         style={{ right: "265px" }}
         onClick={() => {
-          Navigate("/petregistration");
+          nav("/petregistration");
         }}
       >
         <FaPlus size="40" id={style.plusIcon} color="white" />
