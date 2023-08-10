@@ -6,7 +6,6 @@ import Main from "./pages/Main";
 import Check from "./pages/Check";
 import Favorite from "./pages/Favorite";
 import Chat from "./pages/Chat";
-import Mypage from "./pages/Mypage";
 import Alarm from "./pages/Alarm";
 import About from "./pages/banner/About";
 import Hospital from "./pages/banner/Hospital";
@@ -29,6 +28,11 @@ import PStest from "./pages/petsitter/PStest";
 import TestVideo from "./pages/petsitter/TestVideo";
 import TestPage from "./pages/petsitter/TestPage";
 import PetTendency1 from "./pages/User/PetTendency1";
+import PetTendency2 from "./pages/User/PetTendency2";
+import PetTendency3 from "./pages/User/PetTendency3";
+import PetTendency4 from "./pages/User/PetTendency4";
+import PetTendency5 from "./pages/User/PetTendency5";
+import PetTendency6 from "./pages/User/PetTendency6";
 import PetVaccine from "./pages/User/PetVaccine";
 
 const App = () => {
@@ -44,7 +48,7 @@ const App = () => {
             <Route path="/room/:room/:userId" element={<Chat />} />
             <Route path="mypage" element={<Mypage />} />
             {/* 로그인 완료했을 때 보이는 마이페이지 */}
-            <Route path="mypage2" element={<MypageMenu />} />
+            <Route path="mypage" element={<MypageMenu />} />
             {/* 로그인 */}
             <Route path="/login" element={<Login />}></Route>
             {/* 내 정보 */}
@@ -88,9 +92,29 @@ const App = () => {
               element={<PetRegistration />}
             ></Route>
           </Route>
-          {/* 반려동물 성향 설문지 */}
+          {/* 반려동물 성향 설문지 1 */}
           <Route path="/" element={<MainBTNav />}>
-            <Route path="/pettendency" element={<PetTendency1 />}></Route>
+            <Route path="/pettendency1" element={<PetTendency1 />}></Route>
+          </Route>
+          {/* 반려동물 성향 설문지 2 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/pettendency2" element={<PetTendency2 />}></Route>
+          </Route>
+          {/* 반려동물 성향 설문지 3 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/pettendency3" element={<PetTendency3 />}></Route>
+          </Route>
+          {/* 반려동물 성향 설문지 4 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/pettendency4" element={<PetTendency4 />}></Route>
+          </Route>
+          {/* 반려동물 성향 설문지 5 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/pettendency5" element={<PetTendency5 />}></Route>
+          </Route>
+          {/* 반려동물 성향 설문지 6 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/pettendency6" element={<PetTendency6 />}></Route>
           </Route>
           {/* 반려동물 예방접종 설문지 */}
           <Route path="/" element={<MainBTNav />}>
