@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles/reset.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import MainBTNav from "./components/MainBTNav";
 import Main from "./pages/Main";
 import Check from "./pages/Check";
@@ -17,7 +17,7 @@ import UserInfo from "./pages/User/UserInfo";
 import CardInfo from "./pages/User/CardInfo";
 import Signup1 from "./pages/User/Signup1";
 import Signup2 from "./pages/User/Signup2";
-import { RecoilRoot } from "recoil";
+import { RecoilRoot, useRecoilState } from "recoil";
 import Counter from "./pages/User/Counter";
 import Signup3 from "./pages/User/Signup3";
 import Signup4 from "./pages/User/Signup4";
@@ -35,6 +35,7 @@ import PetTendency6 from "./pages/User/PetTendency6";
 import PetVaccine from "./pages/User/PetVaccine";
 import PetList from "./pages/User/PetList";
 import PetInfo from "./pages/User/PetInfo";
+import Logout from "./components/Logout";
 
 const App = () => {
   return (
@@ -54,6 +55,8 @@ const App = () => {
             <Route path="mypage" element={<MypageMenu />} />
             {/* 로그인 */}
             <Route path="/login" element={<Login />}></Route>
+            {/* 로그아웃 */}
+            <Route path="/logout" element={<Logout />}></Route>
             {/* 내 정보 */}
             <Route path="myinfo" element={<UserInfo />}></Route>
             {/* 카드 정보 */}

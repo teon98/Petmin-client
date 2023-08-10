@@ -12,7 +12,7 @@ function PinkBtn(props) {
   const BtnActive = styled.button`
     display: block;
     margin: 10px auto;
-    width: 100%;
+    width: 90%;
     height: 40px;
     background: ${!active ? "#B3B3B3" : "#ff8989"};
     boxshadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
