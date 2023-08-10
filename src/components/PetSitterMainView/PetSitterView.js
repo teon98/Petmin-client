@@ -168,7 +168,7 @@ const PetSitterView = () => {
     <div className={style.petsitterview}>
       {/* 주소 검색 창 */}
       <div className={style.locationSearchBar}>
-        <FaLocationDot color="#C7C7C7" size={25} />
+        <FaLocationDot color="#C7C7C7" size={25} id="응애" />
         <input
           type="text"
           value={location}
