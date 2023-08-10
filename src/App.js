@@ -43,6 +43,8 @@ const App = () => {
             <Route path="rooms" element={<ChatList />} />
             <Route path="/room/:room/:userId" element={<Chat />} />
             <Route path="mypage" element={<Mypage />} />
+            {/*알림 페이지*/}
+            <Route path="alarm" element={<Alarm />}></Route>
             {/* 로그인 완료했을 때 보이는 마이페이지 */}
             <Route path="mypage2" element={<MypageMenu />} />
             {/* 로그인 */}
@@ -105,6 +107,7 @@ const App = () => {
             <Route path="/petsittertestvideo" element={<TestVideo />}></Route>
             <Route path="/petsittertestpage" element={<TestPage />}></Route>
           </Route>
+
           {/* 리코일 실험용*/}
           <Route path="/recoiltest" element={<Counter />} />
         </Routes>
