@@ -28,6 +28,10 @@ const CardForm = styled.div`
 
   .inputContainer {
     text-align: center;
+
+    :focus {
+      color: #ff8989;
+    }
   }
 
   .subTitle {
@@ -190,6 +194,7 @@ function CardInfo(props) {
               value={cardNumber[index]}
               onChange={handleCardInput}
               maxLength={4}
+              // style={{ color: userCard.length !== 0 && "#ff8989" }}
               placeholder={userCard.length !== 0 ? userCard[index] : "XXXX"}
             />
           ))}
