@@ -8,11 +8,32 @@ const MypageMenu = () => {
   return (
     <div style={{ overflow: "hidden" }}>
       <div id={styles.title}>더보기</div>
-      <div className={styles.menuitem}>내 프로필 관리</div>
+      <div
+        className={styles.menuitem}
+        onClick={() => {
+          navigate("/myinfo");
+        }}
+      >
+        내 프로필 관리
+      </div>
       <hr style={{ margin: "0px 40px" }} />
-      <div className={styles.menuitem}>반려동물 프로필 관리</div>
+      <div
+        className={styles.menuitem}
+        onClick={() => {
+          navigate("/petlist");
+        }}
+      >
+        반려동물 프로필 관리
+      </div>
       <div className={styles.boundary} />
-      <div className={styles.menuitem}>카드관리</div>
+      <div
+        className={styles.menuitem}
+        onClick={() => {
+          navigate("/card");
+        }}
+      >
+        카드관리
+      </div>
       <div className={styles.boundary} />
       <div
         className={styles.menuitem}

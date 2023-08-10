@@ -6,7 +6,6 @@ import Main from "./pages/Main";
 import Check from "./pages/Check";
 import Favorite from "./pages/Favorite";
 import Chat from "./pages/Chat";
-import Mypage from "./pages/Mypage";
 import Alarm from "./pages/Alarm";
 import About from "./pages/banner/About";
 import Hospital from "./pages/banner/Hospital";
@@ -15,7 +14,6 @@ import MypageMenu from "./pages/MypageMenu";
 import PSprofile from "./pages/petsitter/PSprofile";
 import Login from "./pages/User/Login";
 import UserInfo from "./pages/User/UserInfo";
-import PetInfo from "./pages/User/PetInfo";
 import CardInfo from "./pages/User/CardInfo";
 import Signup1 from "./pages/User/Signup1";
 import Signup2 from "./pages/User/Signup2";
@@ -29,7 +27,14 @@ import PStest from "./pages/petsitter/PStest";
 import TestVideo from "./pages/petsitter/TestVideo";
 import TestPage from "./pages/petsitter/TestPage";
 import PetTendency1 from "./pages/User/PetTendency1";
+import PetTendency2 from "./pages/User/PetTendency2";
+import PetTendency3 from "./pages/User/PetTendency3";
+import PetTendency4 from "./pages/User/PetTendency4";
+import PetTendency5 from "./pages/User/PetTendency5";
+import PetTendency6 from "./pages/User/PetTendency6";
 import PetVaccine from "./pages/User/PetVaccine";
+import PetList from "./pages/User/PetList";
+import PetInfo from "./pages/User/PetInfo";
 
 const App = () => {
   return (
@@ -43,8 +48,10 @@ const App = () => {
             <Route path="rooms" element={<ChatList />} />
             <Route path="/room/:room/:userId" element={<Chat />} />
             <Route path="mypage" element={<Mypage />} />
+            {/*알림 페이지*/}
+            <Route path="alarm" element={<Alarm />}></Route>
             {/* 로그인 완료했을 때 보이는 마이페이지 */}
-            <Route path="mypage2" element={<MypageMenu />} />
+            <Route path="mypage" element={<MypageMenu />} />
             {/* 로그인 */}
             <Route path="/login" element={<Login />}></Route>
             {/* 내 정보 */}
@@ -52,7 +59,10 @@ const App = () => {
             {/* 카드 정보 */}
             <Route path="card" element={<CardInfo />}></Route>
             {/* 펫 정보 */}
+            <Route path="petlist" element={<PetList />}></Route>
             <Route path="petinfo" element={<PetInfo />}></Route>
+            {/* 병원페이지 */}
+            <Route path="/hospital" element={<Hospital />}></Route>
           </Route>
           {/* 계정 */}
           <Route path="/auth" element={<MainBTNav />}></Route>
@@ -62,8 +72,7 @@ const App = () => {
           <Route path="/about" element={<About />}></Route>
           {/* 펫돌봄 자격 등록 페이지 */}
           <Route path="/register" element={<Register />}></Route>
-          {/* 병원페이지 */}
-          <Route path="/hospital" element={<Hospital />}></Route>
+
           {/* 회원가입 페이지 1*/}
           <Route path="/" element={<MainBTNav />}>
             <Route path="/signup1" element={<Signup1 />}></Route>
@@ -87,9 +96,29 @@ const App = () => {
               element={<PetRegistration />}
             ></Route>
           </Route>
-          {/* 반려동물 성향 설문지 */}
+          {/* 반려동물 성향 설문지 1 */}
           <Route path="/" element={<MainBTNav />}>
-            <Route path="/pettendency" element={<PetTendency1 />}></Route>
+            <Route path="/pettendency1" element={<PetTendency1 />}></Route>
+          </Route>
+          {/* 반려동물 성향 설문지 2 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/pettendency2" element={<PetTendency2 />}></Route>
+          </Route>
+          {/* 반려동물 성향 설문지 3 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/pettendency3" element={<PetTendency3 />}></Route>
+          </Route>
+          {/* 반려동물 성향 설문지 4 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/pettendency4" element={<PetTendency4 />}></Route>
+          </Route>
+          {/* 반려동물 성향 설문지 5 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/pettendency5" element={<PetTendency5 />}></Route>
+          </Route>
+          {/* 반려동물 성향 설문지 6 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/pettendency6" element={<PetTendency6 />}></Route>
           </Route>
           {/* 반려동물 예방접종 설문지 */}
           <Route path="/" element={<MainBTNav />}>
@@ -105,6 +134,7 @@ const App = () => {
             <Route path="/petsittertestvideo" element={<TestVideo />}></Route>
             <Route path="/petsittertestpage" element={<TestPage />}></Route>
           </Route>
+
           {/* 리코일 실험용*/}
           <Route path="/recoiltest" element={<Counter />} />
         </Routes>

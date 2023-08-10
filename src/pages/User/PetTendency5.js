@@ -1,6 +1,6 @@
 import React from "react";
 
-function PetTendency(props) {
+function PetTendency5(props) {
   return (
     <div>
       <p>펫 성향 설문 페이지</p>
@@ -8,4 +8,4 @@ function PetTendency(props) {
   );
 }
 
-export default PetTendency;
+export default PetTendency5;
