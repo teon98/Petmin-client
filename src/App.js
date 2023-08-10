@@ -14,7 +14,6 @@ import MypageMenu from "./pages/MypageMenu";
 import PSprofile from "./pages/petsitter/PSprofile";
 import Login from "./pages/User/Login";
 import UserInfo from "./pages/User/UserInfo";
-import PetInfo from "./pages/User/PetInfo";
 import CardInfo from "./pages/User/CardInfo";
 import Signup1 from "./pages/User/Signup1";
 import Signup2 from "./pages/User/Signup2";
@@ -34,6 +33,8 @@ import PetTendency4 from "./pages/User/PetTendency4";
 import PetTendency5 from "./pages/User/PetTendency5";
 import PetTendency6 from "./pages/User/PetTendency6";
 import PetVaccine from "./pages/User/PetVaccine";
+import PetList from "./pages/User/PetList";
+import PetInfo from "./pages/User/PetInfo";
 
 const App = () => {
   return (
@@ -46,7 +47,6 @@ const App = () => {
             <Route path="favorite" element={<Favorite />} />
             <Route path="rooms" element={<ChatList />} />
             <Route path="/room/:room/:userId" element={<Chat />} />
-            <Route path="mypage" element={<Mypage />} />
             {/* 로그인 완료했을 때 보이는 마이페이지 */}
             <Route path="mypage" element={<MypageMenu />} />
             {/* 로그인 */}
@@ -56,7 +56,10 @@ const App = () => {
             {/* 카드 정보 */}
             <Route path="card" element={<CardInfo />}></Route>
             {/* 펫 정보 */}
+            <Route path="petlist" element={<PetList />}></Route>
             <Route path="petinfo" element={<PetInfo />}></Route>
+            {/* 병원페이지 */}
+            <Route path="/hospital" element={<Hospital />}></Route>
           </Route>
           {/* 계정 */}
           <Route path="/auth" element={<MainBTNav />}></Route>
@@ -66,8 +69,7 @@ const App = () => {
           <Route path="/about" element={<About />}></Route>
           {/* 펫돌봄 자격 등록 페이지 */}
           <Route path="/register" element={<Register />}></Route>
-          {/* 병원페이지 */}
-          <Route path="/hospital" element={<Hospital />}></Route>
+
           {/* 회원가입 페이지 1*/}
           <Route path="/" element={<MainBTNav />}>
             <Route path="/signup1" element={<Signup1 />}></Route>
