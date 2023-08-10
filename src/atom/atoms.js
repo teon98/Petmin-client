@@ -160,3 +160,39 @@ export const petProfileImgAtom = atom({
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
+
+export const petTendency1Atom = atom({
+  key: "petTendency1",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petTendency2Atom = atom({
+  key: "petTendency2",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petTendency3Atom = atom({
+  key: "petTendency3",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petTendency4Atom = atom({
+  key: "petTendency4",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petTendency5Atom = atom({
+  key: "petTendency5",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petTendencyMsgAtom = atom({
+  key: "petTendencyMsg",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
