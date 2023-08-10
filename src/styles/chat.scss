@@ -1,6 +1,5 @@
 #AllComponents {
   width: 500px;
-  background-color: #ededed;
   margin: 50px auto;
   padding: 20px 10px;
   border-radius: 20px;
@@ -29,6 +28,7 @@
 #chatt {
   width: 100%;
   margin: 0 auto;
+  font-size: 15px;
   #title {
     font-size: 30pt;
     text-align: center;
@@ -37,7 +37,7 @@
 
   #talk {
     width: 100%;
-    height: 400px;
+    height: 600px;
     overflow-y: auto;
     border-radius: 18px;
     position: relative;
@@ -58,11 +58,14 @@
       box-sizing: border-box;
 
       &.me {
-        background-color: #ffc;
+        border-radius: 10px;
+        background: #fcaeae;
         margin: 0px 0px 20px 40%;
       }
 
       &.other {
+        border-radius: 10px;
+        background: #d9d9d9;
         margin: 20px 0px 2px 0;
       }
     }
