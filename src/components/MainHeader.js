@@ -1,7 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
 import banner1 from "../assets/images/Main/banner1_noDots.png";
 import banner2 from "../assets/images/Main/banner2_noDots.png";
 import banner3 from "../assets/images/Main/banner3_noDots.png";
@@ -19,7 +19,6 @@ const MainHeader = () => {
     appendDots: (dots) => (
       <div
         style={{
-          width: "100%",
           position: "absolute",
           bottom: "24px",
           display: "flex",
@@ -34,7 +33,7 @@ const MainHeader = () => {
     dotsClass: "dots_custom",
   };
   return (
-    <>
+    <div style={{ width: "100%" }}>
       <Slider {...settings}>
         <Link to="/about">
           <div>
@@ -52,7 +51,7 @@ const MainHeader = () => {
           </div>
         </Link>
       </Slider>
-    </>
+    </div>
   );
 };
 

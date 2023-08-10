@@ -57,3 +57,7 @@ code {
   font-family: "PreThin";
   src: url("./assets/fonts/Pretendard-Thin.otf") format("opentype");
 }
+
+input:focus {
+  outline: none;
+}
