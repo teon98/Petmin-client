@@ -4,6 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import noImg from "../../assets/images/noImg2.svg";
+import { useNavigate } from "react-router-dom";
 
 const PetSitterCardList = (props) => {
   const settings = {
@@ -29,9 +30,18 @@ const PetSitterCardList = (props) => {
     dotsClass: "dots_custom2",
   };
   console.log(props.petSitterList);
+
+  //예약을 위한 펫시터 프로필 이동하기
+  const navigate = useNavigate();
+
+  const handleClick = (userID) => {
+    navigate(`/${userID}`);
+  };
+
   return (
     <div style={{ marginTop: "35px" }}>
       {props.petSitterList.map((item, index) => {
+        //console.log("item", item);
         //이미지배열 -> nullable 처리
         let imgstr;
         let imgarr;
@@ -42,12 +52,15 @@ const PetSitterCardList = (props) => {
           if (typeof imgstr === "string") {
             imgstr = imgstr.substring(1, imgstr.length - 1);
             imgarr = imgstr.split(",");
-            console.log("imgarr", imgarr);
           }
         }
 
         return (
-          <div id={style.cardItem} key={index}>
+          <div
+            id={style.cardItem}
+            key={index}
+            onClick={() => handleClick(item.userId)}
+          >
             <Slider {...settings}>
               {!!item.sitterHouse ? (
                 imgarr.map((imgsrc, i) => (
@@ -73,14 +86,18 @@ const PetSitterCardList = (props) => {
                 </div>
               )}
             </Slider>
-            {/* <Slider {...settings}>
-              <div>
-                <h3>1</h3>
-              </div>
-              <div>
-                <h3>1</h3>
-              </div>
-            </Slider> */}
+            <div id={style.firstRow}>
+              <p>
+                {item.userAddress} ·{" "}
+                <span>
+                  {item.userName.substr(0, 1) +
+                    "○" +
+                    item.userName.substr(-1, 1)}
+                </span>
+              </p>
+              <div id={style.progressBar}>{item.sitterTem}ºC</div>
+            </div>
+            <div id={style.secondRow}>{item.sitterMsg}</div>
           </div>
         );
       })}

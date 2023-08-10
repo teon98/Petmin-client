@@ -35,6 +35,7 @@ import PetTendency6 from "./pages/User/PetTendency6";
 import PetVaccine from "./pages/User/PetVaccine";
 import PetList from "./pages/User/PetList";
 import PetInfo from "./pages/User/PetInfo";
+import PSView from "./pages/petsitter/PSView";
 
 const App = () => {
   return (
@@ -43,11 +44,13 @@ const App = () => {
         <Routes>
           <Route path="/" element={<MainBTNav />}>
             <Route index element={<Main />} />
+            {/* 펫시터 프로필(예약을 위한) */}
+            <Route path="/:userId" element={<PSView />} />
             <Route path="check" element={<Check />} />
             <Route path="favorite" element={<Favorite />} />
             <Route path="rooms" element={<ChatList />} />
             <Route path="/room/:room/:userId" element={<Chat />} />
-            <Route path="mypage" element={<Mypage />} />
+            {/* <Route path="mypage" element={<Mypage />} /> */}
             {/*알림 페이지*/}
             <Route path="alarm" element={<Alarm />}></Route>
             {/* 로그인 완료했을 때 보이는 마이페이지 */}
@@ -125,7 +128,7 @@ const App = () => {
             <Route path="/petvaccine" element={<PetVaccine />}></Route>
           </Route>
           {/* 마이페이지 - 펫시터 프로필 관리 */}
-          <Route path="/petsitterprfile" element={<MainBTNav />}>
+          <Route path="/petsitterprofile" element={<MainBTNav />}>
             <Route path=":userID" element={<PSprofile />} />
           </Route>
           {/*마이페이지 -  실버 펫시터 시험*/}
