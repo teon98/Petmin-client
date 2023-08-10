@@ -73,7 +73,7 @@ function PetInfo(props) {
         className={style.flexBT}
         style={{ right: "265px" }}
         onClick={() => {
-          Navigate("/petsitter");
+          Navigate("/petregistration");
         }}
       >
         <FaPlus size="40" id={style.plusIcon} color="white" />
