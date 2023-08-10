@@ -6,14 +6,19 @@ import { NoData } from "../../assets";
 import Lottie from "lottie-react";
 import { FaLocationDot } from "react-icons/fa6";
 import style from "../../styles/PetSitterView.module.css";
+import { useRecoilState } from "recoil";
+import { idtextAtom, nametextAtom } from "../../atom/atoms";
 
 const { kakao } = window;
 
 export default function Hospital() {
-  const [loc, setLoc] = useState("");
   const [Keyword, setKeyword] = useState("");
   const [mapData, setmapData] = useState();
   const [mList, setMList] = useState();
+  const [startId, setStartId] = useRecoilState(idtextAtom);
+  const [loc, setLoc] = useState();
+
+  const [shouldRender, setShouldRender] = useState(false);
 
   const defaultOptions = {
     loop: true,
@@ -50,6 +55,30 @@ export default function Hospital() {
       alert("검색어를 입력해주세요.");
     }
   };
+
+  const getAddres = () => {
+    axios
+      .get(`/hospitals/useraddress?userId=${startId}`)
+      .then((res) => {
+        console.log(res.data);
+        // setIsValid(false);
+        setLoc(res.data);
+        setShouldRender(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    if (shouldRender) {
+      setShouldRender(false);
+    }
+  }, [shouldRender]);
+
+  useEffect(() => {
+    getAddres();
+  }, []);
 
   useEffect(() => {
     // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
@@ -160,8 +189,8 @@ export default function Hospital() {
     let zoomControl = new kakao.maps.ZoomControl();
 
     // 지도의 우측에 확대 축소 컨트롤을 추가한다
-    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-  }, [mList]);
+    // map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+  }, [mList, shouldRender]);
   // const [isValid, setIsValid] = useState(true);
 
   return (
@@ -218,7 +247,7 @@ export default function Hospital() {
             animationData={NoData}
             style={{
               position: "absolute",
-              top: "-20px",
+              top: "-65px",
               height: "400px",
               width: "200px",
             }}
