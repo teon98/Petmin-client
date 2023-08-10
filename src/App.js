@@ -52,6 +52,8 @@ const App = () => {
             <Route path="card" element={<CardInfo />}></Route>
             {/* 펫 정보 */}
             <Route path="petinfo" element={<PetInfo />}></Route>
+            {/* 병원페이지 */}
+            <Route path="/hospital" element={<Hospital />}></Route>
           </Route>
           {/* 계정 */}
           <Route path="/auth" element={<MainBTNav />}></Route>
@@ -61,8 +63,7 @@ const App = () => {
           <Route path="/about" element={<About />}></Route>
           {/* 펫돌봄 자격 등록 페이지 */}
           <Route path="/register" element={<Register />}></Route>
-          {/* 병원페이지 */}
-          <Route path="/hospital" element={<Hospital />}></Route>
+
           {/* 회원가입 페이지 1*/}
           <Route path="/" element={<MainBTNav />}>
             <Route path="/signup1" element={<Signup1 />}></Route>

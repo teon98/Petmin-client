@@ -94,7 +94,7 @@ const ScheduleForm = () => {
     axios
       .get("/sitter/getSchedule", {
         params: {
-          sitterId: "지만",
+          sitterId: "ckdrua76",
           scheduleDay: inputValue,
         },
       })
@@ -135,7 +135,7 @@ const ScheduleForm = () => {
     //console.log(type);
 
     var formData = new FormData();
-    formData.append("sitterId", "지만");
+    formData.append("sitterId", "ckdrua76");
     formData.append("scheduleDay", inputValue);
     formData.append("scheduleHour", scheduleTimeList);
     formData.append("dolbomOption", type);
@@ -144,6 +144,16 @@ const ScheduleForm = () => {
       .post("/sitter/schedule", formData)
       .then((res) => {
         alert("일정이 등록되었습니다.");
+
+        //체크박스 해제
+        let alldayCheckbox = document.querySelector("#allday");
+        alldayCheckbox.checked = false;
+
+        //돌봄 형태 라디오 버튼 해제
+        let typeRadiobutton = document.querySelector(
+          "input[type=radio][name=type]"
+        );
+        typeRadiobutton.checked = false;
         console.log(res.data);
       })
       .catch((err) => {

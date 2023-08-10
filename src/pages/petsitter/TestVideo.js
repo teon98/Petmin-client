@@ -4,7 +4,10 @@ import BackTitleHeader from "../../components/BackTitleHeader";
 const TestVideo = () => {
   return (
     <div>
-      <BackTitleHeader title="실버 펫시터 시험 동영상" />
+      <BackTitleHeader
+        title="실버 펫시터 
+              동영상"
+      />
       <video muted loop autoPlay style={{ width: "100%", height: "100%" }}>
         <source src={test} type="video/mp4"></source>
       </video>
