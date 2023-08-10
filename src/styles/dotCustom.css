@@ -28,3 +28,35 @@
 .dots_custom .slick-active button {
   background-color: #ff6666;
 }
+
+/* 카드리스트아이템 슬라이더 */
+.dots_custom2 {
+  display: inline-block;
+  vertical-align: middle;
+  margin: auto 0;
+  padding: 0;
+}
+
+.dots_custom2 li {
+  list-style: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 6px;
+  padding: 0;
+}
+
+.dots_custom2 li button {
+  border: none;
+  background: rgba(255, 255, 255, 0.8);
+  color: transparent;
+  cursor: pointer;
+  display: block;
+  height: 8px;
+  width: 8px;
+  border-radius: 100%;
+  padding: 0;
+}
+
+.dots_custom2 .slick-active button {
+  background-color: #ffffff;
+}
