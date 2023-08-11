@@ -195,9 +195,15 @@ const BasicInfoForm = () => {
       <div id={style.frame} className={style.filebox}>
         <label htmlFor="file">
           <div>
-            <FaImages color="#B3B3B3" size={20} />
+            <FaImages color="#B3B3B3" size={15} />
           </div>
-          <div style={{ color: "#FF6666", fontFamily: "PreRegular" }}>
+          <div
+            style={{
+              color: "#FF6666",
+              fontFamily: "PreRegular",
+              fontSize: "13px",
+            }}
+          >
             ({placecount}/3)
           </div>
         </label>
