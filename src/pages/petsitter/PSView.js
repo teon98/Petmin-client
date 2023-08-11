@@ -125,7 +125,9 @@ const PSView = () => {
         </div>
         <hr />
         <p className={style.subtitle}>돌봄 환경</p>
-        <div></div>
+        <div>
+          <input type="button" value="남" />
+        </div>
         <hr />
         <p className={style.subtitle}>함께하는 반려동물</p>
         <hr />

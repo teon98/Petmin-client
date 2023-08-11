@@ -12,8 +12,11 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MagnifyingGlass } from "react-loader-spinner";
 import axios from "axios";
 import "../../styles/daypickerPlus.css";
+import { useRecoilState } from "recoil";
+import { idtextAtom } from "../../atom/atoms";
 
 const PetSitterView = () => {
+  const [userId] = useRecoilState(idtextAtom);
   //로딩이 느려서 추가
   const [loading, setLoading] = useState(true);
 
@@ -121,7 +124,7 @@ const PetSitterView = () => {
     axios
       .get("/dolbom/filter", {
         params: {
-          userId: "으악",
+          userId: userId,
           userAddress: "부천",
         },
       })
@@ -147,7 +150,7 @@ const PetSitterView = () => {
     axios
       .get("/dolbom/filter", {
         params: {
-          userId: "으악",
+          userId: userId,
           userAddress: location,
         },
       })
