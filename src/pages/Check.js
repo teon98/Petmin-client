@@ -19,7 +19,7 @@ const Check = () => {
 
     axios({
       url: "/dolbom/checkSitter",
-      params: { userId: "test11" },
+      params: { userId: userId },
       method: "get",
     })
       .then((res) => {
@@ -46,6 +46,7 @@ const Check = () => {
       });
   };
 
+  const dolbomdel = () => {};
   // 리스트 출력
   const renderMessages = () => {
     const messageElements = [];

@@ -6,8 +6,11 @@ import { usePopper } from "react-popper";
 import { format, isValid, parse } from "date-fns";
 import FocusTrap from "focus-trap-react";
 import axios from "axios";
+import { idtextAtom } from "../../atom/atoms";
+import { useRecoilState } from "recoil";
 
 const ScheduleForm = () => {
+  const [userId] = useRecoilState(idtextAtom);
   //오늘 날짜 알아오기 - 초기화를 위해
   let today = new Date();
   today = format(today, "y-MM-dd");
@@ -94,7 +97,7 @@ const ScheduleForm = () => {
     axios
       .get("/sitter/getSchedule", {
         params: {
-          sitterId: "ckdrua76",
+          sitterId: userId,
           scheduleDay: inputValue,
         },
       })
@@ -135,7 +138,7 @@ const ScheduleForm = () => {
     //console.log(type);
 
     var formData = new FormData();
-    formData.append("sitterId", "ckdrua76");
+    formData.append("sitterId", userId);
     formData.append("scheduleDay", inputValue);
     formData.append("scheduleHour", scheduleTimeList);
     formData.append("dolbomOption", type);
