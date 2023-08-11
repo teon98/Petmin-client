@@ -6,6 +6,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { idtextAtom, nametextAtom } from "../atom/atoms";
 import style from "../styles/PetSitterView.module.css";
+import st from "../styles/chat.scss";
 const Chat = () => {
   let { room } = useParams();
   const navigate = useNavigate();
@@ -27,23 +28,56 @@ const Chat = () => {
   //스크롤
   const scrollRef = useRef();
 
+  const timeRegex = /(\S+\s)(\d{1,2}:\d{2})/;
+
   const msgBox = chatt.map((item, idx) => (
-    <div
-      key={idx}
-      className={item.startId === startId.toString() ? "me" : "other"}
-    >
-      <span>
-        <b>{item.name}</b>
-      </span>{" "}
-      [ {item.date} ]<br />
-      <span>{item.msg}</span>
-      <span>{console.log(item?.chatCheck)}</span>
-      <span>
-        {item?.chatCheck === undefined || item?.chatCheck === true
-          ? "읽음"
-          : "❌"}{" "}
-      </span>
-    </div>
+    <>
+      <div
+        key={idx}
+        className={item.startId === startId.toString() ? "me" : "other"}
+      >
+        <span>
+          <b>{item.name}</b>
+        </span>{" "}
+        <span>{item.msg}</span>
+        <span>{console.log(item?.chatCheck)}</span>
+        {item.startId === startId.toString() ? (
+          <p
+            style={{
+              marginLeft: "-60px",
+              fontFamily: "Inter",
+              fontSize: "12px",
+              fontStyle: "normal",
+              fontWeight: "400",
+              lineHeight: "normal",
+            }}
+          >
+            {item?.chatCheck === undefined || item?.chatCheck === true
+              ? "1️⃣"
+              : ""}
+            &nbsp;
+            {item.date.match(timeRegex)[2]}
+          </p>
+        ) : (
+          <p
+            style={{
+              marginLeft: "245px",
+              fontFamily: "Inter",
+              fontSize: "12px",
+              fontStyle: "normal",
+              fontWeight: "400",
+              lineHeight: "normal",
+            }}
+          >
+            {item.date.match(timeRegex)[2]}
+            &nbsp;
+            {item?.chatCheck === undefined || item?.chatCheck === true
+              ? "1️⃣"
+              : ""}
+          </p>
+        )}
+      </div>
+    </>
   ));
   const webSocketLogin = useCallback(() => {
     ws.current = new WebSocket(`ws://localhost:8888/socket/chatt/${room}`);
@@ -333,6 +367,17 @@ const Chat = () => {
           }}
         >
           <div className="talk-shadow"></div>
+          <span
+            style={{
+              display: "block",
+              textAlign: "center",
+              margin: "10px auto",
+              width: "100%",
+              fontWeight: "bold", // Optional: Add any additional styling you want
+            }}
+          >
+            {chatt[0]?.date ? chatt[0]?.date : "대화를 시작하세요"}
+          </span>
           {msgBox}
           <div ref={scrollRef}></div>
         </div>
