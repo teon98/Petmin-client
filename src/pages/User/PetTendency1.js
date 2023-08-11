@@ -1,8 +1,10 @@
-import React from "react";
-import BackTitleHeader from "../../components/BackTitleHeader";
+import React, { useEffect, useState } from "react";
 import QuestionComponent from "../../components/QuestionComponent";
 import { useRecoilState } from "recoil";
 import { petTendency1Atom } from "../../atom/atoms";
+import BackTitleHeader2 from "../../components/BackTitleHeader2";
+import QuestionFooter from "../../components/QuestionFooter";
+import { useNavigate } from "react-router";
 
 function PetTendency1() {
   const [petTendency1, setPetTendency1] = useRecoilState(petTendency1Atom);
@@ -28,9 +30,28 @@ function PetTendency1() {
     const value = e.target.value;
     setPetTendency1(value);
   };
+
+  const navigate = useNavigate();
+  const moveToNextPage = () => {
+    navigate("/pettendency2");
+  };
+
+  const [btnState, setBtnState] = useState(false);
+  useEffect(() => {
+    if (petTendency1 !== "") {
+      setBtnState(true);
+    } else {
+      setBtnState(false);
+    }
+  }, [petTendency1]);
+
   return (
     <>
-      <BackTitleHeader title={"반려동물 성향 설문지"} className="signupStep" />
+      <BackTitleHeader2
+        title={"반려동물 성향 설문지"}
+        subtitle={"1/6"}
+        className="signupStep"
+      />
       <div className="registerContainer">
         <QuestionComponent
           questionNumber={"Q1"}
@@ -41,6 +62,11 @@ function PetTendency1() {
           selectedValue={petTendency1}
         />
       </div>
+      <QuestionFooter
+        title="다음으로"
+        active={btnState}
+        onClick={moveToNextPage}
+      />
     </>
   );
 }
