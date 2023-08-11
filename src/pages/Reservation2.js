@@ -36,6 +36,7 @@ function Reservation2(props) {
   //은정
   const [startTime, setStartTime] = useState("6");
   const [endTime, setEndTime] = useState("6");
+  const [ableStartTime, setAbleStartTime] = useState([]);
 
   //날짜 선택하면 시간 초기화
   const handleDaySelect = (date) => {
@@ -46,6 +47,9 @@ function Reservation2(props) {
       closePopper();
       setEndTime("6");
       setStartTime("6");
+      //시터 일정 불러오기
+      sitterSchedule(format(date, "y-MM-dd"), 1);
+      // setTime(time.filter((item) => item == ))
     } else {
       setInputValue("");
     }
@@ -57,10 +61,8 @@ function Reservation2(props) {
     setSelected2(date);
     if (date) {
       setInputValue2(format(date, "y-MM-dd"));
-      //끝나는 날이 더 크면 6부터 시작 -- 수정 필요
-      if (inputValue < format(date, "y-MM-dd")) {
-        // setTime(stime);
-      }
+      //시터 일정 불러오기
+      sitterSchedule(format(date, "y-MM-dd"), 2);
       closePopper2();
       setEndTime("6");
     } else {
@@ -96,27 +98,29 @@ function Reservation2(props) {
     }
   };
 
-  const stime = [
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-    "21",
-    "22",
-    "23",
-    "24",
-  ];
+  // const stime = [
+  //   "6",
+  //   "7",
+  //   "8",
+  //   "9",
+  //   "10",
+  //   "11",
+  //   "12",
+  //   "13",
+  //   "14",
+  //   "15",
+  //   "16",
+  //   "17",
+  //   "18",
+  //   "19",
+  //   "20",
+  //   "21",
+  //   "22",
+  //   "23",
+  //   "24",
+  // ];
+  const [stime, setSTime] = useState([]);
+  const [etime, setETime] = useState([]);
   const [time, setTime] = useState([
     "6",
     "7",
@@ -175,6 +179,7 @@ function Reservation2(props) {
     buttonRef2?.current?.focus();
   };
 
+  //선택하면 날짜 바뀜
   const handleInputChange = (e) => {
     console.log("handleInputChange ... 선택하면 날짜 바뀌게 하는 것인듯");
     console.log(e.target.value);
@@ -197,6 +202,7 @@ function Reservation2(props) {
     }
   };
 
+  //달력 클릭... 시간 초기화 됨
   const handleButtonClick = () => {
     console.log("handleButtonClick 달력 클릭 시 ... 시간도 초기화 됨");
     setIsPopperOpen(true);
@@ -204,6 +210,30 @@ function Reservation2(props) {
   const handleButtonClick2 = () => {
     console.log("handleButtonClick 달력 클릭 시 ... 시간도 초기화 됨");
     setIsPopperOpen2(true);
+  };
+
+  //날짜 클릭하면 시터 스케줄 가져오기
+  const sitterSchedule = (scheduleDay, i) => {
+    console.log("시터 일정가져오겠습니다.");
+    axios({
+      method: "get",
+      url: "/sitter/getSchedule",
+      params: { sitterId: "test11", scheduleDay: scheduleDay },
+    }).then((res) => {
+      console.log("****************시터 일정 가져오기입니다.****************");
+      setAbleStartTime(res.data.map((item) => item.Hour.Hour2));
+      //시작날짜 클릭하면
+      if (i === 1) {
+        setSTime(() => res.data.map((item) => item.Hour.Hour2));
+        setETime(() => res.data.map((item) => item.Hour.Hour2));
+      }
+      //끝날짜 클릭하면
+      else {
+        setETime(() => res.data.map((item) => item.Hour.Hour2));
+      }
+
+      console.log(res.data);
+    });
   };
 
   //기존 일정 가져오기
@@ -312,7 +342,7 @@ function Reservation2(props) {
         >
           {stime.map((hour) => (
             <option key={hour} value={hour}>
-              {hour}:00
+              {hour}
             </option>
           ))}
         </select>
@@ -376,13 +406,14 @@ function Reservation2(props) {
           onChange={(e) => selectTime(e.target.value, e.target.id)}
           value={endTime}
         >
-          {time.map((hour) => (
+          {etime.map((hour) => (
             <option key={hour} value={hour}>
-              {hour}:00
+              {hour}
             </option>
           ))}
         </select>
       </TimeList>
+      {ableStartTime}
       <div
         className={style.saveBT}
         id={style.frame}
