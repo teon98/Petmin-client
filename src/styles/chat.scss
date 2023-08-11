@@ -141,6 +141,10 @@
       padding: 10px;
       border-radius: 10px;
       box-sizing: border-box;
+      position: relative;
+      white-space: normal; /* Allow text to wrap */
+      text-overflow: ellipsis;
+      // max-width: 1--;
 
       &.me {
         border-radius: 10px;
