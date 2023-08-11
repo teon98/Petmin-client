@@ -25,8 +25,7 @@ const Main = () => {
       .then((res) => {
         for (let i = 0; i < res.data.length; i++) {
           const alarm = res.data[i].split(":");
-          if (alarm[2] === true) {
-          } else {
+          if (alarm[2] === "false") {
             setNotificationArrived(false);
           }
         }
