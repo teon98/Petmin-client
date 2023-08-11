@@ -40,6 +40,8 @@ import PetList from "./pages/User/PetList";
 import PetInfo from "./pages/User/PetInfo";
 import PSView from "./pages/petsitter/PSView";
 import Logout from "./components/Logout";
+import Reservation from "./pages/Reservation";
+import Reservation2 from "./pages/Reservation2";
 import Assurance from "./pages/User/Assurance";
 
 const App = () => {
@@ -54,7 +56,6 @@ const App = () => {
             <Route path="favorite" element={<Favorite />} />
             <Route path="rooms" element={<ChatList />} />
             <Route path="/room/:room/:userId" element={<Chat />} />
-            {/* <Route path="mypage" element={<Mypage />} /> */}
             {/*알림 페이지*/}
             <Route path="alarm" element={<Alarm />}></Route>
             {/* 로그인 완료했을 때 보이는 마이페이지 */}
@@ -72,6 +73,8 @@ const App = () => {
             <Route path="petinfo" element={<PetInfo />}></Route>
             {/* 병원페이지 */}
             <Route path="/hospital" element={<Hospital />}></Route>
+            <Route path="/reservation" element={<Reservation />} />
+            <Route path="/reservation2" element={<Reservation2 />} />
           </Route>
           {/* 펫시터 프로필(예약을 위한) */}
           <Route path="/sitterProfile/:userId" element={<PSView />} />
