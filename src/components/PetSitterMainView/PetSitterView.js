@@ -290,7 +290,11 @@ const PetSitterView = () => {
             glassColor="#c0efff"
             color="#e15b64"
           />
-          <p id={style.text1}>조건에 맞는 펫시터를 찾고 있어요:)</p>
+          {!userId ? (
+            <p id={style.text1}>로그인을 하면 펫시터를 찾아드릴께요:)</p>
+          ) : (
+            <p id={style.text1}>조건에 맞는 펫시터를 찾고 있어요:)</p>
+          )}
         </div>
       ) : petSitterList.length === 0 ? (
         <div id={style.sorryFrame}>
