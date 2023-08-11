@@ -245,6 +245,7 @@
   margin-right: 5px;
   margin-bottom: 5px;
   font-size: 14px;
+  transition: all 0.3s ease 0s;
 }
 
 .buttonFooter {
@@ -278,4 +279,16 @@
   border: 1px solid #ff6666;
   background-color: #ff6666;
   color: white;
+}
+
+/* 예약확정 */
+.ok + label {
+  color: #17a1fa !important;
+  border-color: #17a1fa !important;
+}
+
+/* 예약대기 */
+.stay + label {
+  color: #2bba64 !important;
+  border-color: #2bba64 !important;
 }

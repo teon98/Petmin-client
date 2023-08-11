@@ -31,6 +31,7 @@ const Chat = () => {
   const timeRegex = /(\S+\s)(\d{1,2}:\d{2})/;
 
   const msgBox = chatt.map((item, idx) => (
+
     <>
       <div
         key={idx}
@@ -104,7 +105,7 @@ const Chat = () => {
     console.log(ws.current, "ws.current");
 
     ws.current.onmessage = (message) => {
-      const dataSet = JSON.parse(message.data);
+      const dataSet = JSON.parse(message?.data);
       setSocketData(dataSet);
     };
   }, [room]);
@@ -147,6 +148,7 @@ const Chat = () => {
               startId: Sid,
               // receiverId: receiverId,
               chatroomId: hRoom,
+              chatCheck: chatCheck,
               // chat,
               date: new Date().toLocaleString(),
               chatCheck: chatCheck,

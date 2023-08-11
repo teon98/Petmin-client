@@ -84,12 +84,53 @@ const PSView = () => {
   const [caretype, setCaretype] = useState("산책");
 
   const handleChange = (e) => {
-    //console.log(e.target.value);
+    console.log(e.target.value);
     setCaretype(e.target.value);
   };
 
   ///////////////////////////////날짜///////////////////////////////
   const [selectedDay, setSelectedDay] = useState();
+  const [scheduleData, setScheduleData] = useState([]);
+
+  const handleSelect = (e) => {
+    setSelectedDay(e);
+    let sitterdate = format(e, "y-MM-dd");
+
+    console.log("케어타입", caretype);
+    axios
+      .get("/sitter/getSchedule", {
+        params: {
+          sitterId: params.userId,
+          scheduleDay: sitterdate,
+        },
+      })
+      .then((res) => {
+        console.log("날자", res.data);
+        //케어타입이 산책인지,날짜인지 구분
+        let careTypeFilltering = [];
+        for (let i = 0; i < res.data.length; i++) {
+          if (res.data[i]["dolbomOption"] === caretype) {
+            //console.log(res.data[i]["Hour"]);
+            careTypeFilltering.push(res.data[i]["Hour"]);
+          }
+        }
+        console.log(careTypeFilltering);
+
+        //타임 테이블 가져오기
+        var timetable = document.querySelectorAll(
+          "#timetable input[type='checkbox']"
+        );
+
+        console.log("timetable", timetable);
+
+        for (let i = 0; i < timetable.length; i++) {}
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  let st = 2;
 
   const footer = selectedDay ? (
     <p>You selected {format(selectedDay, "PPP")}.</p>
@@ -241,18 +282,30 @@ const PSView = () => {
             <DayPicker
               mode="single"
               selected={selectedDay}
-              onSelect={setSelectedDay}
+              onSelect={handleSelect}
             />
           </div>
-          <div className={style.timetable}>
+          <div className={style.timetable} id="timetable">
             <p className={style.subtitle2}>시간</p>
             <hr />
             <p className={style.subtitle3}>오전</p>
             <div style={{ marginLeft: "10px", marginRight: "10px" }}>
-              <input type="checkbox" id="06:00" value="06:00" disabled />
+              <input
+                type="checkbox"
+                id="06:00"
+                value="06:00"
+                disabled
+                className={`${st === 1 ? style.ok : style.stay}`}
+              />
               <label htmlFor="06:00">06:00</label>
 
-              <input type="checkbox" id="07:00" value="07:00" disabled />
+              <input
+                type="checkbox"
+                id="07:00"
+                value="07:00"
+                disabled
+                className={`${st === 1 ? style.ok : style.stay}`}
+              />
               <label htmlFor="07:00">07:00</label>
 
               <input type="checkbox" id="08:00" value="08:00" disabled />
@@ -320,7 +373,7 @@ const PSView = () => {
         </div>
       </div>
       {/* 바텀 */}
-      <FooterPS />
+      <FooterPS userId={params.userId} />
     </div>
   );
 };
