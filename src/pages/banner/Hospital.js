@@ -8,6 +8,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import style from "../../styles/PetSitterView.module.css";
 import { useRecoilState } from "recoil";
 import { idtextAtom, nametextAtom } from "../../atom/atoms";
+import { styled } from "styled-components";
 
 const { kakao } = window;
 
@@ -192,6 +193,20 @@ export default function Hospital() {
     // map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
   }, [mList, shouldRender]);
   // const [isValid, setIsValid] = useState(true);
+
+  let Input1 = styled.input`
+    display: flex;
+    padding-top: 0;
+    padding-bottom: 0;
+    align-items: center;
+    border-width: 1px;
+    border-color: #d1d5db;
+    transition-property: color, background-color, border-color,
+      text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+    height: 35px;
+  `;
 
   return (
     <div>
