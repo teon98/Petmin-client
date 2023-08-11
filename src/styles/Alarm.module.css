@@ -1,0 +1,61 @@
+.aldiv {
+  margin-top: 30px;
+  border-bottom: 1px solid black;
+}
+.alspan {
+  display: flex;
+  width: auto;
+  flex-shrink: 0;
+
+  margin-left: 26px;
+  color: #2a2a2a;
+  font-family: "Pretendard";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.alp {
+  color: #fcaeae;
+  font-family: "Pretendard";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 26px;
+  margin-bottom: 21px;
+}
+#plusIcon {
+  margin: auto;
+  display: block;
+}
+.flexBT {
+  background-color: #ff6666;
+  position: absolute;
+  bottom: 100px;
+  right: 15px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  cursor: pointer;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  display: flex;
+  align-items: center;
+}
+.chImg {
+  width: 50px;
+  height: 50px;
+}
+.chspan {
+  display: flex;
+  width: auto;
+  flex-shrink: 0;
+
+  margin-left: 26px;
+  color: #2a2a2a;
+  font-family: "Pretendard";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

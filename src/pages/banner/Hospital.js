@@ -4,14 +4,21 @@ import axios from "axios";
 import pngwing from "../../assets/images/Main/pngwing.com.png";
 import { NoData } from "../../assets";
 import Lottie from "lottie-react";
+import { FaLocationDot } from "react-icons/fa6";
+import style from "../../styles/PetSitterView.module.css";
+import { useRecoilState } from "recoil";
+import { idtextAtom, nametextAtom } from "../../atom/atoms";
 
 const { kakao } = window;
 
 export default function Hospital() {
-  const [loc, setLoc] = useState("");
   const [Keyword, setKeyword] = useState("");
   const [mapData, setmapData] = useState();
   const [mList, setMList] = useState();
+  const [startId, setStartId] = useRecoilState(idtextAtom);
+  const [loc, setLoc] = useState();
+
+  const [shouldRender, setShouldRender] = useState(false);
 
   const defaultOptions = {
     loop: true,
@@ -36,7 +43,7 @@ export default function Hospital() {
       .get(`/hospitals/maplist?searchTerm=${loc}`)
       .then((res) => {
         setMList(res.data.hospitals);
-        setIsValid(false);
+        // setIsValid(false);
       })
       .catch((err) => {
         console.log(err);
@@ -48,6 +55,30 @@ export default function Hospital() {
       alert("검색어를 입력해주세요.");
     }
   };
+
+  const getAddres = () => {
+    axios
+      .get(`/hospitals/useraddress?userId=${startId}`)
+      .then((res) => {
+        console.log(res.data);
+        // setIsValid(false);
+        setLoc(res.data);
+        setShouldRender(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    if (shouldRender) {
+      setShouldRender(false);
+    }
+  }, [shouldRender]);
+
+  useEffect(() => {
+    getAddres();
+  }, []);
 
   useEffect(() => {
     // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
@@ -79,7 +110,7 @@ export default function Hospital() {
           bounds.extend(new kakao.maps.LatLng(data[i]?.y, data[i].x));
         }
 
-        for (let i = 0; i < mList.length; i++) {
+        for (let i = 0; i < mList?.length; i++) {
           displayMarkers(mList[i]);
         }
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
@@ -158,9 +189,9 @@ export default function Hospital() {
     let zoomControl = new kakao.maps.ZoomControl();
 
     // 지도의 우측에 확대 축소 컨트롤을 추가한다
-    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-  }, [mList]);
-  const [isValid, setIsValid] = useState(true);
+    // map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+  }, [mList, shouldRender]);
+  // const [isValid, setIsValid] = useState(true);
 
   return (
     <div>
@@ -168,96 +199,41 @@ export default function Hospital() {
       <form onSubmit={submitKeyword}>
         <label htmlFor="place">
           <div
+            className={style.locationSearchBar}
             style={{
-              position: "relative",
-              display: "block",
-              backgroundColor: "#EFEFEF",
+              backgroundColor: "white",
+              justifyContent: "center",
+              zIndex: "2",
+              position: "fixed",
+              top: "4%",
+              left: "50%",
+              transform: "translate(-50%, 0)",
+              width: "80%",
+              maxWidth: "300px",
             }}
           >
-            <div
-              style={{
-                position: "relative",
-                height: "42px",
-                zIndex: "110",
-                height: "42px",
-                paddingLeft: "45px",
-                border: "2px solid #FF6666",
-                borderRadius: "5px",
-              }}
-            >
-              <input
-                type="submit"
-                value="검색"
-                onClick={valueChecker}
-                style={{
-                  border: "none",
-                  backgroundImage: `url(https://ssl.pstatic.net/static/maps/v5/pc/20230602131202/search@2x.png)`,
-                  overflow: "hidden",
-                  display: "inline-block",
-                  width: "25px",
-                  height: "24px",
-                  fontSize: "0",
-                  color: "transparent",
-                  verticalAlign: "top",
-                  backgroundPosition: "-26px -112px",
-                  position: "absolute",
-                  top: "9px",
-                  left: "15px",
-                  backgroundSize: "194px 190px",
-                }}
-              />
-              <label
-                style={{
-                  color: "#d8d8d8",
-                  position: "absolute",
-                  top: "0",
-                  left: "60px",
-                  right: "0",
-                  bottom: "0",
-                  zIndex: "-1",
-                  lineHeight: "44px",
-                  fontWeight: "400",
-                }}
-                htmlFor="search"
-              ></label>
-
-              {/* <SearchIcon /> */}
-              <input
-                id="search"
-                type="text"
-                name="place"
-                onChange={keywordChange}
-                placeholder="   검색어를 입력해주세요. (ex: 원종동)"
-                style={{
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                  top: "0",
-                  left: "60px",
-                  right: "100px",
-                  bottom: "12px",
-                  zIndex: "-1",
-                  border: "0 solid #D2D2D2",
-                  width: "3000px",
-                  height: "40px",
-                  flexShrink: "0",
-                  backgroundColor: "transparent",
-                }}
-                required
-              />
-            </div>
+            <FaLocationDot color="#C7C7C7" size={20} onClick={valueChecker} />
+            <input
+              style={{ width: "100%", flex: "1", padding: "9px" }}
+              placeholder=" 검색어를 입력해주세요. (ex: 원종동)"
+              type="text"
+              onChange={keywordChange}
+              className={style.locationSearch}
+            />
           </div>
         </label>
       </form>
       <div
         id="map"
         style={{
-          width: "100vw",
+          // width: "100vw",
           height: "100vh",
-          maxHeight: !isValid ? "500px" : "1000px",
+          // maxHeight: !isValid ? "500px" : "1000px",
+          maxHeight: "500px",
         }}
       ></div>
 
-      {mList?.length === 0 ? (
+      {mList?.length === 0 || mList?.length === undefined ? (
         <div
           style={{
             display: "flex",
@@ -271,9 +247,9 @@ export default function Hospital() {
             animationData={NoData}
             style={{
               position: "absolute",
-              top: "-60px",
-              height: "500px",
-              width: "300px",
+              top: "-65px",
+              height: "400px",
+              width: "200px",
             }}
           />
         </div>
@@ -285,7 +261,7 @@ export default function Hospital() {
                 style={{
                   borderBottom: "1px solid #FF6666",
                   padding: "21px 25px 18px",
-                  background: "#fafcff",
+                  backgroundColor: "white",
                   position: "relative",
                 }}
               >
