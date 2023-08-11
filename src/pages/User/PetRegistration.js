@@ -88,11 +88,11 @@ function PetRegistration(props) {
   //체크리스트 이동
   const navigate = useNavigate();
   const moveToPetTendency = () => {
-    navigate("/pettendency");
+    navigate("/pettendency1");
   };
 
   const moveToPetVaccine = () => {
-    navigate("/petvaccine");
+    navigate("/petvaccine1");
   };
 
   //펫 프로필 저장

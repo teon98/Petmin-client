@@ -19,6 +19,7 @@ function PinkBtn(props) {
     color: " #ffffff",
     fontFamily: "PreMedium",
     border: "none",
+    cursor: "pointer",
   };
 
   return (
