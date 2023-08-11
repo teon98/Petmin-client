@@ -36,12 +36,31 @@ const Chat = () => {
       <div
         key={idx}
         className={item.startId === startId.toString() ? "me" : "other"}
+        style={{
+          // overflow: "scroll",
+          whiteSpace: "wrap",
+          textOverflow: "ellipsis",
+          // width: "400"
+        }}
       >
         <span>
           <b>{item.name}</b>
-        </span>{" "}
-        <span>{item.msg}</span>
-        <span>{console.log(item?.chatCheck)}</span>
+        </span>
+        <p
+          style={{
+            display: "block",
+            padding: "8px 12px",
+            borderRadius: "5px",
+            fontWeight: "600",
+            marginLeft: "5px",
+            maxHeight: "10px" /* Set the maximum height for the container */,
+            // overflowY: "auto",
+
+            // width: "80px",
+          }}
+        >
+          {item.msg}
+        </p>
         {item.startId === startId.toString() ? (
           <p
             style={{
@@ -366,6 +385,8 @@ const Chat = () => {
           id="talk"
           style={{
             marginLeft: "30px",
+            maxWidth: "600px",
+            // overflowY: "scroll",
           }}
         >
           <div className="talk-shadow"></div>
