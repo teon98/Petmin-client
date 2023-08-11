@@ -19,7 +19,7 @@ const Main = () => {
   useEffect(() => {
     axios({
       url: "/alarm/search2",
-      params: { userId: "test11" },
+      params: { userId: userId },
       method: "get",
     })
       .then((res) => {
@@ -42,7 +42,7 @@ const Main = () => {
       {/* 알림 Header */}
       <div className={style.mainHeader}>
         <Link to="/alarm">
-          {notificationArrived == true ? (
+          {notificationArrived === true ? (
             <FaBell
               size="24"
               color="white"

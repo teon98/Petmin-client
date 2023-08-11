@@ -3,20 +3,22 @@ import style from "../../styles/PetSitterProfile.module.css";
 import { useState } from "react";
 import axios from "axios";
 import { FaImages } from "react-icons/fa6";
+import { useRecoilState } from "recoil";
+import { idtextAtom } from "../../atom/atoms";
 
 const BasicInfoForm = () => {
   const [about, setAbout] = useState("");
   const [place, setPlace] = useState("");
   const [placecount, setPlaceCount] = useState(0);
   const [count, setCount] = useState(0);
-
+  const [userId] = useRecoilState(idtextAtom);
   useEffect(() => {
     var placetype = document.querySelectorAll(".placetype input[type='radio']");
 
     axios
       .get("/sitter/getSitter", {
         params: {
-          userId: "ckdrua88",
+          userId: userId,
         },
       })
       .then((res) => {
@@ -96,7 +98,7 @@ const BasicInfoForm = () => {
 
     var formData = new FormData();
     //태영: userID는 추후 로그인한 사용자로 변경
-    formData.append("userId", "ckdrua88");
+    formData.append("userId", userId);
 
     for (var i = 0; i < previews.length; i++) {
       formData.append("sitterHouse", previews[i].fileObject);
