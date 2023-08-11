@@ -35,7 +35,7 @@ const PetSitterCardList = (props) => {
   const navigate = useNavigate();
 
   const handleClick = (userID) => {
-    navigate(`/${userID}`);
+    navigate(`/sitterProfile/${userID}`);
   };
 
   return (

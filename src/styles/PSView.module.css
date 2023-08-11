@@ -9,12 +9,28 @@
 #infoBody {
   margin-top: 10px;
   display: flex;
+  margin-bottom: 20px;
 }
 #infoLeft {
 }
 
+#levelIcon {
+  margin-bottom: 5px;
+}
+
 #infoRight {
   margin-left: 10px;
+  width: 100%;
+}
+
+#leveltext {
+  font-family: "PreLight";
+  font-size: 15px;
+  border-radius: 5px;
+  border: 1px solid #b3b3b3;
+  width: fit-content;
+  padding: 3px 5px;
+  color: #7db249;
 }
 
 #profileImg {
@@ -41,7 +57,7 @@
 }
 
 #head div {
-  margin-left: 150px;
+  margin-left: auto;
   color: #ff6666;
 }
 
@@ -54,4 +70,212 @@
   font-family: "PreMedium";
   font-size: 17px;
   margin-left: 10px;
+}
+
+.subtitle2 {
+  font-family: "PreLight";
+  font-size: 17px;
+  margin: 20px 15px 20px 10px;
+}
+
+.box {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.tag {
+  display: flex;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.tag input[type="button"] {
+  color: #8f8f8f;
+  background: white;
+  border-radius: 10px;
+  border: 2px solid #8f8f8f;
+  padding: 5px 15px;
+  margin-right: 7px;
+}
+
+.card {
+  border-radius: 10px;
+  border-top: 1px solid rgba(217, 217, 217, 0.37);
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "PreMedium";
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#petImg {
+  width: 60px;
+  height: 60px;
+  border-radius: 70%;
+  overflow: hidden;
+}
+
+#petImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#cardMiddle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 10px;
+  margin-right: auto;
+}
+
+.mar {
+  margin-left: 10px;
+}
+
+.mar div {
+  font-family: "PreLight";
+}
+
+.progress {
+  margin-left: 10px;
+}
+
+.progress > div {
+  font-family: "PreLight";
+}
+
+.progress > div > div {
+  height: 17px !important;
+  margin-bottom: 7px;
+}
+
+.progress > div > div > div {
+  background-color: #fdc90e !important;
+  height: 17px !important;
+}
+
+#reviewall {
+  color: #ff6666;
+  font-family: "PreRegular";
+  font-size: 15px;
+  text-align: right;
+  cursor: pointer;
+}
+
+.reviewCard {
+  border-radius: 10px;
+  border-top: 1px solid rgba(217, 217, 217, 0.37);
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  font-family: "PreLight";
+  width: 150px;
+  height: 50px;
+  background: white;
+}
+
+.reviewBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+#reviewtitleName {
+  font-size: 17px;
+  margin-bottom: 15px;
+}
+
+#reviewtitleContent {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.caretypeButton {
+  font-family: "PreRegular";
+}
+
+.caretypeButton input[type="radio"] {
+  display: none;
+}
+
+.caretypeButton input[type="radio"] + label {
+  border-radius: 5px;
+  border: 1px solid #bdbdbd;
+  padding: 5px 14px;
+  margin-left: 10px;
+  color: #bdbdbd;
+}
+
+.caretypeButton input[type="radio"]:checked + label {
+  color: #ff6666;
+  border-color: #ff6666;
+}
+
+.timetable {
+  margin: 0px 17px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.subtitle3 {
+  font-family: "PreLight";
+  font-size: 15px;
+  margin: 20px 15px 20px 10px;
+}
+
+.timetable input[type="checkbox"] {
+  display: none;
+}
+
+.timetable input[type="checkbox"] + label {
+  display: inline-block;
+  font-family: "PreLight";
+  border-radius: 5px;
+  border: 1px solid #bdbdbd;
+  padding: 5px 10px;
+  color: #bdbdbd;
+  width: 37px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.buttonFooter {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  height: 70px;
+  border-top: 1px solid #c7c7c7;
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.buttonFooter button {
+  font-family: "PreMedium";
+  font-size: 15px;
+  border-radius: 5px;
+  width: 175px;
+  height: 46px;
+}
+
+.buttonFooter #a {
+  color: #ff6666;
+  background-color: white;
+  border: 1px solid #b3b3b3;
+}
+
+.buttonFooter #b {
+  border: 1px solid #ff6666;
+  background-color: #ff6666;
+  color: white;
 }
