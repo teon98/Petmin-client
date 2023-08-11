@@ -16,7 +16,7 @@ const Alarm = () => {
   useEffect(() => {
     axios({
       url: "/alarm/search",
-      params: { userId: "test11" },
+      params: { userId: userId },
       method: "get",
     })
       .then((res) => {
