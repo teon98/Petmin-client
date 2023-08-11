@@ -11,13 +11,19 @@ import { FaCalendarDays } from "react-icons/fa6";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MagnifyingGlass } from "react-loader-spinner";
 import axios from "axios";
+import "../../styles/daypickerPlus.css";
+import { useRecoilState } from "recoil";
+import { idtextAtom, userAddrAtom } from "../../atom/atoms";
 
 const PetSitterView = () => {
+  const [userId] = useRecoilState(idtextAtom);
+  const [address] = useRecoilState(userAddrAtom);
+  console.log("주소", address);
   //로딩이 느려서 추가
   const [loading, setLoading] = useState(true);
 
   //사용자 위치
-  const [location, setLocation] = useState("부천");
+  const [location, setLocation] = useState(address);
 
   //주소 변경
   const handleChange = (e) => {
@@ -37,8 +43,10 @@ const PetSitterView = () => {
       setCareType(e.target.value);
       setPetSitterList(
         petSitterList.filter((item) => {
-          console.log("item", item.dolbomOption);
-          return item.dolbomOption.includes(e.target.value);
+          console.log("item22", item);
+          console.log();
+          console.log(inputValue);
+          return item.scheduleDay[inputValue] === e.target.value;
         })
       );
     }
@@ -83,12 +91,16 @@ const PetSitterView = () => {
       closePopper();
       //날짜 배열 중에 선택된 날짜가 포함되어 있으면 그 날짜로 필터링
       let findDate = format(date, "y-MM-dd");
-      console.log("originList", originList);
+      //console.log("originList", originList);
       setPetSitterList(
         originList.filter((item) => {
-          console.log("item", item.scheduleDay);
-          console.log("findDate", findDate);
-          return item.scheduleDay.includes(findDate);
+          //console.log("item", item);
+          //console.log("scheduleDay", item.scheduleDay);
+          let dateArr = item.scheduleDay;
+          //console.log(dateArr);
+          let findDateArr = Object.keys(dateArr);
+          //console.log("findDate", findDate);
+          return findDateArr.includes(findDate);
         })
       );
     } else {
@@ -114,8 +126,8 @@ const PetSitterView = () => {
     axios
       .get("/dolbom/filter", {
         params: {
-          userId: "으악",
-          userAddress: "부천",
+          userId: userId,
+          userAddress: address,
         },
       })
       .then((res) => {
@@ -124,7 +136,7 @@ const PetSitterView = () => {
           setLoadSuccess(false);
         }
         setPetSitterList(res.data.slice(1));
-        setOriginList(res.data);
+        setOriginList(res.data.slice(1));
         setLoading(false);
       })
       .catch((err) => {
@@ -140,7 +152,7 @@ const PetSitterView = () => {
     axios
       .get("/dolbom/filter", {
         params: {
-          userId: "으악",
+          userId: userId,
           userAddress: location,
         },
       })
@@ -168,7 +180,7 @@ const PetSitterView = () => {
     <div className={style.petsitterview}>
       {/* 주소 검색 창 */}
       <div className={style.locationSearchBar}>
-        <FaLocationDot color="#C7C7C7" size={25} />
+        <FaLocationDot color="#C7C7C7" size={20} />
         <input
           type="text"
           value={location}
@@ -215,7 +227,7 @@ const PetSitterView = () => {
             }}
           >
             <div
-              tabIndex={-1}
+              tabIndex={5}
               style={popper.styles.popper}
               className="dialog-sheet"
               {...popper.attributes.popper}

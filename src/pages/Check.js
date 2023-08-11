@@ -31,6 +31,21 @@ const Check = () => {
       });
   }, []);
 
+  const dolbomok = (no) => {
+    axios({
+      url: "/dolbom/surack",
+      params: { dolbomNo: no },
+      method: "put",
+    })
+      .then((res) => {
+        console.log(res.data);
+        //nav();보험 페이지로 이동
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   // 리스트 출력
   const renderMessages = () => {
     const messageElements = [];
@@ -38,18 +53,40 @@ const Check = () => {
       messageElements.push(
         <div key={i} className={styles2.aldiv}>
           <span className={styles2.chspan}>
-            <img src={msg[i].map.sangdaeImg} className={styles2.chImg}></img>
             <div>
-              <p>{msg[i].map.sangdaeName}</p>
               <p>
-                {msg[i].map.StartDay} {msg[i].map.StartHour} ~
+                {msg[i].sangdaeName} 예약 시작 시간 {msg[i].startday} ~
               </p>
+              <p> 끝나는 시간 {msg[i].endday}</p>
               <p>
-                {msg[i].map.EndDay} {msg[i].map.EndHour}{" "}
+                상태 :{msg[i].state}
+                {"     "} 펫: {msg[i].pet.petName} {msg[i].pet.petAge}{" "}
+                {msg[i].petW}
               </p>
+              {msg[i].state === "대기중" ? (
+                <span>
+                  <button>취소</button>
+                  <button className="yobtn" onClick={() => dolbomok(msg[i].no)}>
+                    요청수락
+                  </button>
+                </span>
+              ) : msg[i].state === "수락완료" ? (
+                <span>
+                  <button>취소</button>
+                  <button>채팅하기</button>
+                </span>
+              ) : msg[i].state === "진행중" ? (
+                <span>
+                  <button>취소</button>
+                  <button>채팅하기</button>
+                </span>
+              ) : (
+                <span>
+                  <button>삭제</button>
+                </span>
+              )}
             </div>
           </span>
-          <p>안녕</p>
         </div>
       );
     }

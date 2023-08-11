@@ -2,14 +2,14 @@ import axios from "axios";
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import "../styles/chat.scss";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { idtextAtom, nametextAtom } from "../atom/atoms";
 import style from "../styles/PetSitterView.module.css";
+import st from "../styles/chat.scss";
 const Chat = () => {
   let { room } = useParams();
-
+  const navigate = useNavigate();
   const location = useLocation();
   const receiverId = decodeURI(
     location.pathname.split("/")[location.pathname.split("/").length - 1]
@@ -28,17 +28,56 @@ const Chat = () => {
   //스크롤
   const scrollRef = useRef();
 
+  const timeRegex = /(\S+\s)(\d{1,2}:\d{2})/;
+
   const msgBox = chatt.map((item, idx) => (
-    <div
-      key={idx}
-      className={item.startId === startId.toString() ? "me" : "other"}
-    >
-      <span>
-        <b>{item.name}</b>
-      </span>{" "}
-      [ {item.date} ]<br />
-      <span>{item.msg}</span>
-    </div>
+    <>
+      <div
+        key={idx}
+        className={item.startId === startId.toString() ? "me" : "other"}
+      >
+        <span>
+          <b>{item.name}</b>
+        </span>{" "}
+        <span>{item.msg}</span>
+        <span>{console.log(item?.chatCheck)}</span>
+        {item.startId === startId.toString() ? (
+          <p
+            style={{
+              marginLeft: "-60px",
+              fontFamily: "Inter",
+              fontSize: "12px",
+              fontStyle: "normal",
+              fontWeight: "400",
+              lineHeight: "normal",
+            }}
+          >
+            {item?.chatCheck === undefined || item?.chatCheck === true
+              ? "1️⃣"
+              : ""}
+            &nbsp;
+            {item.date.match(timeRegex)[2]}
+          </p>
+        ) : (
+          <p
+            style={{
+              marginLeft: "245px",
+              fontFamily: "Inter",
+              fontSize: "12px",
+              fontStyle: "normal",
+              fontWeight: "400",
+              lineHeight: "normal",
+            }}
+          >
+            {item.date.match(timeRegex)[2]}
+            &nbsp;
+            {item?.chatCheck === undefined || item?.chatCheck === true
+              ? "1️⃣"
+              : ""}
+          </p>
+        )}
+      </div>
+    </>
   ));
   const webSocketLogin = useCallback(() => {
     ws.current = new WebSocket(`ws://localhost:8888/socket/chatt/${room}`);
@@ -64,6 +103,10 @@ const Chat = () => {
         },
       })
       .then((res) => {
+        console.log(
+          res.data.chatHistory[0],
+          "res.data.chatHistory[0]res.data.chatHistory[0]"
+        );
         console.log(res.data.chatHistory[0].startId.userId);
         // console.log(res.data.startId);
         if (
@@ -77,6 +120,7 @@ const Chat = () => {
             const hRoom = res.data.chatroomId;
             const Sid = history.startId.userId;
             let hDate = history.chatDate;
+            let chatCheck = history.chatCheck;
             hDate = new Date(hDate).toLocaleDateString();
             const historyChat = {
               msg: hMsg,
@@ -86,6 +130,7 @@ const Chat = () => {
               chatroomId: hRoom,
               // chat,
               date: new Date().toLocaleString(),
+              chatCheck: chatCheck,
             };
             historylist.push(historyChat);
           });
@@ -101,7 +146,12 @@ const Chat = () => {
   }
 
   useEffect(() => {
-    scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    scrollRef.current.scrollIntoView({
+      behavior: "auto",
+      block: "end",
+      inline: "nearest",
+    });
+    // console.log("hi");
   }, [msgBox]);
 
   // useEffect(() => {
@@ -117,16 +167,15 @@ const Chat = () => {
   }, [webSocketLogin]);
 
   useEffect(() => {
-    console.log(
-      startId,
-      userName,
-      receiverId,
-      "startId, userName, receiverId,"
-    );
+    // console.log(
+    //   startId,
+    //   userName,
+    //   receiverId,
+    //   "startId, userName, receiverId,"
+    // );
     console.log(chatt, startId.toString(), "chatt@@@");
     console.log(socketData, "socketData");
     if (socketData !== undefined) {
-      // console.log(socketData, "socketData");
       const tempData = chatt.concat(socketData);
       console.log(tempData, "tempData");
       setChatt(tempData);
@@ -164,6 +213,7 @@ const Chat = () => {
         startId: startId,
         receiverId: receiverId,
         chatroomId: room,
+        // chatCheck:
         // chat,
         date: new Date().toLocaleString(),
       }; //전송 데이터(JSON)
@@ -211,6 +261,7 @@ const Chat = () => {
       <GlobalStyle />
       <div
         style={{
+          width: "453px",
           height: "70px",
           flexShrink: "0",
           background: "#FFF",
@@ -227,6 +278,7 @@ const Chat = () => {
           height="23"
           viewBox="0 0 17 23"
           fill="none"
+          onClick={() => navigate(-1)}
           style={{ marginLeft: "1.2rem" }}
         >
           <path
@@ -262,151 +314,176 @@ const Chat = () => {
         </svg>
       </div>
 
-      <div>
-        {/* <div id="chat-wrap"> */}
-        <div id="chatt">
-          <div
+      {/* <div id="chat-wrap"> */}
+      <div
+        id="chatt"
+        // style={{
+        //   display: "flex",
+        //   flexDirection: "column",
+        //   alignItems: "center",
+        //   justifyContent: "center",
+        // }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "412px",
+            height: "90px",
+            flexShrink: "0",
+            borderRadius: "10px",
+            background: "#E9E9E9",
+            margin: "20px auto",
+            padding: "5px",
+            marginLeft: "15px",
+          }}
+        >
+          <p
             style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "354px",
-              height: "90px",
-              flexShrink: "0",
-              borderRadius: "10px",
-              background: "#E9E9E9",
-              margin: "20px auto",
-              padding: "5px",
+              color: "#5F5F5F",
+              fontFamily: "Inter",
+              fontSize: "13px",
+              fontStyle: "normal",
+              fontWeight: "400",
+              lineHeight: "normal",
+              textAlign: "center",
+              margin: "0", // 추가
             }}
           >
-            <p
+            <p style={{ color: "#000", textAlign: "center" }}>
+              {receiverId}님에게 돌봄 문의를 할 수 있습니다
+            </p>
+            <br />
+            연락처 또는 SNS 요구, 과도한 신상 요구, 직거래 제안 그 외 부적절한
+            언행 시 이용이 정지될 수 있습니다.
+          </p>
+        </div>
+        <br />
+        <div
+          id="talk"
+          style={{
+            marginLeft: "30px",
+          }}
+        >
+          <div className="talk-shadow"></div>
+          <span
+            style={{
+              display: "block",
+              textAlign: "center",
+              margin: "10px auto",
+              width: "100%",
+              fontWeight: "bold", // Optional: Add any additional styling you want
+            }}
+          >
+            {chatt[0]?.date ? chatt[0]?.date : "대화를 시작하세요"}
+          </span>
+          {msgBox}
+          <div ref={scrollRef}></div>
+        </div>
+
+        <div
+          id="btm"
+          style={{
+            borderTop: "1px solid #B3B3B3",
+            padding: "20px",
+            width: "415px",
+            height: "35px",
+            // backgroundColor: "pink",
+            // marginLeft: "10px",
+            // maxWidth: "500px",
+            display: "flex",
+            alignItems: "center", // Vertically center-align the content
+            justifyContent: "center", // Horizontally center-align the content
+            justifyContent: "space-between",
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="29"
+            height="29"
+            viewBox="0 0 29 29"
+            fill="none"
+          >
+            <g clip-path="url(#clip0_86_1030)">
+              <path
+                d="M25.375 22.9583V6.04167C25.375 4.7125 24.2875 3.625 22.9583 3.625H6.04167C4.7125 3.625 3.625 4.7125 3.625 6.04167V22.9583C3.625 24.2875 4.7125 25.375 6.04167 25.375H22.9583C24.2875 25.375 25.375 24.2875 25.375 22.9583ZM10.7542 16.8925L13.2917 19.9496L17.0375 15.1283C17.2792 14.8142 17.7625 14.8142 18.0042 15.1404L22.2454 20.7954C22.5475 21.1942 22.2575 21.7621 21.7621 21.7621H7.27417C6.76667 21.7621 6.48875 21.1821 6.80292 20.7833L9.81167 16.9167C10.0413 16.6025 10.5004 16.5904 10.7542 16.8925Z"
+                fill="#323232"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_86_1030">
+                <rect width="29" height="29" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+
+          <label htmlFor="place">
+            <div
+              className={style.locationSearchBar}
               style={{
-                color: "#5F5F5F",
-                fontFamily: "Inter",
-                fontSize: "13px",
-                fontStyle: "normal",
-                fontWeight: "400",
-                lineHeight: "normal",
-                textAlign: "center",
-                margin: "0", // 추가
+                backgroundColor: "white",
+                justifyContent: "center",
+                borderRadius: "20px",
+                border: "2px solid #D2D2D2",
+
+                width: "80%",
+                maxWidth: "300px",
+                display: "flex",
+                alignItems: "center", // Vertically center-align the content
+                justifyContent: "center", // Horizontally center-align the content
               }}
             >
-              <p style={{ color: "#000", textAlign: "center" }}>
-                {receiverId}님에게 돌봄 문의를 할 수 있습니다
-              </p>
-              <br />
-              연락처 또는 SNS 요구, 과도한 신상 요구, 직거래 제안 그 외 부적절한
-              언행 시 이용이 정지될 수 있습니다.
-            </p>
-          </div>
-          <br />
-          <div id="talk">
-            <div className="talk-shadow"></div>
-            {msgBox}
-            <div ref={scrollRef}></div>
-          </div>
-
+              <input
+                style={{ width: "100%", flex: "1", padding: "9px" }}
+                id="msg"
+                value={msg}
+                onChange={onText}
+                onKeyDown={(ev) => {
+                  if (ev.keyCode === 13) {
+                    send();
+                    console.log("onKeyDown");
+                  }
+                }}
+                // onChange={keywordChange}
+                className={style.locationSearch}
+              />
+            </div>
+          </label>
           <div
-            id="btm"
             style={{
-              borderTop: "1px solid #B3B3B3",
-              padding: "20px",
-              width: "393px",
-              height: "35px",
-              // backgroundColor: "pink",
-              marginLeft: "20px",
-              maxWidth: "500px",
-              display: "flex",
-              alignItems: "center", // Vertically center-align the content
-              justifyContent: "center", // Horizontally center-align the content
-              justifyContent: "space-between",
+              marginRight: "30px",
+              width: "43px",
+              height: "46px",
+              flexShrink: "0",
+              borderRadius: "10px",
+              background: "#F66",
+              boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.25)",
             }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="29"
-              height="29"
-              viewBox="0 0 29 29"
+              width="30"
+              height="38"
+              viewBox="-4 -2 24 24"
               fill="none"
+              onClick={() => send()}
             >
-              <g clip-path="url(#clip0_86_1030)">
+              <g clip-path="url(#clip0_86_1037)">
                 <path
-                  d="M25.375 22.9583V6.04167C25.375 4.7125 24.2875 3.625 22.9583 3.625H6.04167C4.7125 3.625 3.625 4.7125 3.625 6.04167V22.9583C3.625 24.2875 4.7125 25.375 6.04167 25.375H22.9583C24.2875 25.375 25.375 24.2875 25.375 22.9583ZM10.7542 16.8925L13.2917 19.9496L17.0375 15.1283C17.2792 14.8142 17.7625 14.8142 18.0042 15.1404L22.2454 20.7954C22.5475 21.1942 22.2575 21.7621 21.7621 21.7621H7.27417C6.76667 21.7621 6.48875 21.1821 6.80292 20.7833L9.81167 16.9167C10.0413 16.6025 10.5004 16.5904 10.7542 16.8925Z"
-                  fill="#323232"
+                  d="M18.7501 3.94046L4.07011 10.0805C3.24011 10.4305 3.26011 11.6105 4.09011 11.9305L9.43011 14.0005C9.69011 14.1005 9.90011 14.3105 10.0001 14.5705L12.0601 19.9005C12.3801 20.7405 13.5701 20.7605 13.9201 19.9305L20.0701 5.26046C20.4001 4.43046 19.5701 3.60046 18.7501 3.94046Z"
+                  fill="white"
                 />
               </g>
               <defs>
-                <clipPath id="clip0_86_1030">
-                  <rect width="29" height="29" fill="white" />
+                <clipPath id="clip0_86_1037">
+                  <rect width="24" height="24" fill="white" />
                 </clipPath>
               </defs>
             </svg>
+          </div>
 
-            <label htmlFor="place">
-              <div
-                className={style.locationSearchBar}
-                style={{
-                  backgroundColor: "white",
-                  justifyContent: "center",
-                  borderRadius: "20px",
-                  border: "2px solid #D2D2D2",
-
-                  width: "80%",
-                  maxWidth: "300px",
-                  display: "flex",
-                  alignItems: "center", // Vertically center-align the content
-                  justifyContent: "center", // Horizontally center-align the content
-                }}
-              >
-                <input
-                  style={{ width: "100%", flex: "1", padding: "9px" }}
-                  id="msg"
-                  value={msg}
-                  onChange={onText}
-                  onKeyDown={(ev) => {
-                    if (ev.keyCode === 13) {
-                      send();
-                      console.log("onKeyDown");
-                    }
-                  }}
-                  // onChange={keywordChange}
-                  className={style.locationSearch}
-                />
-              </div>
-            </label>
-            <div
-              style={{
-                marginRight: "30px",
-                width: "43px",
-                height: "46px",
-                flexShrink: "0",
-                borderRadius: "10px",
-                background: "#F66",
-                boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="38"
-                viewBox="-4 -2 24 24"
-                fill="none"
-              >
-                <g clip-path="url(#clip0_86_1037)">
-                  <path
-                    d="M18.7501 3.94046L4.07011 10.0805C3.24011 10.4305 3.26011 11.6105 4.09011 11.9305L9.43011 14.0005C9.69011 14.1005 9.90011 14.3105 10.0001 14.5705L12.0601 19.9005C12.3801 20.7405 13.5701 20.7605 13.9201 19.9305L20.0701 5.26046C20.4001 4.43046 19.5701 3.60046 18.7501 3.94046Z"
-                    fill="white"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0_86_1037">
-                    <rect width="24" height="24" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
-            </div>
-
-            {/* <div id="sendZone">
+          {/* <div id="sendZone">
               <textarea
                 id="msg"
                 value={msg}
@@ -429,8 +506,8 @@ const Chat = () => {
                 }}
               />
             </div> */}
-          </div>
-          {/* <input
+        </div>
+        {/* <input
             // disabled={chkLog}
             disabled={true}
             // className="ipt"
@@ -440,7 +517,6 @@ const Chat = () => {
             value={userName}
             // onChange={(event) => setName(event.target.value)}
           /> */}
-        </div>
       </div>
     </>
   );
