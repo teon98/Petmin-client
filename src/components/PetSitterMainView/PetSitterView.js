@@ -18,12 +18,15 @@ import { idtextAtom, userAddrAtom } from "../../atom/atoms";
 const PetSitterView = () => {
   const [userId] = useRecoilState(idtextAtom);
   const [address] = useRecoilState(userAddrAtom);
-  console.log("주소", address);
+  const adds = address.split(" ");
+  console.log("주소", adds[0] + " " + adds[1] + " " + adds[2]);
   //로딩이 느려서 추가
   const [loading, setLoading] = useState(true);
 
   //사용자 위치
-  const [location, setLocation] = useState(address);
+  const [location, setLocation] = useState(
+    adds[0] + " " + adds[1] + " " + adds[2]
+  );
 
   //주소 변경
   const handleChange = (e) => {
@@ -127,7 +130,7 @@ const PetSitterView = () => {
       .get("/dolbom/filter", {
         params: {
           userId: userId,
-          userAddress: address,
+          userAddress: adds[0] + " " + adds[1] + " " + adds[2],
         },
       })
       .then((res) => {
