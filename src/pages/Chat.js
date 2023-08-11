@@ -7,6 +7,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { idtextAtom, nametextAtom } from "../atom/atoms";
 import style from "../styles/PetSitterView.module.css";
+import { hi } from "date-fns/locale";
 const Chat = () => {
   let { room } = useParams();
 
@@ -37,7 +38,7 @@ const Chat = () => {
         <b>{item.name}</b>
       </span>{" "}
       [ {item.date} ]<br />
-      <span>{item.msg}</span>
+      <span>{item.msg}</span><span>{item.chatCheck ? "A": "B"}</span>
     </div>
   ));
   const webSocketLogin = useCallback(() => {
@@ -46,7 +47,7 @@ const Chat = () => {
     console.log(ws.current, "ws.current");
 
     ws.current.onmessage = (message) => {
-      const dataSet = JSON.parse(message.data);
+      const dataSet = JSON.parse(message?.data);
       setSocketData(dataSet);
     };
   }, [room]);
@@ -77,6 +78,7 @@ const Chat = () => {
             const hRoom = res.data.chatroomId;
             const Sid = history.startId.userId;
             let hDate = history.chatDate;
+            let chatCheck = history.chatCheck;
             hDate = new Date(hDate).toLocaleDateString();
             const historyChat = {
               msg: hMsg,
@@ -84,6 +86,7 @@ const Chat = () => {
               startId: Sid,
               // receiverId: receiverId,
               chatroomId: hRoom,
+              chatCheck: chatCheck,
               // chat,
               date: new Date().toLocaleString(),
             };
