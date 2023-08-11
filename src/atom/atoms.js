@@ -160,3 +160,81 @@ export const petProfileImgAtom = atom({
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
+
+export const petTendency1Atom = atom({
+  key: "petTendency1",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petTendency2Atom = atom({
+  key: "petTendency2",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petTendency3Atom = atom({
+  key: "petTendency3",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petTendency4Atom = atom({
+  key: "petTendency4",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petTendency5Atom = atom({
+  key: "petTendency5",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petTendencyMsgAtom = atom({
+  key: "petTendencyMsg",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const careTypeAtom = atom({
+  key: "careType",
+  default: [false, false, false, false, false, false, false, false],
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petVaccine1Atom = atom({
+  key: "petVaccine1",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petVaccine2Atom = atom({
+  key: "petVaccine2",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petVaccineMsgAtom = atom({
+  key: "petVaccineMsg",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petChooseListAtom = atom({
+  key: "petChooseList",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petVaccineValueList1Atom = atom({
+  key: "petVaccineValueList1",
+  default: [],
+  // effects_UNSTABLE: [persistAtom],
+});
+
+export const petVaccineValueList2Atom = atom({
+  key: "petVaccineValueList2",
+  default: [],
+  // effects_UNSTABLE: [persistAtom],
+});
