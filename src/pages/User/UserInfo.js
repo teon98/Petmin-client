@@ -12,6 +12,7 @@ import {
   emailtextAtom,
   fullAddressAtom,
   idtextAtom,
+  nametextAtom,
   userAddrAtom,
   userDetailAddrAtom,
   userImgAtom,
@@ -97,6 +98,7 @@ const Info = styled.div`
 
 function UserInfo(props) {
   const [userId, setUserId] = useRecoilState(idtextAtom);
+  const userName = useRecoilState(nametextAtom);
   //화면에 띄울 img
   const [imgFile, setImgFile] = useRecoilState(userImgAtom);
   //img 경로? 인듯
@@ -182,7 +184,7 @@ function UserInfo(props) {
       <BackTitleHeader />
       <Info>
         <div id={styles.title} style={{ display: "inline-block" }}>
-          {userId}님,
+          {userName}님,
           <br />
           안녕하세요!
         </div>
