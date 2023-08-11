@@ -45,8 +45,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<MainBTNav />}>
             <Route index element={<Main />} />
-            {/* 펫시터 프로필(예약을 위한) */}
-            <Route path="/:userId" element={<PSView />} />
+
             <Route path="check" element={<Check />} />
             <Route path="favorite" element={<Favorite />} />
             <Route path="rooms" element={<ChatList />} />
@@ -70,6 +69,8 @@ const App = () => {
             {/* 병원페이지 */}
             <Route path="/hospital" element={<Hospital />}></Route>
           </Route>
+          {/* 펫시터 프로필(예약을 위한) */}
+          <Route path="/sitterProfile/:userId" element={<PSView />} />
           {/* 계정 */}
           <Route path="/auth" element={<MainBTNav />}></Route>
           {/* 알림페이지 */}

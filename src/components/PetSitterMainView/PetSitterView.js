@@ -13,15 +13,17 @@ import { MagnifyingGlass } from "react-loader-spinner";
 import axios from "axios";
 import "../../styles/daypickerPlus.css";
 import { useRecoilState } from "recoil";
-import { idtextAtom } from "../../atom/atoms";
+import { idtextAtom, userAddrAtom } from "../../atom/atoms";
 
 const PetSitterView = () => {
   const [userId] = useRecoilState(idtextAtom);
+  const [address] = useRecoilState(userAddrAtom);
+  console.log("주소", address);
   //로딩이 느려서 추가
   const [loading, setLoading] = useState(true);
 
   //사용자 위치
-  const [location, setLocation] = useState("부천");
+  const [location, setLocation] = useState(address);
 
   //주소 변경
   const handleChange = (e) => {
@@ -125,7 +127,7 @@ const PetSitterView = () => {
       .get("/dolbom/filter", {
         params: {
           userId: userId,
-          userAddress: "부천",
+          userAddress: address,
         },
       })
       .then((res) => {
