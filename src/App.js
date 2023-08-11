@@ -40,6 +40,7 @@ import PetList from "./pages/User/PetList";
 import PetInfo from "./pages/User/PetInfo";
 import PSView from "./pages/petsitter/PSView";
 import Logout from "./components/Logout";
+import Assurance from "./pages/User/Assurance";
 
 const App = () => {
   return (
@@ -149,6 +150,10 @@ const App = () => {
 
           {/* 돌봄 요청 페이지 3 (태영 요청) */}
           <Route path="/careRequest3" element={<CareRequest3 />}></Route>
+          {/* 보험 적용 페이지 */}
+          <Route path="/" element={<MainBTNav />}>
+            <Route path="/assurance" element={<Assurance />}></Route>
+          </Route>
         </Routes>
       </RecoilRoot>
     </div>
