@@ -36,7 +36,6 @@ import CareRequest3 from "./pages/CareRequest3";
 import PetVaccine1 from "./pages/User/PetVaccine1";
 import PetVaccine2 from "./pages/User/PetVaccine2";
 import PetVaccine3 from "./pages/User/PetVaccine3";
-import PetVaccine from "./pages/User/PetVaccine";
 import PetList from "./pages/User/PetList";
 import PetInfo from "./pages/User/PetInfo";
 import PSView from "./pages/petsitter/PSView";
