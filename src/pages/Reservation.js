@@ -7,6 +7,46 @@ import { format, isValid, parse } from "date-fns";
 import FocusTrap from "focus-trap-react";
 import axios from "axios";
 import styles from "../styles/MypageMenu.module.css";
+import { styled } from "styled-components";
+
+const TimeList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 20px;
+  margin-right: 20px;
+  box-sizing: border-box;
+  
+  select {
+    text-align: center;
+    height: 46px;
+    width: 160px;
+
+    font-family: "PreMedium";
+    font-size: 15px;
+    color: #ff6666;
+    border-radius: 5px;
+    border: 2px solid #b3b3b3;
+    margin-right: 20px;
+  }
+  .endTime {
+    text-align: center;
+    height: 42px;
+    width: 158px;
+    font-family: "PreMedium";
+    font-size: 15px;
+    color: #ff6666;
+    border-radius: 5px;
+    border: 2px solid #b3b3b3;
+    line-height: 43px;
+  }
+`;
+
+const DateList = styled.div`
+  width: 85%;
+  display: inline-block;
+  margin-right: 20px;
+  margin-left: 20px;
+`;
 
 function Reservation(props) {
   //은정
@@ -22,6 +62,7 @@ function Reservation(props) {
       setEndTime("");
       setStartTime("6:00");
     } else {
+
       setInputValue("");
     }
   };
@@ -153,12 +194,12 @@ function Reservation(props) {
   return (
     <div>
       <div id={styles.title}>
-        돌봄이 필요한 날짜와 시간을
+        산책이 필요한 날짜와 시간을
         <br />
         선택하세요.
       </div>
-      <div id={style.frame}>
-        <div className={style.subtitle3}>날짜</div>
+      <DateList id={style.frame}>
+        <div className={style.subtitle3}>돌봄 시작</div>
         <div ref={popperRef}>
           <input
             size={12}
@@ -172,6 +213,7 @@ function Reservation(props) {
             id="todayDate"
           />
         </div>
+        {/* ---------시작달력 */}
         {isPopperOpen && (
           <FocusTrap
             active
@@ -204,10 +246,36 @@ function Reservation(props) {
             </div>
           </FocusTrap>
         )}
-      </div>
-
-      <div id="timetable">
+      </DateList>
+{/* 
+      <TimeList id="timetable">
         <div className={style.subtitle3}>시간</div>
+        <select
+          name="StartTime"
+          id="StartTime"
+          onChange={(e) => selectTime(e.target.value)}
+          value={startTime}
+        >
+         {time.map((hour) => (
+            <option key={hour} value={hour}>
+              {hour}
+            </option>
+          ))}
+          <div>{endTime ? endTime : "-"}</div>
+          
+          <div
+          className={style.saveBT}
+          id={style.frame}
+          style={{ textAlign: "right" }}
+        >
+          <input type="button" value="요청하기" onClick={handleClick} />
+        </div>
+        </select>
+      </TimeList> */}
+
+
+      <TimeList id="timetable">
+        <div className={style.subtitle3} style={{width : "100%"}}>시간</div>
         <select
           name="StartTime"
           id="StartTime"
@@ -220,15 +288,24 @@ function Reservation(props) {
             </option>
           ))}
         </select>
-        <div>{endTime ? endTime : "-"}</div>
+        <div
+          className="endTime"
+          name="StartTime"
+          id="StartTime"
+          // onChange={(e) => selectTime(e.target.value)}
+          value={endTime}
+        > 
+        {endTime }
+        </div>
+        {/* <div>{endTime ? endTime : "-"}</div> */}
         <div
           className={style.saveBT}
           id={style.frame}
-          style={{ textAlign: "right" }}
+          style={{ textAlign: "right", width : "100%" }}
         >
           <input type="button" value="요청하기" onClick={handleClick} />
         </div>
-      </div>
+      </TimeList>
     </div>
   );
 }

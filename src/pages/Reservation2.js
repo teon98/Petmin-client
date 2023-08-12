@@ -34,10 +34,10 @@ const DateList = styled.div`
 `;
 
 function Reservation2(props) {
-  const location = useLocation();
-  const sitter = location.state.sitter;
-  console.log("sitter");
-  console.log(location.state);
+  //const location = useLocation();
+  //const sitter = location.state.sitter;
+  //console.log("sitter");
+  //console.log(location.state);
 
   //은정
   const [startTime, setStartTime] = useState("6");
@@ -225,7 +225,8 @@ function Reservation2(props) {
       method: "get",
       url: "/sitter/getSchedule",
       params: {
-        sitterId: sitter ? sitter : "test11",
+        //sitterId: sitter ? sitter : "test11",
+        sitterId: "test11",
         scheduleDay: scheduleDay,
       },
     }).then((res) => {
