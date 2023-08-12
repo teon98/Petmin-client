@@ -1,10 +1,10 @@
-.textInputContainer {
+.textInputContainer2 {
   width: 100%;
   margin: auto;
   margin-bottom: 0px;
 }
 
-.textInputLable {
+.textInputLable2 {
   color: black;
   font-family: PreMedium;
   font-size: 15px;
@@ -14,7 +14,7 @@
   /* margin-right: 20px; */
 }
 
-.textInputValue {
+.textInputValue2 {
   height: 50px;
   width: 100%;
   border-style: none;
@@ -25,22 +25,12 @@
   box-sizing: border-box;
 }
 
-.emailValidText {
+.emailValidText2 {
   font-family: PreMedium;
   font-size: 13px;
   color: #ff8989;
   margin-top: 10px;
   height: 15px;
-}
-
-#formargin p {
-  display: inline-block;
-  width: 20%;
-}
-
-#formargin input {
-  display: inline-block;
-  width: 80%;
 }
 
 #formargin2 p {

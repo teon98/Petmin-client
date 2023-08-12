@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import QuestionComponent from "../../components/QuestionComponent";
 import { useRecoilState } from "recoil";
-import { petVaccine2Atom, petVaccineValueList2Atom } from "../../atom/atoms";
+import { petVaccineValueList2Atom } from "../../atom/atoms";
 import BackTitleHeader2 from "../../components/BackTitleHeader2";
 import QuestionFooter from "../../components/QuestionFooter";
 import { useNavigate } from "react-router";
 import CheckBoxComponent from "../../components/CheckBoxComponent";
 
-function PetVaccine2(props) {
-  const [petVaccine2, setPetVaccine2] = useRecoilState(petVaccine2Atom);
+function PetVaccine2() {
   const petVaccine2Options = [
     {
       name: "petVaccine2",
@@ -21,10 +19,10 @@ function PetVaccine2(props) {
       label: "외부기생충(매월 1회 접종완료)",
     },
   ];
-  const petVaccine2Change = (e) => {
-    const value = e.target.value;
-    setPetVaccine2(value);
-  };
+
+  const [checkValueList, setCheckValueList] = useRecoilState(
+    petVaccineValueList2Atom
+  );
 
   const navigate = useNavigate();
   const moveToNextPage = () => {
@@ -33,16 +31,12 @@ function PetVaccine2(props) {
 
   const [btnState, setBtnState] = useState(false);
   useEffect(() => {
-    if (petVaccine2 !== "") {
+    if (checkValueList.length > 0) {
       setBtnState(true);
     } else {
       setBtnState(false);
     }
-  }, [petVaccine2]);
-
-  const [checkValueList, setCheckValueList] = useRecoilState(
-    petVaccineValueList2Atom
-  );
+  }, [checkValueList]);
 
   return (
     <>

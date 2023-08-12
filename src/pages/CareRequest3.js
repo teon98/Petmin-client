@@ -73,10 +73,9 @@ function CareRequest3(props) {
           } else if (pet.petSex === "여아") {
             icon = "♀";
           }
-
           return {
             name: "careType",
-            value: `${icon} ${pet.petName} (${pet.petAge})`,
+            value: `${pet.petNo}`,
             label: `${icon} ${pet.petName} (${pet.petAge})`,
           };
         });
@@ -88,6 +87,11 @@ function CareRequest3(props) {
   }, []);
 
   const [checkValueList, setCheckValueList] = useRecoilState(petChooseListAtom);
+
+  for (let i = 0; i < checkValueList.length; i++) {
+    const element = checkValueList[i];
+    console.log(element); // 각 요소를 하나씩 출력하거나 원하는 작업을 수행
+  }
 
   return (
     <>
@@ -104,9 +108,6 @@ function CareRequest3(props) {
           options={careTypeOptions}
           checkValueList={checkValueList}
           setCheckValueList={setCheckValueList}
-
-          //onChange={careTypeChange}
-          //selectedValue={careType}
         />
       </div>
       <QuestionFooter
