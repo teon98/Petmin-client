@@ -55,9 +55,9 @@ function CareRequest1(props) {
   const navigate = useNavigate();
   const moveToNextPage = () => {
     if (careType === "산책 (단기돌봄)") {
-      navigate("/reservation", { state: { sitter: props.userId } });
+      navigate("/reservation", { state: { sitter: sitter } });
     } else {
-      navigate("/reservation2", { state: { sitter: props.userId } });
+      navigate("/reservation2", { state: { sitter: sitter } });
     }
   };
 

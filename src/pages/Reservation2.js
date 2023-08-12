@@ -9,7 +9,10 @@ import axios from "axios";
 import styles from "../styles/MypageMenu.module.css";
 import { start } from "@popperjs/core";
 import { styled } from "styled-components";
-import { useLocation } from "react-router";
+import { UNSAFE_LocationContext, useLocation, useNavigate } from "react-router";
+import BackTitleHeader2 from "../components/BackTitleHeader2";
+import QuestionComponent from "../components/QuestionComponent";
+import QuestionFooter from "../components/QuestionFooter";
 
 const TimeList = styled.div`
   display: inline-block;
@@ -34,10 +37,9 @@ const DateList = styled.div`
 `;
 
 function Reservation2(props) {
-  //const location = useLocation();
-  //const sitter = location.state.sitter;
-  //console.log("sitter");
-  //console.log(location.state);
+  const location = useLocation();
+  const sitter = location.state.sitter; 
+  const address = location.state.address;
 
   //은정
   const [startTime, setStartTime] = useState("6");
@@ -54,6 +56,7 @@ function Reservation2(props) {
       setEndTime("6");
       setStartTime("6");
       //시터 일정 불러오기
+      console.log("날짜 입력 받음. 시터 ㅇ리정 가져오겠습니다.")
       sitterSchedule(format(date, "y-MM-dd"), 1);
       // setTime(time.filter((item) => item == ))
     } else {
@@ -63,6 +66,9 @@ function Reservation2(props) {
   const handleDaySelect2 = (date) => {
     console.log("끝나는 날이 더 큰가? ");
     console.log(inputValue < format(date, "y-MM-dd"));
+    if(inputValue > format(date, "y-MM-dd")){
+      setBtnState(false)
+    }
     // console.log(startTime);
     setSelected2(date);
     if (date) {
@@ -84,12 +90,25 @@ function Reservation2(props) {
       const n = parseInt(e);
       console.log("n 시간 선택시");
       console.log(n);
-      setEndTime(n + 1);
+      setBtnState(false)
+      setEndTime(e);
       // setTime(stime.filter((item) => item > n));
     }
     //끝나는 시간
     else {
       setEndTime(e);
+      //시작날짜.시간 < 종료날짜.시간 일때만 btnState(true)
+      //1. 시작날짜 === 종료날짜
+      
+      if((inputValue === inputValue2 && parseInt(startTime.split(":")[0]) < parseInt(e.split(":"))) ||
+       inputValue < inputValue2){
+        console.log("1. 시작날짜 === 종료날짜이면서 시간은 큼")
+        console.log("2. 시작날짜 < 종료날짜")
+        setBtnState(true)
+      }else {
+        console.log("3. 일정을 다시 확인해 주세요")
+        setBtnState(false)
+      }
       console.log("******************************************");
       console.log("시간 선택 완료");
       console.log("시작날짜");
@@ -99,6 +118,7 @@ function Reservation2(props) {
       console.log("끝나는 날짜");
       console.log(inputValue2);
       console.log("끝나는 시간");
+      console.log(e);
       console.log(endTime);
       console.log("******************************************");
     }
@@ -167,6 +187,8 @@ function Reservation2(props) {
   const buttonRef2 = useRef(null);
   const [popperElement, setPopperElement] = useState(null);
   const [popperElement2, setPopperElement2] = useState(null);
+  const [btnState, setBtnState] = useState(false)
+  const nav = useNavigate();
 
   const popper = usePopper(popperRef.current, popperElement, {
     placement: "bottom-start",
@@ -220,78 +242,62 @@ function Reservation2(props) {
 
   //날짜 클릭하면 시터 스케줄 가져오기
   const sitterSchedule = (scheduleDay, i) => {
-    console.log("시터 일정가져오겠습니다.");
+    console.log(sitter + "시터 일정가져오겠습니다.");
+    
     axios({
       method: "get",
       url: "/sitter/getSchedule",
       params: {
-        //sitterId: sitter ? sitter : "test11",
-        sitterId: "test11",
-        scheduleDay: scheduleDay,
+        sitterId: sitter,
+         scheduleDay: scheduleDay,
       },
     }).then((res) => {
       console.log("****************시터 일정 가져오기입니다.****************");
-      setAbleStartTime(res.data.map((item) => item.Hour.Hour2));
-      //시작날짜 클릭하면
+      setBtnState(false)
+      
+      //시터 일정 가져와서 dolbomStatus가 0인 것만 다시 배열에 넣기. => 예약 가능한 상태만 
+      var arr = res.data.filter((item) => item.Hour.dolbomStatus === 0);      
+
+      //기존 코드
+      setAbleStartTime(arr.map((item) => item.Hour.Hour2));
+       //시작날짜 클릭하면
       if (i === 1) {
-        setSTime(() => res.data.map((item) => item.Hour.Hour2));
-        setETime(() => res.data.map((item) => item.Hour.Hour2));
-      }
+        setSTime(() => arr.map((item) => item.Hour.Hour2));
+        setETime(() => arr.map((item) => item.Hour.Hour2));
+       }
       //끝날짜 클릭하면
       else {
-        setETime(() => res.data.map((item) => item.Hour.Hour2));
-      }
+        setETime(() => arr.map((item) => item.Hour.Hour2));
+       }
 
-      console.log(res.data);
     });
   };
-
-  //기존 일정 가져오기
-  useEffect(() => {
-    axios
-      .get("/sitter/getSchedule", {
-        params: {
-          sitterId: "ckdrua76",
-          scheduleDay: inputValue,
-        },
-      })
-      .then((res) => {
-        //테이블 돌기
-        var timetable = document.querySelectorAll(
-          "#timetable input[type='checkbox']"
-        );
-
-        //테이블 초기화
-        for (let z = 0; z < timetable.length; z++) {
-          timetable[z].checked = false;
-          timetable[z].disabled = false;
-        }
-
-        for (let i = 0; i < res.data.length; i++) {
-          for (let j = 0; j < timetable.length; j++) {
-            if (res.data[i].Hour["Hour2"] === timetable[j].id) {
-              if (!res.data[i].Hour["dolbomStatus"]) {
-                timetable[j].checked = true;
-              } else {
-                timetable[j].disabled = true;
-              }
-            }
-          }
-        }
-      })
-      .catch((err) => {});
-  }, [inputValue]);
-
+  
+  //요청하기 클릭시
   const handleClick = () => {
-    console.log("돌봄 ... 요청하기");
-  };
+    nav("/careRequest3", {
+      state: {
+        startDate : inputValue,
+        startTime : startTime,
+        endDate : inputValue2,
+        endTime : endTime
+      }
+    })
+   };
 
   return (
     <div>
+      <BackTitleHeader2
+        title={"돌봄 요청"}
+        subtitle={"2/3"}
+        className="signupStep"
+      />
+      <div className="registerContainer">
       <div id={styles.title}>
-        돌봄이 필요한 날짜와 시간을
+        산책이 필요한 날짜와 시간을
         <br />
         선택하세요.
+      </div>
       </div>
       <DateList id={style.frame}>
         <div className={style.subtitle3}>돌봄 시작</div>
@@ -423,13 +429,17 @@ function Reservation2(props) {
           ))}
         </select>
       </TimeList>
-      {ableStartTime}
-      <div
+       <div
         className={style.saveBT}
         id={style.frame}
         style={{ textAlign: "right" }}
       >
-        <input type="button" value="요청하기" onClick={handleClick} />
+        <QuestionFooter
+        title="요청하기"
+        active={btnState}
+        onClick={handleClick}
+      />
+        {/* <input type="button" value="요청하기" onClick={handleClick} /> */}
       </div>
     </div>
   );
