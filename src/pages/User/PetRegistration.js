@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../styles/PetRegistrationStyle.css";
 import BackTitleHeader from "../../components/BackTitleHeader";
 import basicPetImage from "../../assets/images/basicPetImage.png";
@@ -11,12 +11,26 @@ import { useRecoilState } from "recoil";
 import {
   idtextAtom,
   isCheckedAtom,
+  isTendencyLastButtonClickedAtom,
+  isVaccineLastButtonClickedAtom,
   petAgeAtom,
   petGenderAtom,
   petMsgAtom,
   petNameAtom,
+  petNumWhenRegister,
   petProfileImgAtom,
   petSpeciesAtom,
+  petTendency1Atom,
+  petTendency2Atom,
+  petTendency3Atom,
+  petTendency4Atom,
+  petTendency5Atom,
+  petTendencyMsgAtom,
+  petVaccine1Atom,
+  petVaccine2Atom,
+  petVaccineMsgAtom,
+  petVaccineValueList1Atom,
+  petVaccineValueList2Atom,
   petWeightAtom,
 } from "../../atom/atoms";
 import axios from "axios";
@@ -95,6 +109,82 @@ function PetRegistration(props) {
     navigate("/petvaccine1");
   };
 
+  //방금 등록한 펫 넘버 가져오기
+  const getPetNumber = () => {
+    axios({
+      url: `/petRecenNum/${userId}`,
+      method: "get",
+    })
+      .then((res) => {
+        console.log(res.data);
+        // setPetNum(res.data);
+        savePetTendency(res.data);
+        petVaccineSave(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  //펫 성향 저장하기
+  const [tendency1] = useRecoilState(petTendency1Atom);
+  const [tendency2] = useRecoilState(petTendency2Atom);
+  const [tendency3] = useRecoilState(petTendency3Atom);
+  const [tendency4] = useRecoilState(petTendency4Atom);
+  const [tendency5] = useRecoilState(petTendency5Atom);
+  const [tendencyMsg] = useRecoilState(petTendencyMsgAtom);
+
+  const savePetTendency = (petNum) => {
+    axios({
+      url: `/petTendencySave/${petNum}`,
+      method: "post",
+      data: {
+        tendency1: tendency1,
+        tendency2: tendency2,
+        tendency3: tendency3,
+        tendency4: tendency4,
+        tendency5: tendency5,
+        tendencyMsg: tendencyMsg,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  //펫 예방접종 정보 저장하기
+  const [vaccine1] = useRecoilState(petVaccineValueList1Atom);
+  const [vaccine2] = useRecoilState(petVaccineValueList2Atom);
+  const [vaccineMsg] = useRecoilState(petVaccineMsgAtom);
+
+  console.log(vaccine1);
+  console.log(vaccine2);
+  console.log(vaccineMsg);
+
+  const petVaccineSave = (petNum) => {
+    axios({
+      url: `/petVaccineSave/${petNum}`,
+      method: "post",
+      data: {
+        vaccine1: vaccine1,
+        vaccine2: vaccine2,
+        vaccineMsg: vaccineMsg,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  console.log(imgUrl);
+  console.log(userId);
+
   //펫 프로필 저장
   const savePetProfile = () => {
     var formData = new FormData();
@@ -115,11 +205,53 @@ function PetRegistration(props) {
       })
       .then((res) => {
         console.log(res.data);
+        getPetNumber();
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const [isTendencyLastButtonClicked] = useRecoilState(
+    isTendencyLastButtonClickedAtom
+  );
+
+  const [isVaccinLastButtonClicked] = useRecoilState(
+    isVaccineLastButtonClickedAtom
+  );
+  const [btnState, setBtnState] = useState(false);
+  useEffect(() => {
+    if (
+      imgFile !== "" &&
+      petName !== "" &&
+      petGender !== "" &&
+      petAge !== "" &&
+      petWeight !== "" &&
+      petSpecies !== "" &&
+      petMsg !== "" &&
+      isChecked &&
+      isTendencyLastButtonClicked &&
+      isVaccinLastButtonClicked
+    ) {
+      setBtnState(true);
+    } else {
+      setBtnState(false);
+    }
+  }, [
+    imgFile,
+    petName,
+    petGender,
+    petAge,
+    petWeight,
+    petSpecies,
+    petMsg,
+    isChecked,
+    isTendencyLastButtonClicked,
+    isVaccinLastButtonClicked,
+  ]);
+
+  console.log("성향 체크완료 했는지 :" + isTendencyLastButtonClicked);
+  console.log("백신 체크완료 했는지 :" + isVaccinLastButtonClicked);
 
   return (
     <div style={{ paddingBottom: "70px" }}>
@@ -233,7 +365,7 @@ function PetRegistration(props) {
           <br />
           약관에 따라 돌봄이 거부될 수 있습니다.
         </p>
-        <PinkBtn title="저장하기" onClick={savePetProfile} active={true} />
+        <PinkBtn title="저장하기" onClick={savePetProfile} active={btnState} />
       </div>
     </div>
   );

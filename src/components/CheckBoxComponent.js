@@ -1,12 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "../styles/QuestionComponentStyle.css";
 import { useLocation } from "react-router";
-import { useRecoilState } from "recoil";
-import {
-  petChooseListAtom,
-  petVaccineValueList1Atom,
-  petVaccineValueList2Atom,
-} from "../atom/atoms";
 
 function CheckBoxComponent({
   options,
@@ -18,21 +12,11 @@ function CheckBoxComponent({
   placeholder,
   fullAddress,
   userName,
+  checkValueList,
+  setCheckValueList,
 }) {
   const location = useLocation();
   const pathname = location.pathname;
-
-  //careRequest3 페이지 atoms
-  const [checkValueList, setCheckValueList] = useRecoilState(petChooseListAtom);
-  // const [checkValueList, setCheckValueList] = useState([]);
-
-  // const [petVaccineValueList1, setPetVaccineValueList1] = useRecoilState(
-  //   petVaccineValueList1Atom
-  // );
-
-  // const [petVaccineValueList2, setPetVaccineValueList2] = useRecoilState(
-  //   petVaccineValueList2Atom
-  // );
 
   const isCare =
     pathname === "/careRequest1" ||
@@ -48,6 +32,10 @@ function CheckBoxComponent({
   useEffect(() => {
     console.log(checkValueList);
   }, [checkValueList]);
+
+  // useEffect(() => {
+  //   setCheckValueList([]);
+  // }, []);
 
   return (
     <div>

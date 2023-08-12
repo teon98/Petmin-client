@@ -39,6 +39,7 @@ function CareRequest1(props) {
       label: "돌봄 (장기돌봄)",
     },
   ];
+
   const careTypeChange = (e) => {
     const value = e.target.value;
     setCareType(value);

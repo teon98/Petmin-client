@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import QuestionComponent from "../../components/QuestionComponent";
 import { useRecoilState } from "recoil";
-import { petVaccine1Atom } from "../../atom/atoms";
+import { petVaccine1Atom, petVaccineValueList1Atom } from "../../atom/atoms";
 import BackTitleHeader2 from "../../components/BackTitleHeader2";
 import QuestionFooter from "../../components/QuestionFooter";
 import { useNavigate } from "react-router";
@@ -55,6 +55,10 @@ function PetVaccine1(props) {
     }
   }, [petVaccine1]);
 
+  const [checkValueList, setCheckValueList] = useRecoilState(
+    petVaccineValueList1Atom
+  );
+
   return (
     <>
       <BackTitleHeader2
@@ -68,6 +72,8 @@ function PetVaccine1(props) {
           questionText1={"지금까지 완료하신"}
           questionText2={"예방 접종 여부를 선택해주세요"}
           options={petVaccine1Options}
+          checkValueList={checkValueList}
+          setCheckValueList={setCheckValueList}
         />
       </div>
       <QuestionFooter
