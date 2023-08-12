@@ -3,7 +3,7 @@ import "./styles/reset.css";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import MainBTNav from "./components/MainBTNav";
 import Main from "./pages/Main";
-import Check from "./pages/Check";
+import CheckSitter from "./pages/CheckSitter";
 import Favorite from "./pages/Favorite";
 import Chat from "./pages/Chat";
 import Alarm from "./pages/Alarm";
@@ -43,6 +43,7 @@ import Logout from "./components/Logout";
 import Reservation from "./pages/Reservation";
 import Reservation2 from "./pages/Reservation2";
 import Assurance from "./pages/User/Assurance";
+import Checkuser from "./pages/CheckUser";
 
 const App = () => {
   return (
@@ -52,7 +53,8 @@ const App = () => {
           <Route path="/" element={<MainBTNav />}>
             <Route index element={<Main />} />
 
-            <Route path="check" element={<Check />} />
+            <Route path="checkSitter" element={<CheckSitter />} />
+            <Route path="checkUser" element={<Checkuser />} />
             <Route path="favorite" element={<Favorite />} />
             <Route path="rooms" element={<ChatList />} />
             <Route path="/room/:room/:userId" element={<Chat />} />
