@@ -171,7 +171,9 @@ function UserInfo(props) {
           },
         })
         .then((res) => {
-          setAddr(searchAddr);
+
+          setAddr(searchAddr ? searchAddr : subAddr);
+          // setAddr(searchAddr);
           setDetailAddr(subDetailAddr);
           setImgFile(res.data.userImg);
           setSuccessMsg(true);
