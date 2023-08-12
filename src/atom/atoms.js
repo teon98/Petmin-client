@@ -12,6 +12,11 @@ export const emailtextAtom = atom({
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
+export const licenceAtom = atom({
+  key: "licence",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
 
 export const idtextAtom = atom({
   key: "idtext",

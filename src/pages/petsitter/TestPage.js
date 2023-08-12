@@ -4,6 +4,8 @@ import PinkBtn from "../../components/User/PinkBtn";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { idtextAtom } from "../../atom/atoms";
 
 //제출시 알람
 const Toast = Swal.mixin({
@@ -18,7 +20,7 @@ const TestPage = () => {
   const navi = useNavigate({});
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [btnState, setBtnState] = useState(false);
-  const [userId, setUserId] = useState();
+  const [userId] = useRecoilState(idtextAtom);
   useEffect(() => {
     // useEffect를 사용하여 selectedAnswers 변경 시에만 실행될 로직을 구현합니다.
     const allAnswersSelected = questions.every((q) => selectedAnswers[q.id]);
@@ -93,7 +95,7 @@ const TestPage = () => {
       axios({
         url: `/sitter/licence`,
         method: "post",
-        params: { userId: "으악", score: score },
+        params: { userId: userId, score: score },
       })
         .then((res) => {
           console.log(res.data);
