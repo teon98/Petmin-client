@@ -49,7 +49,7 @@ const MypageMenu = () => {
       <div
         className={styles.menuitem}
         onClick={() => {
-          navigate(`/petsitterprfile/${userId}`);
+          navigate(`/petsitterprofile/${userId}`);
         }}
       >
         펫시터 프로필 관리

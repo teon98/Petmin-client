@@ -30,6 +30,14 @@ const ChatList = () => {
       });
   }
 
+  //userID 없으면 로그인 화면으로
+  const [userId] = useRecoilState(idtextAtom);
+  useEffect(() => {
+    if (userId === "") {
+      navigate("/login");
+    }
+  });
+
   useEffect(() => {
     console.log(userName);
     getRoomList();

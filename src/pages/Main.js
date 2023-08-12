@@ -19,14 +19,13 @@ const Main = () => {
   useEffect(() => {
     axios({
       url: "/alarm/search2",
-      params: { userId: "test11" },
+      params: { userId: userId },
       method: "get",
     })
       .then((res) => {
         for (let i = 0; i < res.data.length; i++) {
           const alarm = res.data[i].split(":");
-          if (alarm[2] == true) {
-          } else {
+          if (alarm[2] === "false") {
             setNotificationArrived(false);
           }
         }
@@ -42,7 +41,7 @@ const Main = () => {
       {/* 알림 Header */}
       <div className={style.mainHeader}>
         <Link to="/alarm">
-          {notificationArrived == true ? (
+          {notificationArrived === true ? (
             <FaBell
               size="24"
               color="white"
@@ -79,14 +78,15 @@ const Main = () => {
       {/* main content 영역  */}
       <PetSitterView />
       {/* 상단 이동 버튼 */}
-      <div
+      {/* <div
         className={style.flexBT}
         onClick={() => {
+          console.log("클릭중");
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
       >
         <FaArrowUp size="30" id={style.plusIcon} color="white" />
-      </div>
+      </div> */}
     </div>
   );
 };

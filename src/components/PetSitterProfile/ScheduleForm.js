@@ -6,8 +6,11 @@ import { usePopper } from "react-popper";
 import { format, isValid, parse } from "date-fns";
 import FocusTrap from "focus-trap-react";
 import axios from "axios";
+import { idtextAtom } from "../../atom/atoms";
+import { useRecoilState } from "recoil";
 
 const ScheduleForm = () => {
+  const [userId] = useRecoilState(idtextAtom);
   //오늘 날짜 알아오기 - 초기화를 위해
   let today = new Date();
   today = format(today, "y-MM-dd");
@@ -45,7 +48,29 @@ const ScheduleForm = () => {
   };
 
   const handleDaySelect = (date) => {
-    console.log(date);
+    console.log("date", date);
+    setScheduleTimeList([]);
+
+    // 기존 일정 불러오기
+    axios
+      .get("/sitter/getSchedule", {
+        params: {
+          sitterId: userId,
+          scheduleDay: format(date, "y-MM-dd"),
+        },
+      })
+      .then((res) => {
+        console.log("응애", res.data);
+        let timearr = [];
+        for (let i = 0; i < res.data.length; i++) {
+          console.log(res.data[i].Hour["Hour2"]);
+          timearr.push(res.data[i].Hour["Hour2"]);
+        }
+        setScheduleTimeList(timearr);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setSelected(date);
     if (date) {
       setInputValue(format(date, "y-MM-dd"));
@@ -76,7 +101,7 @@ const ScheduleForm = () => {
   const [scheduleTimeList, setScheduleTimeList] = useState([]);
 
   const handleChange = (e) => {
-    console.log(e.target.id);
+    console.log("??", e.target.id);
     if (e.target.checked === true) {
       setScheduleTimeList([...scheduleTimeList, e.target.id]);
     } else if (e.target.checked === false) {
@@ -94,7 +119,7 @@ const ScheduleForm = () => {
     axios
       .get("/sitter/getSchedule", {
         params: {
-          sitterId: "ckdrua76",
+          sitterId: userId,
           scheduleDay: inputValue,
         },
       })
@@ -111,8 +136,8 @@ const ScheduleForm = () => {
         }
 
         for (let i = 0; i < res.data.length; i++) {
-          console.log(res.data[i].Hour["Hour2"]);
-          console.log(res.data[i].Hour["dolbomStatus"]);
+          //console.log(res.data[i].Hour["Hour2"]);
+          //console.log(res.data[i].Hour["dolbomStatus"]);
 
           for (let j = 0; j < timetable.length; j++) {
             if (res.data[i].Hour["Hour2"] === timetable[j].id) {
@@ -135,7 +160,7 @@ const ScheduleForm = () => {
     //console.log(type);
 
     var formData = new FormData();
-    formData.append("sitterId", "ckdrua76");
+    formData.append("sitterId", userId);
     formData.append("scheduleDay", inputValue);
     formData.append("scheduleHour", scheduleTimeList);
     formData.append("dolbomOption", type);

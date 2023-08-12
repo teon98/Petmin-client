@@ -1,0 +1,45 @@
+.NavBody {
+  background-color: white;
+  height: 50px;
+  /* box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.25); */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
+}
+
+.goback {
+  margin-right: 80px;
+  cursor: pointer;
+}
+
+.title {
+  font-family: "PreSemiBold";
+  font-size: 15px;
+}
+
+.subtitle {
+  font-family: "PreRegular";
+  margin-left: 35px;
+  color: #616161;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.BackgroundBar {
+  position: relative;
+  background-color: #c7c7c7;
+  height: 3px;
+  width: 100%;
+  z-index: 0; /* BackgroundBar를 하위로 배치 */
+}
+
+.StatusBar {
+  position: absolute;
+  background-color: #f66;
+  height: 3px;
+  width: 16.6%;
+  z-index: 1; /* StatusBar를 상위로 배치 */
+}

@@ -3,26 +3,25 @@ import BackTitleHeader2 from "../../components/BackTitleHeader2";
 import QuestionComponent from "../../components/QuestionComponent";
 import QuestionFooter from "../../components/QuestionFooter";
 import { useRecoilState } from "recoil";
-import { petTendencyMsgAtom } from "../../atom/atoms";
+import { petVaccineMsgAtom } from "../../atom/atoms";
 import { useNavigate } from "react-router";
 
-function PetTendency6(props) {
-  const [petTendencyMsg, setPetTendencyMsg] =
-    useRecoilState(petTendencyMsgAtom);
+function PetVaccine3(props) {
+  const [petVaccineMsg, setPetVaccineMsg] = useRecoilState(petVaccineMsgAtom);
 
-  const petTendencyMsgChange = (e) => {
+  const petVaccineMsgChange = (e) => {
     const value = e.target.value;
-    setPetTendencyMsg(value);
+    setPetVaccineMsg(value);
   };
 
   const [btnState, setBtnState] = useState(false);
   useEffect(() => {
-    if (petTendencyMsg !== "") {
+    if (petVaccineMsg !== "") {
       setBtnState(true);
     } else {
       setBtnState(false);
     }
-  }, [petTendencyMsg]);
+  }, [petVaccineMsg]);
 
   const navigate = useNavigate();
   const moveToPetProfile = () => {
@@ -32,17 +31,17 @@ function PetTendency6(props) {
   return (
     <>
       <BackTitleHeader2
-        title={"반려동물 성향 설문지"}
-        subtitle={"6/6"}
+        title={"반려동물 예방접종 설문지"}
+        subtitle={"3/3"}
         className="signupStep"
       />
       <div className="registerContainer">
         <QuestionComponent
-          questionNumber={"Q6"}
-          questionText1={"산책 관련 주의해야 할 점을 알려 주세요"}
-          onChange={petTendencyMsgChange}
-          value={petTendencyMsg}
-          placeholder={"자유롭게 입력해주세요"}
+          questionNumber={"Q3"}
+          questionText1={"건강 관련한 주의사항을 알려주세요"}
+          onChange={petVaccineMsgChange}
+          value={petVaccineMsg}
+          placeholder={"*전염병이 있는 경우, 돌봄이 불가합니다."}
         />
       </div>
       <QuestionFooter
@@ -54,4 +53,4 @@ function PetTendency6(props) {
   );
 }
 
-export default PetTendency6;
+export default PetVaccine3;
