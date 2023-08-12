@@ -194,7 +194,7 @@ function Reservation(props) {
   return (
     <div>
       <div id={styles.title}>
-        돌봄이 필요한 날짜와 시간을
+        산책이 필요한 날짜와 시간을
         <br />
         선택하세요.
       </div>
