@@ -25,17 +25,9 @@ function CheckBoxComponent({
   const isTextArea =
     pathname === "/petvaccine3" || pathname === "/pettendency6";
 
-  // const isVaccine1 = pathname === "/petvaccine1";
-  // const isVaccine2 = pathname === "/petvaccine2";
-  // const isCareRequest3 = pathname === "/careRequest3";
-
   useEffect(() => {
     console.log(checkValueList);
   }, [checkValueList]);
-
-  // useEffect(() => {
-  //   setCheckValueList([]);
-  // }, []);
 
   return (
     <div>

@@ -12,20 +12,20 @@ function TextInputComponentForPet({
   const isAge = lable === "나이";
   const isWeight = lable === "몸무게";
   return (
-    <div className="textInputContainer">
+    <div className="textInputContainer2">
       <div id={isAge || isWeight ? "formargin2" : "formargin"}>
         <p className="textInputLable">{lable}</p>
         <input
-          className="textInputValue"
+          className="textInputValue2"
           onChange={(e) => onChange(e)}
           value={value}
           placeholder={placeholder}
           type={type}
         />
-        {isAge && <p className="textInputLable">살</p>}
-        {isWeight && <p className="textInputLable">KG</p>}
+        {isAge && <p className="textInputLable2">살</p>}
+        {isWeight && <p className="textInputLable2">KG</p>}
       </div>
-      <p className="emailValidText">{message}</p>
+      <p className="emailValidText2">{message}</p>
     </div>
   );
 }
