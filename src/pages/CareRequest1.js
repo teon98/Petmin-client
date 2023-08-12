@@ -4,27 +4,34 @@ import { useRecoilState } from "recoil";
 import { careTypeAtom, nametextAtom, userAddrAtom } from "../atom/atoms";
 import QuestionFooter from "../components/QuestionFooter";
 import QuestionComponent from "../components/QuestionComponent";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 function CareRequest1(props) {
-  const [address] = useRecoilState(userAddrAtom);
-  const frontAdress = address.substring(0, 6);
-  function backAddressFind(address) {
-    const openParenIndex = address.indexOf("(");
+  const location = useLocation();
+  const sitter = location.state.sitter;
+  const address = location.state.address;
 
-    if (openParenIndex !== -1 && openParenIndex + 4 <= address.length) {
-      const threeCharsAfterOpenParen = address.substring(
-        openParenIndex + 1,
-        openParenIndex + 4
-      );
-      return threeCharsAfterOpenParen;
-    }
+  console.log(sitter);
+  console.log(address);
 
-    return ""; // "(" 문자를 찾지 못하거나 뒤에 세 글자가 없을 경우 빈 문자열 반환
-  }
-  const backAddress = backAddressFind(address);
+  // const [address] = useRecoilState(userAddrAtom);
+  // const frontAdress = address.substring(0, 6);
+  // function backAddressFind(address) {
+  //   const openParenIndex = address.indexOf("(");
+
+  //   if (openParenIndex !== -1 && openParenIndex + 4 <= address.length) {
+  //     const threeCharsAfterOpenParen = address.substring(
+  //       openParenIndex + 1,
+  //       openParenIndex + 4
+  //     );
+  //     return threeCharsAfterOpenParen;
+  //   }
+
+  //   return ""; // "(" 문자를 찾지 못하거나 뒤에 세 글자가 없을 경우 빈 문자열 반환
+  // }
+  // const backAddress = backAddressFind(address);
   const [userName] = useRecoilState(nametextAtom);
-  const fullAddress = frontAdress + " " + backAddress + " · ";
+  // const fullAddress = frontAdress + " " + backAddress + " · ";
 
   const [careType, setCareType] = useRecoilState(careTypeAtom);
   const careTypeOptions = [
@@ -39,6 +46,7 @@ function CareRequest1(props) {
       label: "돌봄 (장기돌봄)",
     },
   ];
+
   const careTypeChange = (e) => {
     const value = e.target.value;
     setCareType(value);
@@ -46,7 +54,11 @@ function CareRequest1(props) {
 
   const navigate = useNavigate();
   const moveToNextPage = () => {
-    navigate("/anywhere");
+    if (careType === "산책 (단기돌봄)") {
+      navigate("/reservation", { state: { sitter: props.userId } });
+    } else {
+      navigate("/reservation2", { state: { sitter: props.userId } });
+    }
   };
 
   const [btnState, setBtnState] = useState(false);
@@ -67,7 +79,7 @@ function CareRequest1(props) {
       />
       <div className="registerContainer">
         <QuestionComponent
-          fullAddress={fullAddress}
+          fullAddress={address}
           userName={userName}
           questionText2={"돌봄 유형을 선택하세요"}
           options={careTypeOptions}

@@ -3,7 +3,10 @@ import BackTitleHeader2 from "../../components/BackTitleHeader2";
 import QuestionComponent from "../../components/QuestionComponent";
 import QuestionFooter from "../../components/QuestionFooter";
 import { useRecoilState } from "recoil";
-import { petTendencyMsgAtom } from "../../atom/atoms";
+import {
+  isTendencyLastButtonClickedAtom,
+  petTendencyMsgAtom,
+} from "../../atom/atoms";
 import { useNavigate } from "react-router";
 
 function PetTendency6(props) {
@@ -24,9 +27,12 @@ function PetTendency6(props) {
     }
   }, [petTendencyMsg]);
 
+  const [isTendencyLastButtonClicked, setIsTendencyLastButtonClicked] =
+    useRecoilState(isTendencyLastButtonClickedAtom);
   const navigate = useNavigate();
   const moveToPetProfile = () => {
     navigate("/petregistration");
+    setIsTendencyLastButtonClicked(true);
   };
 
   return (

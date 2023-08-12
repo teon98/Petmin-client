@@ -1,15 +1,6 @@
 import React, { useEffect } from "react";
 import "../styles/QuestionComponentStyle.css";
 import { useLocation } from "react-router";
-import { useRecoilState } from "recoil";
-import {
-  petCheckListAtom,
-  petChooseListAtom,
-  petVaccineCheckList1Atom,
-  petVaccineCheckList2Atom,
-  petVaccineValueList1Atom,
-  petVaccineValueList2Atom,
-} from "../atom/atoms";
 
 function CheckBoxComponent({
   options,
@@ -21,21 +12,11 @@ function CheckBoxComponent({
   placeholder,
   fullAddress,
   userName,
+  checkValueList,
+  setCheckValueList,
 }) {
   const location = useLocation();
   const pathname = location.pathname;
-
-  //careRequest3 페이지 atoms
-  //const [checkList, setCheckList] = useRecoilState(petCheckListAtom);
-  const [checkValueList, setCheckValueList] = useRecoilState(petChooseListAtom);
-
-  const [petVaccineValueList1, setPetVaccineValueList1] = useRecoilState(
-    petVaccineValueList1Atom
-  );
-
-  const [petVaccineValueList2, setPetVaccineValueList2] = useRecoilState(
-    petVaccineValueList2Atom
-  );
 
   const isCare =
     pathname === "/careRequest1" ||
@@ -44,13 +25,17 @@ function CheckBoxComponent({
   const isTextArea =
     pathname === "/petvaccine3" || pathname === "/pettendency6";
 
-  const isVaccine1 = pathname === "/petvaccine1";
-  const isVaccine2 = pathname === "/petvaccine2";
-  const isCareRequest3 = pathname === "/careRequest3";
+  // const isVaccine1 = pathname === "/petvaccine1";
+  // const isVaccine2 = pathname === "/petvaccine2";
+  // const isCareRequest3 = pathname === "/careRequest3";
 
   useEffect(() => {
     console.log(checkValueList);
   }, [checkValueList]);
+
+  // useEffect(() => {
+  //   setCheckValueList([]);
+  // }, []);
 
   return (
     <div>
@@ -76,7 +61,7 @@ function CheckBoxComponent({
           />
         </div>
       ) : (
-        options.map((option, index) => (
+        options.map((option) => (
           <label
             key={option.value}
             className={`radioBox2 ${
@@ -89,19 +74,15 @@ function CheckBoxComponent({
               value={option.value}
               checked={checkValueList.includes(option.value)}
               onChange={(e) => {
-                if (isVaccine1) {
-                } else if (isVaccine2) {
-                } else if (isCareRequest3) {
-                  var prevCheckValueList = [...checkValueList];
-                  if (e.target.checked) {
-                    prevCheckValueList.push(e.target.value);
-                  } else {
-                    prevCheckValueList = prevCheckValueList.filter((data) => {
-                      return data !== e.target.value;
-                    });
-                  }
-                  setCheckValueList(prevCheckValueList);
+                var prevCheckValueList = [...checkValueList];
+                if (e.target.checked) {
+                  prevCheckValueList.push(e.target.value);
+                } else {
+                  prevCheckValueList = prevCheckValueList.filter((data) => {
+                    return data !== e.target.value;
+                  });
                 }
+                setCheckValueList(prevCheckValueList);
               }}
             />
             {option.label}

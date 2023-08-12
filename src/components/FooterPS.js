@@ -12,7 +12,7 @@ const FooterPS = (props) => {
       <button
         id={style.b}
         onClick={() => {
-          nav("/reservation2", { state: { sitter: props.userId } });
+          nav("/careRequest1", { state: { sitter: props.userId } });
         }}
       >
         예약요청

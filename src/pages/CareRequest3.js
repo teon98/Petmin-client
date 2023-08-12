@@ -5,6 +5,7 @@ import {
   careTypeAtom,
   idtextAtom,
   nametextAtom,
+  petChooseListAtom,
   userAddrAtom,
 } from "../atom/atoms";
 import QuestionFooter from "../components/QuestionFooter";
@@ -86,6 +87,8 @@ function CareRequest3(props) {
       });
   }, []);
 
+  const [checkValueList, setCheckValueList] = useRecoilState(petChooseListAtom);
+
   return (
     <>
       <BackTitleHeader2
@@ -99,6 +102,9 @@ function CareRequest3(props) {
           userName={userName}
           questionText2={"돌봄을 맡길 반려견을 선택해주세요"}
           options={careTypeOptions}
+          checkValueList={checkValueList}
+          setCheckValueList={setCheckValueList}
+
           //onChange={careTypeChange}
           //selectedValue={careType}
         />
