@@ -7,7 +7,7 @@ import RadioComponent from "../../components/RadioComponent";
 import PinkBtn from "../../components/User/PinkBtn";
 import { FaCircleCheck, FaRegCircleCheck } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import {
   idtextAtom,
   isCheckedAtom,
@@ -15,9 +15,9 @@ import {
   isVaccineLastButtonClickedAtom,
   petAgeAtom,
   petGenderAtom,
+  petImgUrlAtom,
   petMsgAtom,
   petNameAtom,
-  petNumWhenRegister,
   petProfileImgAtom,
   petSpeciesAtom,
   petTendency1Atom,
@@ -26,8 +26,6 @@ import {
   petTendency4Atom,
   petTendency5Atom,
   petTendencyMsgAtom,
-  petVaccine1Atom,
-  petVaccine2Atom,
   petVaccineMsgAtom,
   petVaccineValueList1Atom,
   petVaccineValueList2Atom,
@@ -86,7 +84,7 @@ function PetRegistration(props) {
   //펫 프로필 이미지
   const [imgFile, setImgFile] = useRecoilState(petProfileImgAtom);
   //img 경로? 인듯
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgUrl, setImgUrl] = useRecoilState(petImgUrlAtom);
   const imgRef = useRef();
 
   const saveImgFile = (e) => {
@@ -160,17 +158,17 @@ function PetRegistration(props) {
   const [vaccine2] = useRecoilState(petVaccineValueList2Atom);
   const [vaccineMsg] = useRecoilState(petVaccineMsgAtom);
 
-  console.log(vaccine1);
-  console.log(vaccine2);
-  console.log(vaccineMsg);
+  //배열 하나의 String으로 합치기
+  const vaccine1String = vaccine1.join(", ");
+  const vaccine2String = vaccine2.join(", ");
 
   const petVaccineSave = (petNum) => {
     axios({
       url: `/petVaccineSave/${petNum}`,
       method: "post",
       data: {
-        vaccine1: vaccine1,
-        vaccine2: vaccine2,
+        vaccine1: vaccine1String,
+        vaccine2: vaccine2String,
         vaccineMsg: vaccineMsg,
       },
     })
@@ -182,8 +180,30 @@ function PetRegistration(props) {
       });
   };
 
-  console.log(imgUrl);
-  console.log(userId);
+  ////사용했던 전역변수들 리셋하기
+  //기본 정보들
+  const resetpetName = useResetRecoilState(petNameAtom);
+  const resetpetGender = useResetRecoilState(petGenderAtom);
+  const resetpetAge = useResetRecoilState(petAgeAtom);
+  const resetpetWeight = useResetRecoilState(petWeightAtom);
+  const resetpetSpecies = useResetRecoilState(petSpeciesAtom);
+  const resetpetMsg = useResetRecoilState(petMsgAtom);
+  const resetisChecked = useResetRecoilState(isCheckedAtom);
+  const resetimgFile = useResetRecoilState(petProfileImgAtom);
+  const resetimgUrl = useResetRecoilState(petImgUrlAtom);
+
+  //성향 체크리스트
+  const resettendency1 = useResetRecoilState(petTendency1Atom);
+  const resettendency2 = useResetRecoilState(petTendency2Atom);
+  const resettendency3 = useResetRecoilState(petTendency3Atom);
+  const resettendency4 = useResetRecoilState(petTendency4Atom);
+  const resettendency5 = useResetRecoilState(petTendency5Atom);
+  const resettendencyMsg = useResetRecoilState(petTendencyMsgAtom);
+
+  //백신 체크리스트
+  const resetvaccine1 = useResetRecoilState(petVaccineValueList1Atom);
+  const resetvaccine2 = useResetRecoilState(petVaccineValueList2Atom);
+  const resetvaccineMsg = useResetRecoilState(petVaccineMsgAtom);
 
   //펫 프로필 저장
   const savePetProfile = () => {
@@ -210,6 +230,25 @@ function PetRegistration(props) {
       .catch((err) => {
         console.log(err);
       });
+    resetpetName();
+    resetpetGender();
+    resetpetAge();
+    resetpetWeight();
+    resetpetSpecies();
+    resetpetMsg();
+    resetisChecked();
+    resetimgUrl();
+    resetimgFile();
+    resettendency1();
+    resettendency2();
+    resettendency3();
+    resettendency4();
+    resettendency5();
+    resettendencyMsg();
+    resetvaccine1();
+    resetvaccine2();
+    resetvaccineMsg();
+    navigate("/petlist");
   };
 
   const [isTendencyLastButtonClicked] = useRecoilState(

@@ -1,7 +1,7 @@
 .textInputContainer {
   width: 100%;
   margin: auto;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 .textInputLable {
@@ -30,6 +30,7 @@
   color: #ff8989;
   margin-top: 10px;
   height: 15px;
+  margin-bottom: 25px;
 }
 
 .forIdDuplicateBtn {

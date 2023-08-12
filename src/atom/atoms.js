@@ -203,18 +203,6 @@ export const careTypeAtom = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const petVaccine1Atom = atom({
-  key: "petVaccine1",
-  default: [],
-  effects_UNSTABLE: [persistAtom],
-});
-
-export const petVaccine2Atom = atom({
-  key: "petVaccine2",
-  default: [],
-  effects_UNSTABLE: [persistAtom],
-});
-
 export const petVaccineMsgAtom = atom({
   key: "petVaccineMsg",
   default: "",
@@ -254,6 +242,12 @@ export const isVaccineLastButtonClickedAtom = atom({
 //반려동물 프로필 등록할 때 생성되는 강아지의 petNum
 export const petNumWhenRegister = atom({
   key: "petNum",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const petImgUrlAtom = atom({
+  key: "petImgUrl",
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
