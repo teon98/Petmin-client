@@ -37,14 +37,14 @@ export default function Hospital() {
   };
 
   const submitKeyword = (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     setKeyword(loc);
-
     axios
       .get(`/hospitals/maplist?searchTerm=${loc}`)
       .then((res) => {
         setMList(res.data.hospitals);
         // setIsValid(false);
+        console.log("hi");
       })
       .catch((err) => {
         console.log(err);
@@ -63,7 +63,10 @@ export default function Hospital() {
       .then((res) => {
         console.log(res.data);
         // setIsValid(false);
+
         setLoc(res.data);
+        // setKeyword(res.data);
+
         setShouldRender(true);
       })
       .catch((err) => {
@@ -73,6 +76,7 @@ export default function Hospital() {
 
   useEffect(() => {
     if (shouldRender) {
+      submitKeyword();
       setShouldRender(false);
     }
   }, [shouldRender]);

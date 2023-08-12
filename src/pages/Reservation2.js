@@ -9,6 +9,7 @@ import axios from "axios";
 import styles from "../styles/MypageMenu.module.css";
 import { start } from "@popperjs/core";
 import { styled } from "styled-components";
+import { useLocation } from "react-router";
 
 const TimeList = styled.div`
   display: inline-block;
@@ -33,6 +34,11 @@ const DateList = styled.div`
 `;
 
 function Reservation2(props) {
+  const location = useLocation();
+  const sitter = location.state.sitter;
+  console.log("sitter");
+  console.log(location.state);
+
   //은정
   const [startTime, setStartTime] = useState("6");
   const [endTime, setEndTime] = useState("6");
@@ -218,7 +224,10 @@ function Reservation2(props) {
     axios({
       method: "get",
       url: "/sitter/getSchedule",
-      params: { sitterId: "test11", scheduleDay: scheduleDay },
+      params: {
+        sitterId: sitter ? sitter : "test11",
+        scheduleDay: scheduleDay,
+      },
     }).then((res) => {
       console.log("****************시터 일정 가져오기입니다.****************");
       setAbleStartTime(res.data.map((item) => item.Hour.Hour2));
