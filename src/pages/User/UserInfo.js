@@ -157,7 +157,11 @@ function UserInfo(props) {
         setDetailAddr(subDetailAddr);
         setSuccessMsg(true);
       });
-    } else {
+    }else if(searchAddr === ""){
+      //아무것도 수정하지 않았을 경우
+      return
+    } 
+    else {
       //이미지 수정 했을 경우
       formdata.append("userImg", imgUrl);
       formdata.append("userId", userId);
@@ -172,8 +176,8 @@ function UserInfo(props) {
         })
         .then((res) => {
 
-          setAddr(searchAddr ? searchAddr : subAddr);
-          // setAddr(searchAddr);
+          // setAddr(searchAddr ? searchAddr : subAddr);
+          setAddr(searchAddr);
           setDetailAddr(subDetailAddr);
           setImgFile(res.data.userImg);
           setSuccessMsg(true);
