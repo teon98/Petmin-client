@@ -9,7 +9,7 @@ import axios from "axios";
 import styles from "../styles/MypageMenu.module.css";
 import { start } from "@popperjs/core";
 import { styled } from "styled-components";
-import { useLocation } from "react-router";
+import { UNSAFE_LocationContext, useLocation, useNavigate } from "react-router";
 import BackTitleHeader2 from "../components/BackTitleHeader2";
 import QuestionComponent from "../components/QuestionComponent";
 import QuestionFooter from "../components/QuestionFooter";
@@ -188,6 +188,7 @@ function Reservation2(props) {
   const [popperElement, setPopperElement] = useState(null);
   const [popperElement2, setPopperElement2] = useState(null);
   const [btnState, setBtnState] = useState(false)
+  const nav = useNavigate();
 
   const popper = usePopper(popperRef.current, popperElement, {
     placement: "bottom-start",
@@ -272,9 +273,17 @@ function Reservation2(props) {
     });
   };
   
+  //요청하기 클릭시
   const handleClick = () => {
-    console.log("돌봄 ... 요청하기");
-  };
+    nav("/careRequest3", {
+      state: {
+        startDate : inputValue,
+        startTime : startTime,
+        endDate : inputValue2,
+        endTime : endTime
+      }
+    })
+   };
 
   return (
     <div>
