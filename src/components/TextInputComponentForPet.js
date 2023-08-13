@@ -13,7 +13,7 @@ function TextInputComponentForPet({
   const isWeight = lable === "몸무게";
   return (
     <div className="textInputContainer2">
-      <div id={isAge || isWeight ? "formargin2" : "formargin"}>
+      <div id={isAge || isWeight ? "formargin2" : "formargin3"}>
         <p className="textInputLable">{lable}</p>
         <input
           className="textInputValue2"
