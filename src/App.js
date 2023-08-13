@@ -43,6 +43,8 @@ import Logout from "./components/Logout";
 import Reservation from "./pages/Reservation";
 import Reservation2 from "./pages/Reservation2";
 import Assurance from "./pages/User/Assurance";
+import Review from "./pages/User/Review";
+import ReviewWrite from "./pages/User/ReviewWrite";
 
 const App = () => {
   return (
@@ -110,6 +112,14 @@ const App = () => {
               element={<PetRegistration />}
             ></Route>
           </Route>
+          {/* 펫시터 프로필(예약을 위한) */}
+          <Route path="/sitterProfile/:userId/review" element={<Review />} />
+
+          <Route
+            path="/sitterProfile/:userId/reviewrite"
+            element={<ReviewWrite />}
+          />
+          {/* 리뷰 페이지 */}
 
           {/* 반려동물 성향 설문지 1 */}
           <Route path="/pettendency1" element={<PetTendency1 />} />
