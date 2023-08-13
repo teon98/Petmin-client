@@ -9,7 +9,7 @@ import axios from "axios";
 import styles from "../styles/MypageMenu.module.css";
 import { styled } from "styled-components";
 import QuestionFooter from "../components/QuestionFooter";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BackTitleHeader2 from "../components/BackTitleHeader2";
 import { SelectTimeDateTitle } from "./Reservation2";
 
@@ -83,6 +83,7 @@ function Reservation(props) {
     const sTime = parseInt(e.split(":")[0]) + 1;
     //끝시간 설정
     setEndTime((sTime > 24 ? 1 : sTime) + ":00");
+    setBtnState(true);
   };
   const [time, setTime] = useState([]);
   // const time = [
@@ -111,6 +112,7 @@ function Reservation(props) {
   //오늘 날짜 알아오기 - 초기화를 위해
   let today = new Date();
   today = format(today, "y-MM-dd");
+  const nav = useNavigate();
 
   const [selected, setSelected] = useState("");
   const [inputValue, setInputValue] = useState(today);
@@ -178,6 +180,13 @@ function Reservation(props) {
 
   const handleClick = () => {
     console.log("요청하기 버튼 클릭함");
+    nav("/careRequest3", {
+      state: {
+        startDate: inputValue,
+        startTime: startTime,
+        endTime: endTime,
+      },
+    });
   };
 
   return (
