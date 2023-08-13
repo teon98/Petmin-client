@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import BackTitleHeader from "../../components/BackTitleHeader";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -16,6 +16,7 @@ import { DayPicker } from "react-day-picker";
 import FooterPS from "../../components/FooterPS";
 
 const PSView = () => {
+  const navigate = useNavigate();
   const settings = {
     dots: true,
     infinite: false,
@@ -278,9 +279,12 @@ const PSView = () => {
             <ProgressBar completed={reviewDelecacy} customLabel="섬세함" />
           </div>
 
-          <div className={style.box}>
-            <div id={style.reviewall}>{`리뷰 전체보기 >`}</div>
-          </div>
+          <div
+            id={style.reviewall}
+            onClick={() => {
+              navigate(`/sitterProfile/${params.userId}/review`);
+            }}
+          >{`리뷰 전체보기 >`}</div>
           <div className={`${style.box} ${style.reviewBox}`}>
             <div className={style.reviewCard}>
               <p id={style.reviewtitleName}>김0민</p>
