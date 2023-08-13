@@ -36,7 +36,7 @@ const FooterPS = (props) => {
   }
 
   console.log("profileName--------------");
-  console.log(props.userId);
+  console.log(props.sitter);
   return (
     <div className={style.buttonFooter}>
       <button id={style.a} onClick={() => makeRoom(startId, receiver)}>
@@ -45,7 +45,9 @@ const FooterPS = (props) => {
       <button
         id={style.b}
         onClick={() => {
-          nav("/reservation2", { state: { sitter: props.userId } });
+          nav("/careRequest1", {
+            state: { sitter: props.sitter, sitterId: props.sitterId },
+          });
         }}
       >
         예약요청

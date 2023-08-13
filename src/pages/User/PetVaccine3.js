@@ -3,7 +3,10 @@ import BackTitleHeader2 from "../../components/BackTitleHeader2";
 import QuestionComponent from "../../components/QuestionComponent";
 import QuestionFooter from "../../components/QuestionFooter";
 import { useRecoilState } from "recoil";
-import { petVaccineMsgAtom } from "../../atom/atoms";
+import {
+  isVaccineLastButtonClickedAtom,
+  petVaccineMsgAtom,
+} from "../../atom/atoms";
 import { useNavigate } from "react-router";
 
 function PetVaccine3(props) {
@@ -23,8 +26,11 @@ function PetVaccine3(props) {
     }
   }, [petVaccineMsg]);
 
+  const [isVaccinLastButtonClicked, setIsVaccinLastButtonClicked] =
+    useRecoilState(isVaccineLastButtonClickedAtom);
   const navigate = useNavigate();
   const moveToPetProfile = () => {
+    setIsVaccinLastButtonClicked(true);
     navigate("/petregistration");
   };
 

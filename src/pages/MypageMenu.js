@@ -2,11 +2,21 @@ import React, { useEffect } from "react";
 import styles from "../styles/MypageMenu.module.css";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { idtextAtom } from "../atom/atoms";
+import { idtextAtom, licenceAtom } from "../atom/atoms";
+import Swal from "sweetalert2";
+
+//펫시터 아니면 알람
+const Toast = Swal.mixin({
+  toast: true,
+  position: "center",
+  showConfirmButton: false,
+  timer: 1000,
+  timerProgressBar: true,
+});
 
 const MypageMenu = () => {
   const navigate = useNavigate();
-
+  const [userLicence] = useRecoilState(licenceAtom);
   //userID 없으면 로그인 화면으로
   const [userId] = useRecoilState(idtextAtom);
   useEffect(() => {
@@ -15,6 +25,13 @@ const MypageMenu = () => {
     }
   });
   // const userId = 1234;
+  const al = () => {
+    Toast.fire({
+      icon: "error",
+      title: "펫시터 자격을 획득해주세요.",
+    });
+    setTimeout(() => {}, 1000);
+  };
 
   return (
     <div style={{ overflow: "hidden" }}>
@@ -49,7 +66,11 @@ const MypageMenu = () => {
       <div
         className={styles.menuitem}
         onClick={() => {
-          navigate(`/petsitterprofile/${userId}`);
+          {
+            userLicence === "일반"
+              ? al()
+              : navigate(`/petsitterprofile/${userId}`);
+          }
         }}
       >
         펫시터 프로필 관리

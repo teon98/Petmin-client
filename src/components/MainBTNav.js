@@ -30,7 +30,7 @@ const MainBTNav = () => {
           </li>
         </NavLink>
         <NavLink
-          to="/check"
+          to="/checkUser"
           className={({ isActive }) => {
             return isActive
               ? `${styles.activeFooterBT}`

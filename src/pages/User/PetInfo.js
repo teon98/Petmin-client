@@ -58,6 +58,10 @@ const Info = styled.div`
     }
   }
 
+  .forspan {
+    display: inline-block;
+    width: 100%;
+  }
   p {
     color: #ff6666;
     padding-bottom: 25px;
@@ -73,7 +77,7 @@ function PetInfo(props) {
   const location = useLocation();
   const petNo = location.state;
   const [petInfo, setPetInfo] = useState({});
-  const [petTendency, stePetTendency] = useState([]);
+  const [petTendency, stePetTendency] = useState("");
   const tendencyQ = [
     "Q. 호텔 등 낯선 공간에 맡겨지면 어떤가요?",
     "Q. 다른 낯선 강아지를 만나면 어떤가요?",
@@ -81,27 +85,31 @@ function PetInfo(props) {
     "Q. 평소 집에서 짖음은 어떤가요?",
     "Q. 배변 습관은 어떤 편인가요?",
   ];
-  const petVaccineQ = ["Q. 예방 접종 여부1", "Q. 예방 접종 여부2"];
-  const [petVaccine, setPetVaccine] = useState([]);
+  const petVaccineQ = ["Q. 예방 접종 여부 1", "Q. 예방 접종 여부 2"];
 
+  const [petVaccine, setPetVaccine] = useState([]);
   useEffect(() => {
     axios({
       url: `/petInformationRead/${petNo}`,
       method: "get",
-    }).then((res) => {
-      setPetInfo(res.data);
-      stePetTendency(res.data.petTendency);
-      setPetVaccine(res.data.petVaccine);
-      console.log(res.data);
-    });
+    })
+      .then((res) => {
+        console.log(res.data);
+        setPetInfo(res.data);
+        stePetTendency(res.data.petTendency);
+        setPetVaccine(res.data.petVaccine);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
     <>
       <BackTitleHeader title={petInfo.petName} className="signupStep" />
-      {/* <img src={petInfo.petImg ? petInfo.petImg : PetDefaultImg} alt="펫" /> */}
       <Info>
-        <img src={PetDefaultImg} alt="펫" />
+        <img src={petInfo.petImg ? petInfo.petImg : PetDefaultImg} alt="펫" />
 
         <div className="introduce section">
           <p>반려동물 소개</p>
@@ -130,7 +138,7 @@ function PetInfo(props) {
               {tendencyQ.map((item, index) => (
                 <li key={index}>
                   <div>{item}</div>
-                  <div>🔸{petTendency["tendency" + (index + 1)]}</div>
+                  <div>· {petTendency["tendency" + (index + 1)]}</div>
                 </li>
               ))}
             </ul>
@@ -139,19 +147,29 @@ function PetInfo(props) {
             <p>예방 접종</p>
             <ul>
               {petVaccineQ.map((item, index) => (
-                <li key={index}>
-                  <div>{item}</div>
-                  <div>🔸{petVaccine["vaccine" + (index + 1)]}</div>
-                </li>
+                <>
+                  <li key={index}>
+                    <div>{item}</div>
+                    <div>
+                      {petVaccine["vaccine" + (index + 1)] === undefined
+                        ? ""
+                        : petVaccine["vaccine" + (index + 1)]
+                            .split(", ")
+                            .map((ele, idx) => (
+                              <span className="forspan">
+                                · {ele}
+                                <br />
+                              </span>
+                            ))}
+                    </div>
+                  </li>
+                </>
               ))}
               <li>
-                <div>건강특이사항 vaccineMsg</div>
-                <div>🔸{petVaccine["vaccineMsg"]}</div>
+                <div>건강특이사항</div>
+                <div>· {petVaccine["vaccineMsg"]}</div>
               </li>
             </ul>
-            <div className="petMsg">
-              tendencyMsg - {petTendency.tendencyMsg}
-            </div>
           </div>
         </div>
         <div
