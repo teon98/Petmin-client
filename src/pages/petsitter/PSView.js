@@ -105,10 +105,21 @@ const PSView = () => {
         setAge(Math.floor(res.data[0].sitterAge / 10) * 10); //나이
         setHouse(res.data[0].sitterHousetype); //거주지 형태
 
-        setReviewScore(res.data[0].reviewScore); //점수
-        setReviewKind(res.data[0].reviewKind * 20); //친절도
-        setReviewTime(res.data[0].reviewTime * 20); //시간약속
-        setReviewDelecacy(res.data[0].reviewDelecacy * 20); //섬세함
+        setReviewScore(
+          isNaN(res.data[0].reviewScore) ? 0 : res.data[0].reviewScore
+        ); //점수
+
+        setReviewKind(
+          isNaN(res.data[0].reviewKind * 20) ? 0 : res.data[0].reviewKind * 20
+        ); //친절도
+        setReviewTime(
+          isNaN(res.data[0].reviewTime * 20) ? 0 : res.data[0].reviewTime * 20
+        ); //시간약속
+        setReviewDelecacy(
+          isNaN(res.data[0].reviewDelecacy * 20)
+            ? 0
+            : res.data[0].reviewDelecacy * 20
+        ); //섬세함
       })
       .catch((err) => {
         console.log(err);
