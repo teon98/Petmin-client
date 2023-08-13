@@ -9,6 +9,7 @@ import { useNavigate, useLocation } from "react-router";
 function CareRequest1(props) {
   const location = useLocation();
   const sitter = location.state.sitter;
+  const sitterId = location.state.sitterId;
   const address = location.state.address;
 
   console.log(sitter);
@@ -55,9 +56,13 @@ function CareRequest1(props) {
   const navigate = useNavigate();
   const moveToNextPage = () => {
     if (careType === "산책 (단기돌봄)") {
-      navigate("/reservation", { state: { sitter: sitter } });
+      navigate("/reservation", {
+        state: { sitter: sitter, sitterId: sitterId },
+      });
     } else {
-      navigate("/reservation2", { state: { sitter: sitter } });
+      navigate("/reservation2", {
+        state: { sitter: sitter, sitterId: sitterId },
+      });
     }
   };
 
@@ -80,7 +85,7 @@ function CareRequest1(props) {
       <div className="registerContainer">
         <QuestionComponent
           fullAddress={address}
-          userName={userName}
+          userName={sitter}
           questionText2={"돌봄 유형을 선택하세요"}
           options={careTypeOptions}
           onChange={careTypeChange}
