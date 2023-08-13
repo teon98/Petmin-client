@@ -9,18 +9,34 @@ import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import style from "../../styles/Main.module.css";
+import Boy from "../../assets/images/boy.png";
+import Girl from "../../assets/images/girl.png";
+import Gender from "../../assets/images/gender.png";
 
 const List = styled.div`
   height: 100px;
   border-bottom: 2px solid #ccc;
   margin-bottom: 20px;
   padding: 20px 0 20px 20px;
+  display: flex;
+  align-items: center;
+
+  p {
+    padding: 5px 0;
+
+    &:last-child {
+      padding-left: 20px;
+    }
+  }
 
   &:hover {
     cursor: pointer;
 
     img {
       border: 5px solid #ff8989;
+    }
+    .gender {
+      border: none;
     }
   }
 
@@ -46,6 +62,19 @@ const List = styled.div`
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+
+    :last-child {
+      padding-left: 5px;
+    }
+  }
+
+  .gender {
+    margin-right: 5px;
+    background: transparent;
+    border-radius: 0;
+    width: 15px;
+    height: 15px;
+    border: none;
   }
 `;
 
@@ -80,11 +109,17 @@ function PetList(props) {
             <img src={item.petImg ? item.petImg : PetDefaultImg} alt="펫" />
             <div className="petinfo">
               <p className="text">
-                {item.petSex === "남아"
-                  ? "♂️"
-                  : item.petSex === "여아"
-                  ? "♀"
-                  : "◌"}{" "}
+                <img
+                  alt="성별"
+                  className="gender"
+                  src={
+                    item.petSex === "남아"
+                      ? Boy
+                      : item.petSex === "여아"
+                      ? Girl
+                      : Gender
+                  }
+                />
                 {item.petName} <span>({item.petAge}세)</span>
               </p>
               <p className="text">{item.petMsg}</p>
