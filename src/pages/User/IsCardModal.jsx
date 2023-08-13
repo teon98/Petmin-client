@@ -27,21 +27,20 @@ const ModalContent = styled.div`
   align-items: center;
 `;
 
-const IsCardModal = ({ onClose, cardCheck }) => {
+const IsCardModal = ({ onClose }) => {
+  const nav = useNavigate();
   const cardNumber = useRecoilState(userCardNumber);
   const userId = useRecoilState(idtextAtom);
-
-  console.log(cardNumber);
-
   const [pwd, setPwd] = useState("");
+  const [msg, setMsg] = useState("");
+
+  //비밀번호 입력시
   const changePwd = (e) => {
     setPwd(e.target.value);
   };
+
+  //비밀번호 입력 후 확인
   const CheckPwd = () => {
-    console.log("userId");
-    console.log(userId[0]);
-    console.log("pwd");
-    console.log(pwd);
     axios({
       method: "get",
       url: "/user/checkCard",
@@ -50,23 +49,49 @@ const IsCardModal = ({ onClose, cardCheck }) => {
         userCardPass: pwd,
       },
     }).then((res) => {
-      console.log(res.data);
-      cardCheck(res.data);
+      //비밀번호 일치
+      if (res.data) {
+        setMsg("결제가 완료되었습니다.");
+        setTimeout(() => {
+          nav("/checkSitter");
+        }, 3000);
+      } else {
+        //비밀번호 불일치
+        setPwd("");
+        setMsg("카드 비밀번호를 확인해주세요.");
+        setTimeout(() => {
+          setMsg("");
+        }, 2000);
+      }
     });
   };
 
+  //카드 미등록시
+  const RegisterCard = () => {
+    nav("/card");
+  };
+
   return (
-    <ModalOverlay onClick={onClose}>
+    <ModalOverlay>
       <ModalContent>
         <p style={{ color: "#f66" }}>
-          {cardNumber === "" ? (
-            "카드 등록하자"
+          <input type="button" value="X" onClick={onClose} />
+          {cardNumber[0] === "" ? (
+            <div>
+              <p>등록된 카드가 없습니다.</p>
+              <input
+                type="button"
+                value="카드 등록하기"
+                onClick={RegisterCard}
+              />
+            </div>
           ) : (
-            <p>
-              카드 비밀번호 입력해{" "}
+            <div>
+              <p>카드 비밀번호를 입력해주세요.</p>
               <input value={pwd} maxLength="4" onChange={changePwd} />
               <input type="button" value="결제하기" onClick={CheckPwd} />
-            </p>
+              <p>{msg}</p>
+            </div>
           )}
         </p>
       </ModalContent>
