@@ -73,9 +73,9 @@ const App = () => {
             <Route path="petinfo" element={<PetInfo />}></Route>
             {/* 병원페이지 */}
             <Route path="/hospital" element={<Hospital />}></Route>
-            <Route path="/reservation" element={<Reservation />} />
-            <Route path="/reservation2" element={<Reservation2 />} />
           </Route>
+          <Route path="/reservation" element={<Reservation />} />
+          <Route path="/reservation2" element={<Reservation2 />} />
           {/* 펫시터 프로필(예약을 위한) */}
           <Route path="/sitterProfile/:userId" element={<PSView />} />
           {/* 계정 */}

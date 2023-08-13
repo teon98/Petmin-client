@@ -142,8 +142,12 @@ function UserInfo(props) {
 
   const onClick = (e) => {
     var formdata = new FormData();
-    //이미지는 수정 안했을 경우
-    if (imgUrl === "") {
+    if(searchAddr === "" && imgUrl === ""){
+      //아무것도 수정하지 않았을 경우
+      return
+    } 
+    //주소만 수정 했을 경우
+    else if (imgUrl === "") {
       axios({
         method: "put",
         url: "/user/updateInfo",
@@ -157,26 +161,49 @@ function UserInfo(props) {
         setDetailAddr(subDetailAddr);
         setSuccessMsg(true);
       });
-    } else {
-      //이미지 수정 했을 경우
-      formdata.append("userImg", imgUrl);
-      formdata.append("userId", userId);
-      formdata.append("userAddress", searchAddr);
-      formdata.append("userDetailAddress", subDetailAddr);
+    } 
+    else {
+      //이미지만 수정했을 경우
+      if(searchAddr === ""){
+        formdata.append("userImg", imgUrl);
+        formdata.append("userId", userId);
+        formdata.append("userAddress", addr);
+        formdata.append("userDetailAddress", detailAddr);
+  
+        axios
+          .put("/user/updateInfoAll", formdata, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            setImgFile(res.data.userImg);
+            setSuccessMsg(true);
+          });
+      }else {
+            //이미지, 주소 수정 했을 경우
+            formdata.append("userImg", imgUrl);
+            formdata.append("userId", userId);
+            formdata.append("userAddress", searchAddr);
+            formdata.append("userDetailAddress", subDetailAddr);
 
-      axios
-        .put("/user/updateInfoAll", formdata, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          setAddr(searchAddr);
-          setDetailAddr(subDetailAddr);
-          setImgFile(res.data.userImg);
-          setSuccessMsg(true);
-        });
-    }
+            axios
+              .put("/user/updateInfoAll", formdata, {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+              })
+              .then((res) => {
+
+                // setAddr(searchAddr ? searchAddr : subAddr);
+                setAddr(searchAddr);
+                setDetailAddr(subDetailAddr);
+                setImgFile(res.data.userImg);
+                setSuccessMsg(true);
+              });
+            }
+      }
+     
   };
 
   return (

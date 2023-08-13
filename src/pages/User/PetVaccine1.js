@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import QuestionComponent from "../../components/QuestionComponent";
 import { useRecoilState } from "recoil";
-import { petVaccine1Atom } from "../../atom/atoms";
+import { petVaccineValueList1Atom } from "../../atom/atoms";
 import BackTitleHeader2 from "../../components/BackTitleHeader2";
 import QuestionFooter from "../../components/QuestionFooter";
 import { useNavigate } from "react-router";
 import CheckBoxComponent from "../../components/CheckBoxComponent";
 
-function PetVaccine1(props) {
-  const [petVaccine1, setPetVaccine1] = useRecoilState(petVaccine1Atom);
+function PetVaccine1() {
   const petVaccine1Options = [
     {
       name: "petVaccine1",
@@ -36,10 +34,10 @@ function PetVaccine1(props) {
       label: "접종을 하지 않았습니다.",
     },
   ];
-  const petVaccine1Change = (e) => {
-    const value = e.target.value;
-    setPetVaccine1(value);
-  };
+
+  const [checkValueList, setCheckValueList] = useRecoilState(
+    petVaccineValueList1Atom
+  );
 
   const navigate = useNavigate();
   const moveToNextPage = () => {
@@ -48,12 +46,12 @@ function PetVaccine1(props) {
 
   const [btnState, setBtnState] = useState(false);
   useEffect(() => {
-    if (petVaccine1 !== "") {
+    if (checkValueList.length > 0) {
       setBtnState(true);
     } else {
       setBtnState(false);
     }
-  }, [petVaccine1]);
+  }, [checkValueList]);
 
   return (
     <>
@@ -68,6 +66,8 @@ function PetVaccine1(props) {
           questionText1={"지금까지 완료하신"}
           questionText2={"예방 접종 여부를 선택해주세요"}
           options={petVaccine1Options}
+          checkValueList={checkValueList}
+          setCheckValueList={setCheckValueList}
         />
       </div>
       <QuestionFooter

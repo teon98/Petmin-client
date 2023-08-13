@@ -5,6 +5,7 @@ import {
   careTypeAtom,
   idtextAtom,
   nametextAtom,
+  petChooseListAtom,
   userAddrAtom,
 } from "../atom/atoms";
 import QuestionFooter from "../components/QuestionFooter";
@@ -72,10 +73,9 @@ function CareRequest3(props) {
           } else if (pet.petSex === "여아") {
             icon = "♀";
           }
-
           return {
             name: "careType",
-            value: `${icon} ${pet.petName} (${pet.petAge})`,
+            value: `${pet.petNo}`,
             label: `${icon} ${pet.petName} (${pet.petAge})`,
           };
         });
@@ -85,6 +85,13 @@ function CareRequest3(props) {
         console.log(err);
       });
   }, []);
+
+  const [checkValueList, setCheckValueList] = useRecoilState(petChooseListAtom);
+
+  for (let i = 0; i < checkValueList.length; i++) {
+    const element = checkValueList[i];
+    console.log(element); // 각 요소를 하나씩 출력하거나 원하는 작업을 수행
+  }
 
   return (
     <>
@@ -99,8 +106,8 @@ function CareRequest3(props) {
           userName={userName}
           questionText2={"돌봄을 맡길 반려견을 선택해주세요"}
           options={careTypeOptions}
-          //onChange={careTypeChange}
-          //selectedValue={careType}
+          checkValueList={checkValueList}
+          setCheckValueList={setCheckValueList}
         />
       </div>
       <QuestionFooter
