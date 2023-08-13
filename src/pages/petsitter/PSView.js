@@ -51,6 +51,16 @@ const PSView = () => {
   const [profileTemp, setProfileTemp] = useState("");
   const [profileMsg, setProfileMsg] = useState("");
 
+  //돌봄 환경
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [house, setHouse] = useState("");
+
+  const [reviewScore, setReviewScore] = useState(0); //리뷰 총점
+  const [reviewDelecacy, setReviewDelecacy] = useState(0); //리뷰 섬세함
+  const [reviewKind, setReviewKind] = useState(0); //리뷰 친절도
+  const [reviewTime, setReviewTime] = useState(0); //리뷰 시간
+
   useEffect(() => {
     axios
       .get("/dolbom/detail", {
@@ -71,10 +81,45 @@ const PSView = () => {
         setProfileImg(!!res.data[0].userImg ? res.data[0].userImg : null);
 
         //펫시터 정보
-        setProfileAddress(res.data[0].userAddress); //주소
-        setProfileName(res.data[0].userName); //이름
+        let address_slice = res.data[0].userAddress;
+        //console.log("슬라이싱", address_slice.split(" "));
+        let address_slice_arr = address_slice.split(" ");
+        let add_str =
+          address_slice_arr[0] +
+          " " +
+          address_slice_arr[1] +
+          " " +
+          (!!address_slice_arr[2] ? address_slice_arr[2] : "");
+
+        let user_name =
+          res.data[0].userName.substr(0, 1) +
+          "○" +
+          res.data[0].userName.substr(-1, 1);
+
+        setProfileAddress(add_str); //주소
+        setProfileName(user_name); //이름
         setProfileTemp(res.data[0].userTemp); //온도
         setProfileMsg(res.data[0].petsitter["sitterMsg"]); //메세지
+
+        setGender(res.data[0].sitterSex); //성별
+        setAge(Math.floor(res.data[0].sitterAge / 10) * 10); //나이
+        setHouse(res.data[0].sitterHousetype); //거주지 형태
+
+        setReviewScore(
+          isNaN(res.data[0].reviewScore) ? 0 : res.data[0].reviewScore
+        ); //점수
+
+        setReviewKind(
+          isNaN(res.data[0].reviewKind * 20) ? 0 : res.data[0].reviewKind * 20
+        ); //친절도
+        setReviewTime(
+          isNaN(res.data[0].reviewTime * 20) ? 0 : res.data[0].reviewTime * 20
+        ); //시간약속
+        setReviewDelecacy(
+          isNaN(res.data[0].reviewDelecacy * 20)
+            ? 0
+            : res.data[0].reviewDelecacy * 20
+        ); //섬세함
       })
       .catch((err) => {
         console.log(err);
@@ -195,9 +240,9 @@ const PSView = () => {
         <div className={style.box}>
           <p className={style.subtitle}>돌봄 환경</p>
           <div className={style.tag}>
-            <input type="button" value="남" />
-            <input type="button" value="30+" />
-            <input type="button" value="마당있는 집" />
+            <input type="button" value={gender} />
+            <input type="button" value={`${age}+`} />
+            <input type="button" value={house} />
           </div>
         </div>
         <hr />
@@ -221,16 +266,16 @@ const PSView = () => {
           <div className={style.subtitle} style={{ marginBottom: "10px" }}>
             <span style={{ marginRight: "20px" }}>리뷰</span>
             <StarRatings
-              rating={4}
+              rating={reviewScore}
               starDimension="25px"
               starSpacing="1px"
               starRatedColor="#FDC90E"
             />
           </div>
           <div className={style.progress}>
-            <ProgressBar completed={70} customLabel="친절도" />
-            <ProgressBar completed={80} customLabel="시간약속" />
-            <ProgressBar completed={50} customLabel="섬세함" />
+            <ProgressBar completed={reviewKind} customLabel="친절도" />
+            <ProgressBar completed={reviewTime} customLabel="시간약속" />
+            <ProgressBar completed={reviewDelecacy} customLabel="섬세함" />
           </div>
 
           <div className={style.box}>
@@ -373,7 +418,7 @@ const PSView = () => {
         </div>
       </div>
       {/* 바텀 */}
-      <FooterPS userId={params.userId} />
+      <FooterPS sitter={profileName} sitterId={params.userId} />
     </div>
   );
 };

@@ -29,7 +29,7 @@ const PetSitterCardList = (props) => {
     ),
     dotsClass: "dots_custom2",
   };
-  console.log(props.petSitterList);
+  //console.log(props.petSitterList);
 
   //예약을 위한 펫시터 프로필 이동하기
   const navigate = useNavigate();
@@ -54,6 +54,17 @@ const PetSitterCardList = (props) => {
             imgarr = imgstr.split(",");
           }
         }
+
+        //주소 슬라이싱
+        let address_slice = item.userAddress;
+        //console.log("슬라이싱", address_slice.split(" "));
+        let address_slice_arr = address_slice.split(" ");
+        let add_str =
+          address_slice_arr[0] +
+          " " +
+          address_slice_arr[1] +
+          " " +
+          (!!address_slice_arr[2] ? address_slice_arr[2] : "");
 
         return (
           <div
@@ -88,7 +99,7 @@ const PetSitterCardList = (props) => {
             </Slider>
             <div id={style.firstRow}>
               <p>
-                {item.userAddress} ·{" "}
+                {add_str} ·{" "}
                 <span>
                   {item.userName.substr(0, 1) +
                     "○" +
