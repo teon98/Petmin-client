@@ -70,12 +70,12 @@ const CheckSitter = () => {
 
   const dolbomchat = (sangdaeId) => {
     axios({
-      url: "/chat/findroom",
-      params: { Id1: userId, Id2: sangdaeId },
+      url: "/chat/chatting",
+      params: { sender: userId, receiver: sangdaeId },
       method: "get",
     })
       .then((res) => {
-        nav("/room/" + res.data + "/" + sangdaeId);
+        nav("/room/" + res.data.chatroomId + "/" + sangdaeId);
       })
       .catch((error) => {
         console.log(error);
