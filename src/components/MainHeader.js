@@ -40,7 +40,7 @@ const MainHeader = () => {
             <img src={banner1} alt="배너1" width="100%" />
           </div>
         </Link>
-        <Link to="/register">
+        <Link to="/petsittertest">
           <div>
             <img src={banner2} alt="배너2" width="100%" />
           </div>

@@ -14,6 +14,7 @@ import {
   userDetailAddrAtom,
   userAddrAtom,
   userImgAtom,
+  licenceAtom,
 } from "../../atom/atoms";
 
 const LoginForm = styled.div`
@@ -69,6 +70,7 @@ function Login(props) {
   const [detailAddr, setDetailAddr] = useRecoilState(userDetailAddrAtom);
   const [fullAddr, setFullAddr] = useRecoilState(userAddrAtom);
   const [email, setEmail] = useRecoilState(emailtextAtom);
+  const [licence, setLicence] = useRecoilState(licenceAtom);
   const [img, setImg] = useRecoilState(userImgAtom);
 
   const [pwd, setPwd] = useState("");
@@ -119,6 +121,7 @@ function Login(props) {
           setDetailAddr(() => res.data.userDetailAddress);
           setFullAddr(() => res.data.userAddress);
           setEmail(() => res.data.userEmail);
+          setLicence(() => res.data.userLicence);
           setPwd(() => "");
           setImg(() => res.data.userImg);
           console.log(res.data);
