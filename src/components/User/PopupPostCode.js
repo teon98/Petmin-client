@@ -80,7 +80,7 @@ const PopupPostCode = (props) => {
     display: "block",
     position: "absolute",
     top: "15%",
-    width: "412px",
+    width: "100%",
     height: "600px",
     padding: "7px",
     marginLeft: location ? "-47px" : "-268px",
