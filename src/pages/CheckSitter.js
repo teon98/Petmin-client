@@ -45,6 +45,7 @@ const CheckSitter = () => {
   }, []);
 
   const dolbomok = (no) => {
+    console.log(no);
     axios({
       url: "/dolbom/surack",
       params: { dolbomNo: no },
@@ -60,7 +61,7 @@ const CheckSitter = () => {
           title: "돌봄요청을 수락하셨습니다.",
         });
         setTimeout(() => {
-          nav("/checkSitter");
+          nav("/assurance", { state: no });
         }, 1000);
       })
       .catch((error) => {
