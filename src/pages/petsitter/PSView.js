@@ -162,7 +162,41 @@ const PSView = () => {
 
   const handleChange = (e) => {
     console.log(e.target.value);
+
+    if (!selectedDay) {
+      return;
+    }
     setCaretype(e.target.value);
+    let sitterdate = format(selectedDay, "y-MM-dd");
+
+    console.log("케어타입", caretype);
+    axios
+      .get("/sitter/getSchedule", {
+        params: {
+          sitterId: params.userId,
+          scheduleDay: sitterdate,
+        },
+      })
+      .then((res) => {
+        console.log("날자", res.data);
+        //케어타입이 산책인지,날짜인지 구분
+        let careTypeFilltering = [];
+        for (let i = 0; i < res.data.length; i++) {
+          if (res.data[i]["dolbomOption"] === e.target.value) {
+            console.log("응애", res.data[i]["Hour"]);
+
+            let baby = res.data[i]["Hour"];
+            if (baby.dolbomStatus === 0) {
+              careTypeFilltering.push(baby.Hour2);
+            }
+          }
+        }
+        console.log("careTypeFilltering", careTypeFilltering);
+        setScheduleData(careTypeFilltering);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   ///////////////////////////////날짜///////////////////////////////
@@ -172,6 +206,10 @@ const PSView = () => {
   ]);
 
   const handleSelect = (e) => {
+    if (!e) {
+      return;
+    }
+    console.log("잉잉", e);
     setSelectedDay(e);
     let sitterdate = format(e, "y-MM-dd");
 
@@ -209,7 +247,6 @@ const PSView = () => {
   //   console.log("scheduleData:", scheduleData);
   // }, [scheduleData]);
 
-  let st = 2;
   //////////////////////////////////////////////////////////////////
   return (
     <div id={style.aa}>
@@ -372,7 +409,7 @@ const PSView = () => {
                 value="06:00"
                 disabled
                 className={`${
-                  scheduleData.includes("06:00") ? style.yes : style.no
+                  scheduleData.includes("6:00") ? style.yes : style.no
                 }`}
               />
               <label htmlFor="06:00">06:00</label>
@@ -383,7 +420,7 @@ const PSView = () => {
                 value="07:00"
                 disabled
                 className={`${
-                  scheduleData.includes("07:00") ? style.yes : style.no
+                  scheduleData.includes("7:00") ? style.yes : style.no
                 }`}
               />
               <label htmlFor="07:00">07:00</label>
@@ -394,7 +431,7 @@ const PSView = () => {
                 value="08:00"
                 disabled
                 className={`${
-                  scheduleData.includes("08:00") ? style.yes : style.no
+                  scheduleData.includes("8:00") ? style.yes : style.no
                 }`}
               />
               <label htmlFor="08:00">08:00</label>
@@ -405,10 +442,10 @@ const PSView = () => {
                 value="09:00"
                 disabled
                 className={`${
-                  scheduleData.includes("09:00") ? style.yes : style.no
+                  scheduleData.includes("9:00") ? style.yes : style.no
                 }`}
               />
-              <label htmlFor="09:00">09:00</label>
+              <label htmlFor="09:00">9:00</label>
 
               <input
                 type="checkbox"
