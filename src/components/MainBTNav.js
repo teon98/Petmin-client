@@ -3,9 +3,9 @@ import { NavLink, Outlet } from "react-router-dom";
 import styles from "../styles/common/MainBTNav.module.css";
 import { FaHouseChimney } from "react-icons/fa6";
 import { FaRegCalendarDays } from "react-icons/fa6";
-import { FaStar } from "react-icons/fa6";
 import { FaMessage } from "react-icons/fa6";
 import { FaUserLarge } from "react-icons/fa6";
+import { FaHospitalAlt } from "react-icons/fa";
 
 const MainBTNav = () => {
   return (
@@ -43,7 +43,7 @@ const MainBTNav = () => {
           </li>
         </NavLink>
         <NavLink
-          to="/favorite"
+          to="/hospital"
           className={({ isActive }) => {
             return isActive
               ? `${styles.activeFooterBT}`
@@ -51,8 +51,8 @@ const MainBTNav = () => {
           }}
         >
           <li>
-            <FaStar />
-            <p>즐겨찾기</p>
+            <FaHospitalAlt />
+            <p>병원</p>
           </li>
         </NavLink>
         <NavLink
