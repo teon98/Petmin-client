@@ -79,7 +79,7 @@ const Assurance = () => {
     setIsCardModalOpen(false);
     //기존
     setIsModalOpen(false);
-    nav("/check");
+    nav("/checkSitter");
   };
 
   const CardContainer = styled.div`
