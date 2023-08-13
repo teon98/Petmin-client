@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import BackTitleHeader from "../../components/BackTitleHeader";
 import styled from "styled-components";
 import InsuranceModal from "./InsuranceModal";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 // HOC
 const withCardStyling = (WrappedComponent) => {
@@ -44,13 +46,31 @@ const StyledTextGroup = withTextGroupStyling(styled.div``);
 
 const Assurance = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
-
+  const { state } = useLocation();
+  console.log(state);
+  const nav = useNavigate();
   const handleModalOpen = () => {
     setIsModalOpen(true);
+    axios({
+      url: "/dolbom/assurance",
+      params: {
+        dolbomNo: state,
+        assuranceName: "신한 종합형 펫 플랜(실버)",
+      },
+      method: "post",
+    })
+      .then((res) => {
+        console.log(res.data);
+        //nav();보험 페이지로 이동
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+    nav("/check");
   };
 
   const CardContainer = styled.div`
@@ -144,12 +164,9 @@ const Assurance = () => {
               <Title>신한 종합형 펫 플랜(실버)</Title>
               <SubTitle>기간형 보험</SubTitle>
             </StyledTextGroup>
-            <LargeText>3400원</LargeText>
-            <SmallCard title="치료비" subTitle="사고/질병 당 최대 50만원" />
-            <SmallCard title="피부질환" subTitle="보장" />
-            <SmallCard title="구강질환" subTitle="보장" />
-            <SmallCard title="배상책임" subTitle="200만원" />
-            <SmallCard title="애견장례비" subTitle="15만원" />
+            <LargeText>시간당 90원</LargeText>
+            <SmallCard title="할인률" subTitle="사고/질병 당 20%" />
+            <SmallCard title="최대 지원금" subTitle="사고/질병 당 50만원" />
             <BoxDivContainer>
               <BoxBtn>자세히 보기</BoxBtn>
               <BoxBtn onClick={handleModalOpen}>가입하기</BoxBtn>

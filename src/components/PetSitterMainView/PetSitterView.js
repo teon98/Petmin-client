@@ -19,14 +19,18 @@ const PetSitterView = () => {
   const [userId] = useRecoilState(idtextAtom);
   const [address] = useRecoilState(userAddrAtom);
   const adds = address.split(" ");
-  console.log("주소", adds[0] + " " + adds[1] + " " + adds[2]);
+  console.log("address", address);
+  //console.log("userID", !!userId);
+  //console.log("주소", adds[0] + " " + adds[1] + " " + adds[2]);
   //로딩이 느려서 추가
   const [loading, setLoading] = useState(true);
 
   //사용자 위치
   const [location, setLocation] = useState(
-    adds[0] + " " + adds[1] + " " + adds[2]
-  );
+    !!userId
+      ? adds[0] + " " + adds[1] + " " + adds[2]
+      : "서울 마포구 월드컵북로"
+  ); //ANT빌딩
 
   //주소 변경
   const handleChange = (e) => {
@@ -35,24 +39,39 @@ const PetSitterView = () => {
 
   //오늘 날짜 알아오기 - 초기화를 위해
   let today = new Date();
-  today = format(today, "y-MM-dd");
+  //today = format(today, "y-MM-dd");
 
   //돌봄 형태
   const [caretype, setCareType] = useState("");
 
   const careTypeChange = (e) => {
-    //console.log(e.target.name);
+    console.log("선택된 산책유형", e.target.value);
+    console.log("리스트", originList);
+    let date = !selected ? today : selected;
+    console.log("선택된 날짜", format(date, "y-MM-dd"));
     if (e.target.name === "caretype") {
       setCareType(e.target.value);
-      setPetSitterList(
-        petSitterList.filter((item) => {
-          console.log("item22", item);
-          console.log();
-          console.log(inputValue);
-          return item.scheduleDay[inputValue] === e.target.value;
-        })
-      );
     }
+
+    //필터링
+    console.log("필터링된 리스트", petSitterList);
+    console.log("originList", originList);
+    setPetSitterList(
+      originList.filter((item) => {
+        console.log(item.scheduleDay);
+
+        //판별기
+        let result = false;
+        for (let [key, value] of Object.entries(item.scheduleDay)) {
+          console.log(key, value);
+          if (key === format(date, "y-MM-dd") && value === e.target.value) {
+            result = true;
+          }
+        }
+
+        return result;
+      })
+    );
   };
 
   //날짜 Pick을 위한 코드 ---------------Start-----------------------
@@ -90,22 +109,44 @@ const PetSitterView = () => {
   const handleDaySelect = (date) => {
     setSelected(date);
     if (date) {
-      setInputValue(format(date, "y-MM-dd"));
+      let filter_date = format(date, "y-MM-dd");
+      setInputValue(filter_date);
       closePopper();
       //날짜 배열 중에 선택된 날짜가 포함되어 있으면 그 날짜로 필터링
-      let findDate = format(date, "y-MM-dd");
-      //console.log("originList", originList);
-      setPetSitterList(
-        originList.filter((item) => {
-          //console.log("item", item);
-          //console.log("scheduleDay", item.scheduleDay);
-          let dateArr = item.scheduleDay;
-          //console.log(dateArr);
-          let findDateArr = Object.keys(dateArr);
-          //console.log("findDate", findDate);
-          return findDateArr.includes(findDate);
-        })
-      );
+      console.log("돌봄 유형", caretype);
+      console.log("filter_date", filter_date);
+      if (!!caretype) {
+        setPetSitterList(
+          originList.filter((item) => {
+            console.log(item.scheduleDay);
+
+            //판별기
+            let result = false;
+            for (let [key, value] of Object.entries(item.scheduleDay)) {
+              console.log(key, value);
+              if (key === filter_date && value === caretype) {
+                result = true;
+              }
+            }
+
+            return result;
+          })
+        );
+      } else {
+        setPetSitterList(
+          originList.filter((item) => {
+            //기준 되는 날짜
+            // console.log(item.scheduleDay);
+            let scheduleList = Object.keys(item.scheduleDay);
+            //caretype이 null이면
+            //console.log("scheduleList", scheduleList.includes(filter_date));
+            //caretype이 null이 아니면
+            return scheduleList.includes(filter_date);
+          })
+        );
+      }
+
+      console.log(originList);
     } else {
       setInputValue("");
     }
@@ -126,50 +167,94 @@ const PetSitterView = () => {
   //로그인한 사용자의 닉네임과 주소가 들어가도록 한다.
   //태양: 추후 recoil로 받아온 정보가 들어오게 하기
   useEffect(() => {
-    axios
-      .get("/dolbom/filter", {
-        params: {
-          userId: userId,
-          userAddress: adds[0] + " " + adds[1] + " " + adds[2],
-        },
-      })
-      .then((res) => {
-        //console.log(res.data);
-        if (res.data[0]["추천"] === "실패") {
-          setLoadSuccess(false);
-        }
-        setPetSitterList(res.data.slice(1));
-        setOriginList(res.data.slice(1));
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!!userId) {
+      axios
+        .get("/dolbom/filter", {
+          params: {
+            userId: userId,
+            userAddress: location,
+          },
+        })
+        .then((res) => {
+          //console.log(res.data);
+          if (res.data[0]["추천"] === "실패") {
+            setLoadSuccess(false);
+          }
+          setPetSitterList(res.data.slice(1));
+          setOriginList(res.data.slice(1));
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      //로그인하지 않았을 때
+      axios
+        .get("/dolbom/filter", {
+          params: {
+            userId: "test1",
+            userAddress: "서울 마포구 월드컵북로",
+          },
+        })
+        .then((res) => {
+          //console.log(res.data);
+          // if (res.data[0]["추천"] === "실패") {
+          //   setLoadSuccess(false);
+          // }
+          setPetSitterList(res.data.slice(1));
+          setOriginList(res.data.slice(1));
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
 
   //사용자 정보에 저장되어있지 않은 다른 위치를 검색할 때
   const anotherLocationSearch = useCallback(() => {
-    console.log(location);
+    //console.log(location);
     setLoading(true);
     setLoadSuccess(true);
-    axios
-      .get("/dolbom/filter", {
-        params: {
-          userId: userId,
-          userAddress: location,
-        },
-      })
-      .then((res) => {
-        //console.log(res.data);
-        if (res.data[0]["추천"] === "실패") {
-          setLoadSuccess(false);
-        }
-        setPetSitterList(res.data.slice(1));
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!!userId) {
+      axios
+        .get("/dolbom/filter", {
+          params: {
+            userId: userId,
+            userAddress: location,
+          },
+        })
+        .then((res) => {
+          //console.log(res.data);
+          if (res.data[0]["추천"] === "실패") {
+            setLoadSuccess(false);
+          }
+          setPetSitterList(res.data.slice(1));
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .get("/dolbom/filter", {
+          params: {
+            userId: "test1",
+            userAddress: location,
+          },
+        })
+        .then((res) => {
+          //console.log(res.data);
+          if (res.data[0]["추천"] === "실패") {
+            setLoadSuccess(false);
+          }
+          setPetSitterList(res.data.slice(1));
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, [location]);
 
   const handleOnKeyPress = (e) => {
@@ -291,7 +376,7 @@ const PetSitterView = () => {
             color="#e15b64"
           />
           {!userId ? (
-            <p id={style.text1}>로그인을 하면 펫시터를 찾아드릴께요:)</p>
+            <p id={style.text1}>로그인을 하면 맞춤 펫시터를 추천해드려요😊</p>
           ) : (
             <p id={style.text1}>조건에 맞는 펫시터를 찾고 있어요:)</p>
           )}
