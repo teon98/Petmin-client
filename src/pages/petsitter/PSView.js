@@ -162,12 +162,15 @@ const PSView = () => {
 
   const handleChange = (e) => {
     console.log(e.target.value);
+    setCaretype(e.target.value);
+
+    let sitterdate;
 
     if (!selectedDay) {
-      return;
+      sitterdate = today;
+    } else {
+      sitterdate = format(selectedDay, "y-MM-dd");
     }
-    setCaretype(e.target.value);
-    let sitterdate = format(selectedDay, "y-MM-dd");
 
     console.log("케어타입", caretype);
     axios

@@ -279,6 +279,25 @@ const ScheduleForm = () => {
         <input id="allday" type="checkbox" onClick={allHandleClick} />
         <label htmlFor="allday">종일 가능</label>
       </div>
+      <div className={style.subtitle3}>돌봄 형태</div>
+      <div className={style.typetable}>
+        <input
+          id="type1"
+          value="산책"
+          type="radio"
+          name="type"
+          onChange={typeChange}
+        />
+        <label htmlFor="type1">산책</label>
+        <input
+          id="type2"
+          value="돌봄"
+          type="radio"
+          name="type"
+          onChange={typeChange}
+        />
+        <label htmlFor="type2">돌봄</label>
+      </div>
       <div id="timetable">
         <div className={style.subtitle3}>오전</div>
         <div className={style.timetable}>
@@ -302,25 +321,7 @@ const ScheduleForm = () => {
             );
           })}
         </div>
-        <div className={style.subtitle3}>돌봄 형태</div>
-        <div className={style.typetable}>
-          <input
-            id="type1"
-            value="산책"
-            type="radio"
-            name="type"
-            onChange={typeChange}
-          />
-          <label htmlFor="type1">산책</label>
-          <input
-            id="type2"
-            value="돌봄"
-            type="radio"
-            name="type"
-            onChange={typeChange}
-          />
-          <label htmlFor="type2">돌봄</label>
-        </div>
+
         <div
           className={style.saveBT}
           id={style.frame}
