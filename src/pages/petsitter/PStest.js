@@ -6,6 +6,16 @@ import youtube from "../../assets/images/youtube.png";
 import notice from "../../assets/images/notice.png";
 import test from "../../assets/images/test.png";
 import Modal from "react-modal";
+import Swal from "sweetalert2";
+
+//제출시 알람
+const toast = Swal.mixin({
+  toast: true,
+  position: "center",
+  showConfirmButton: false,
+  timer: 1000,
+  timerProgressBar: true,
+});
 
 const PStest = () => {
   const navi = useNavigate({});
@@ -17,6 +27,7 @@ const PStest = () => {
 
   const closeModal = () => {
     setModalIsOpen(false);
+    gotest();
   };
   const gotest = () => {
     navi("/petsittertestpage");
@@ -24,13 +35,24 @@ const PStest = () => {
   const govideo = () => {
     navi("/petsittertestvideo");
   };
+  const goldtest = () => {
+    toast.fire({
+      icon: "success",
+      title: "골드 펫시터 시험 신청이 완료되었습니다.",
+    });
+    setTimeout(() => {}, 1000);
+  };
 
   return (
     <div>
-      <BackTitleHeader title="실버 펫시터 시험" />
+      <BackTitleHeader title="펫시터 자격 시험" />
+      <div className={style.silver} onClick={govideo}>
+        <img src={youtube}></img>
+        <p>실버 펫시터 시험 동영상</p>
+      </div>
       <div className={style.silver} onClick={openModal}>
-        <img src={notice}></img>
-        <p>실버 펫시터 유의사항</p>
+        <img src={test}></img>
+        <p>실버 펫시터 시험</p>
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -91,13 +113,10 @@ const PStest = () => {
           </div>
         </div>
       </Modal>
-      <div className={style.silver} onClick={govideo}>
-        <img src={youtube}></img>
-        <p>실버 펫시터 시험 동영상</p>
-      </div>
-      <div className={style.silver} onClick={gotest}>
-        <img src={test}></img>
-        <p>실버 펫시터 시험</p>
+
+      <div className={style.silver} onClick={goldtest}>
+        <img src={notice}></img>
+        <p>골드 펫시터 시험 신청</p>
       </div>
     </div>
   );
