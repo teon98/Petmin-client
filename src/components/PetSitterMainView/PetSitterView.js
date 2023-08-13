@@ -172,7 +172,7 @@ const PetSitterView = () => {
         .get("/dolbom/filter", {
           params: {
             userId: userId,
-            userAddress: adds[0] + " " + adds[1] + " " + adds[2],
+            userAddress: location,
           },
         })
         .then((res) => {
