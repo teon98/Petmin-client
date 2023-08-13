@@ -98,6 +98,21 @@ function PetList(props) {
     nav("/petinfo", { state: petNo });
   };
 
+  const deletePet = (e) => {
+    e.stopPropagation();
+    const petNo = e.target.getAttribute("petNo");
+    axios({
+      url: `/petInformainDelete/${petNo}`,
+      method: "delete",
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div style={{ paddingBottom: "70px" }}>
       <BackTitleHeader title="반려동물 리스트" />
@@ -124,6 +139,9 @@ function PetList(props) {
                 {item.petName} <span>({item.petAge}세)</span>
               </p>
               <p className="text">{item.petMsg}</p>
+              <button petNo={item.petNo} onClick={(e) => deletePet(e)}>
+                삭제
+              </button>
             </div>
           </List>
         ))}

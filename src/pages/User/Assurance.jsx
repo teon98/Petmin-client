@@ -70,7 +70,7 @@ const Assurance = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-    nav("/check");
+    nav("/checkSitter");
   };
 
   const CardContainer = styled.div`
