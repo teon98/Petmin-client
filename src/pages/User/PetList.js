@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import BackTitleHeader from "../../components/BackTitleHeader";
 import styles from "../../styles/MypageMenu.module.css";
 import { useRecoilState } from "recoil";
-import { idtextAtom } from "../../atom/atoms";
+import { idtextAtom, nametextAtom } from "../../atom/atoms";
 import axios from "axios";
 import PetDefaultImg from "../../assets/images/basicPetImage.png";
 import { styled } from "styled-components";
@@ -80,6 +80,7 @@ const List = styled.div`
 
 function PetList(props) {
   const [userId] = useRecoilState(idtextAtom);
+  const [userName] = useRecoilState(nametextAtom);
   const [petList, setPetList] = useState([]);
   const nav = useNavigate();
 
@@ -101,7 +102,7 @@ function PetList(props) {
     <div style={{ paddingBottom: "70px" }}>
       <BackTitleHeader title="반려동물 리스트" />
       <div id={styles.title} style={{ paddingTop: "50px" }}>
-        {userId}님의 반려동물
+        {userName}님의 반려동물
       </div>
       {petList &&
         petList.map((item, index) => (
