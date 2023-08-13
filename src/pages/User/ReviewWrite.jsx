@@ -170,6 +170,7 @@ const ReviewWrite = () => {
 
   const [startId, setStartId] = useRecoilState(idtextAtom);
 
+  const nav = useNavigate();
   const SmallCard = ({ title, subTitle }) => (
     <StyledTextGroup>
       <SmallText>{title}</SmallText>
@@ -177,7 +178,7 @@ const ReviewWrite = () => {
     </StyledTextGroup>
   );
   const location = useLocation();
-
+  const { state } = useLocation();
   async function getMakeReviewList() {
     const url = `/dolbom/reviewList?sitterId=${
       location.pathname.split("/")[2]
@@ -280,18 +281,37 @@ const ReviewWrite = () => {
     const url = `/dolbom/inReview?userId=${startId}&sitterId=${
       location.pathname.split("/")[2]
     }&reviewTime=${reviewTime}&reviewKind=${reviewKind}&reviewDelecacy=${reviewDelecacy}&reviewMsg=${event}`;
-    await axios
-      .post(url, {
-        headers: {
-          "Content-Type": `application/json`,
-        },
-      })
+    console.log(state);
+    axios({
+      url: "/dolbom/inReview",
+      params: {
+        dolbomNo: state,
+        reviewTime: reviewTime,
+        reviewKind: reviewKind,
+        reviewDelecacy: reviewDelecacy,
+        reviewMsg: event,
+      },
+      method: "post",
+    })
       .then((res) => {
         console.log(res.data);
+        nav("/checkUser");
       })
-      .catch((ex) => {
-        console.log("requset fail : " + ex);
+      .catch((error) => {
+        console.log(error);
       });
+    // await axios
+    //   .post(url, {
+    //     headers: {
+    //       "Content-Type": `application/json`,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   })
+    //   .catch((ex) => {
+    //     console.log("requset fail : " + ex);
+    //   });
   }
   //   postMakeReview();
 
