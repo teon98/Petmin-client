@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import BackTitleHeader from "../../components/BackTitleHeader";
 import styled from "styled-components";
 import InsuranceModal from "./InsuranceModal";
+import IsCardModal from "./IsCardModal";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -46,10 +47,16 @@ const StyledTextGroup = withTextGroupStyling(styled.div``);
 
 const Assurance = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [isCardModalOpen, setIsCardModalOpen] = useState(false); // State for modal visibility
+  const [cardCheck, setCardCheck] = useState(false); // State for modal visibility
   const { state } = useLocation();
   console.log(state);
   const nav = useNavigate();
   const handleModalOpen = () => {
+    console.log("여기 옴");
+    setIsCardModalOpen(true);
+
+    //기존
     setIsModalOpen(true);
     axios({
       url: "/dolbom/assurance",
@@ -69,8 +76,10 @@ const Assurance = () => {
   };
 
   const handleModalClose = () => {
+    setIsCardModalOpen(false);
+    //기존
     setIsModalOpen(false);
-    nav("/check");
+    nav("/checkSitter");
   };
 
   const CardContainer = styled.div`
@@ -172,6 +181,12 @@ const Assurance = () => {
               <BoxBtn onClick={handleModalOpen}>가입하기</BoxBtn>
             </BoxDivContainer>
             {isModalOpen && <InsuranceModal onClose={handleModalClose} />}
+            {isCardModalOpen && (
+              <IsCardModal
+                cardCheck={setCardCheck}
+                onClose={handleModalClose}
+              />
+            )}
           </StyledCardDiv>
         ))}
       </CardContainer>

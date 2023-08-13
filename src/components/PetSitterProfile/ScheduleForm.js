@@ -101,16 +101,19 @@ const ScheduleForm = () => {
   const [scheduleTimeList, setScheduleTimeList] = useState([]);
 
   const handleChange = (e) => {
-    console.log("??", e.target.id);
+    console.log("??", e.target.checked);
     if (e.target.checked === true) {
       setScheduleTimeList([...scheduleTimeList, e.target.id]);
     } else if (e.target.checked === false) {
       //삭제
+      var aa = [...scheduleTimeList];
       for (var i = 0; i < scheduleTimeList.length; i++) {
-        if (scheduleTimeList[i] === e.target.id) {
-          scheduleTimeList.splice(i, 1);
+        if (aa[i] === e.target.id) {
+          aa.splice(i, 1);
         }
       }
+      console.log(aa);
+      setScheduleTimeList(aa);
     }
   };
 
@@ -136,9 +139,8 @@ const ScheduleForm = () => {
         }
 
         for (let i = 0; i < res.data.length; i++) {
-          //console.log(res.data[i].Hour["Hour2"]);
-          //console.log(res.data[i].Hour["dolbomStatus"]);
-
+          console.log(res.data[i].Hour["Hour2"]);
+          console.log(res.data[i].Hour["dolbomStatus"]);
           for (let j = 0; j < timetable.length; j++) {
             if (res.data[i].Hour["Hour2"] === timetable[j].id) {
               if (!res.data[i].Hour["dolbomStatus"]) {
@@ -277,6 +279,25 @@ const ScheduleForm = () => {
         <input id="allday" type="checkbox" onClick={allHandleClick} />
         <label htmlFor="allday">종일 가능</label>
       </div>
+      <div className={style.subtitle3}>돌봄 형태</div>
+      <div className={style.typetable}>
+        <input
+          id="type1"
+          value="산책"
+          type="radio"
+          name="type"
+          onChange={typeChange}
+        />
+        <label htmlFor="type1">산책</label>
+        <input
+          id="type2"
+          value="돌봄"
+          type="radio"
+          name="type"
+          onChange={typeChange}
+        />
+        <label htmlFor="type2">돌봄</label>
+      </div>
       <div id="timetable">
         <div className={style.subtitle3}>오전</div>
         <div className={style.timetable}>
@@ -300,25 +321,7 @@ const ScheduleForm = () => {
             );
           })}
         </div>
-        <div className={style.subtitle3}>돌봄 형태</div>
-        <div className={style.typetable}>
-          <input
-            id="type1"
-            value="산책"
-            type="radio"
-            name="type"
-            onChange={typeChange}
-          />
-          <label htmlFor="type1">산책</label>
-          <input
-            id="type2"
-            value="돌봄"
-            type="radio"
-            name="type"
-            onChange={typeChange}
-          />
-          <label htmlFor="type2">돌봄</label>
-        </div>
+
         <div
           className={style.saveBT}
           id={style.frame}

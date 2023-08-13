@@ -293,3 +293,13 @@
   color: #2bba64 !important;
   border-color: #2bba64 !important;
 }
+
+.yes + label {
+  color: #ff6666 !important;
+  border-color: #ff6666 !important;
+}
+
+.no + label {
+  color: #bdbdbd !important;
+  border-color: #bdbdbd !important;
+}

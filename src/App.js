@@ -3,7 +3,6 @@ import "./styles/reset.css";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import MainBTNav from "./components/MainBTNav";
 import Main from "./pages/Main";
-import Check from "./pages/Check";
 import Favorite from "./pages/Favorite";
 import Chat from "./pages/Chat";
 import Alarm from "./pages/Alarm";
@@ -45,6 +44,8 @@ import Reservation2 from "./pages/Reservation2";
 import Assurance from "./pages/User/Assurance";
 import Review from "./pages/User/Review";
 import ReviewWrite from "./pages/User/ReviewWrite";
+import Checkuser from "./pages/CheckUser";
+import CheckSitter from "./pages/CheckSitter";
 
 const App = () => {
   return (
@@ -54,7 +55,8 @@ const App = () => {
           <Route path="/" element={<MainBTNav />}>
             <Route index element={<Main />} />
 
-            <Route path="check" element={<Check />} />
+            <Route path="checkUser" element={<Checkuser />} />
+            <Route path="checkSitter" element={<CheckSitter />} />
             <Route path="favorite" element={<Favorite />} />
             <Route path="rooms" element={<ChatList />} />
             <Route path="/room/:room/:userId" element={<Chat />} />
@@ -75,9 +77,9 @@ const App = () => {
             <Route path="petinfo" element={<PetInfo />}></Route>
             {/* 병원페이지 */}
             <Route path="/hospital" element={<Hospital />}></Route>
-            <Route path="/reservation" element={<Reservation />} />
-            <Route path="/reservation2" element={<Reservation2 />} />
           </Route>
+          <Route path="/reservation" element={<Reservation />} />
+          <Route path="/reservation2" element={<Reservation2 />} />
           {/* 펫시터 프로필(예약을 위한) */}
           <Route path="/sitterProfile/:userId" element={<PSView />} />
           {/* 계정 */}

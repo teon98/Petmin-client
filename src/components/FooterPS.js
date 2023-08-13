@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 
 import style from "../styles/PSView.module.css";
-import { useNavigate, useLocation } from "react-router";
+
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router";
+import { idtextAtom } from "../atom/atoms";
 import { useRecoilState } from "recoil";
-import { idtextAtom, nametextAtom } from "../atom/atoms";
 import axios from "axios";
 
 const FooterPS = (props) => {
@@ -37,6 +39,21 @@ const FooterPS = (props) => {
 
   console.log("profileName--------------");
   console.log(props.sitter);
+  const [userId] = useRecoilState(idtextAtom);
+
+  const dolbomchat = (sangdaeId) => {
+    axios({
+      url: "/chat/chatting",
+      params: { sender: userId, receiver: props.sitterId },
+      method: "get",
+    })
+      .then((res) => {
+        nav("/room/" + res.data.chatroomId + "/" + props.sitterId);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className={style.buttonFooter}>
       <button id={style.a} onClick={() => makeRoom(startId, receiver)}>

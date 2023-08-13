@@ -63,6 +63,12 @@ export const detailaddresstextAtom = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const userCardNumber = atom({
+  key: "userCardNumber",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const preference1Atom = atom({
   key: "preference1",
   default: "",
