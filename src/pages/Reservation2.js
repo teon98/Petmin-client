@@ -36,7 +36,7 @@ const DateList = styled.div`
   margin-left: 20px;
 `;
 
-const SelectTimeDateTitle = styled.div`
+export const SelectTimeDateTitle = styled.div`
   color: #323232;
   font-family: PreSemiBold;
   font-size: 20px;
@@ -271,7 +271,9 @@ function Reservation2(props) {
       setBtnState(false);
 
       //시터 일정 가져와서 dolbomStatus가 0인 것만 다시 배열에 넣기. => 예약 가능한 상태만
-      var arr = res.data.filter((item) => item.Hour.dolbomStatus === 0);
+      var arr = res.data.filter(
+        (item) => item.Hour.dolbomStatus === 0 && item.dolbomOption === "돌봄"
+      );
 
       //기존 코드
       setAbleStartTime(arr.map((item) => item.Hour.Hour2));
