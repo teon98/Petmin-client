@@ -101,16 +101,19 @@ const ScheduleForm = () => {
   const [scheduleTimeList, setScheduleTimeList] = useState([]);
 
   const handleChange = (e) => {
-    console.log("??", e.target.id);
+    console.log("??", e.target.checked);
     if (e.target.checked === true) {
       setScheduleTimeList([...scheduleTimeList, e.target.id]);
     } else if (e.target.checked === false) {
       //삭제
+      var aa = [...scheduleTimeList];
       for (var i = 0; i < scheduleTimeList.length; i++) {
-        if (scheduleTimeList[i] === e.target.id) {
-          scheduleTimeList.splice(i, 1);
+        if (aa[i] === e.target.id) {
+          aa.splice(i, 1);
         }
       }
+      console.log(aa);
+      setScheduleTimeList(aa);
     }
   };
 
@@ -136,9 +139,8 @@ const ScheduleForm = () => {
         }
 
         for (let i = 0; i < res.data.length; i++) {
-          //console.log(res.data[i].Hour["Hour2"]);
-          //console.log(res.data[i].Hour["dolbomStatus"]);
-
+          console.log(res.data[i].Hour["Hour2"]);
+          console.log(res.data[i].Hour["dolbomStatus"]);
           for (let j = 0; j < timetable.length; j++) {
             if (res.data[i].Hour["Hour2"] === timetable[j].id) {
               if (!res.data[i].Hour["dolbomStatus"]) {
