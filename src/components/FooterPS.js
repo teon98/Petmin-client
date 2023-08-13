@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 
 import style from "../styles/PSView.module.css";
 
+import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { idtextAtom } from "../atom/atoms";
 import { useRecoilState } from "recoil";
