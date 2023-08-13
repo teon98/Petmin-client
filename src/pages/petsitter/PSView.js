@@ -373,7 +373,7 @@ const PSView = () => {
         </div>
       </div>
       {/* 바텀 */}
-      <FooterPS sitter={profileName} />
+      <FooterPS sitter={profileName} sitterId={params.userId} />
     </div>
   );
 };
