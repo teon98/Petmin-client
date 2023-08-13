@@ -20,7 +20,7 @@ const List = styled.div`
     cursor: pointer;
 
     img {
-      border: 6px solid #ff8989;
+      border: 5px solid #ff8989;
     }
   }
 
@@ -35,8 +35,17 @@ const List = styled.div`
     object-fit: cover;
     background: #ccc;
     border-radius: 50%;
-    border: 6px solid transparent;
+    border: 5px solid transparent;
     transition: all 0.2s ease-in-out;
+  }
+
+  .text {
+    color: #323232;
+    font-family: PreMedium;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
   }
 `;
 
@@ -52,7 +61,7 @@ function PetList(props) {
     }).then((res) => {
       setPetList(res.data);
     });
-  }, []);
+  });
 
   const onClick = (petNo) => {
     console.log("petNo : ", petNo);
@@ -60,18 +69,25 @@ function PetList(props) {
   };
 
   return (
-    <div>
-      <BackTitleHeader />
-      <div id={styles.title}>{userId}님의 반려동물</div>
+    <div style={{ paddingBottom: "70px" }}>
+      <BackTitleHeader title="반려동물 리스트" />
+      <div id={styles.title} style={{ paddingTop: "50px" }}>
+        {userId}님의 반려동물
+      </div>
       {petList &&
         petList.map((item, index) => (
           <List key={index} onClick={() => onClick(item.petNo)}>
             <img src={item.petImg ? item.petImg : PetDefaultImg} alt="펫" />
             <div className="petinfo">
-              <p>
+              <p className="text">
+                {item.petSex === "남아"
+                  ? "♂️"
+                  : item.petSex === "여아"
+                  ? "♀"
+                  : "◌"}{" "}
                 {item.petName} <span>({item.petAge}세)</span>
               </p>
-              <p>{item.petMsg}</p>
+              <p className="text">{item.petMsg}</p>
             </div>
           </List>
         ))}
