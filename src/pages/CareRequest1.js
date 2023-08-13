@@ -80,7 +80,7 @@ function CareRequest1(props) {
       <div className="registerContainer">
         <QuestionComponent
           fullAddress={address}
-          userName={userName}
+          userName={sitter}
           questionText2={"돌봄 유형을 선택하세요"}
           options={careTypeOptions}
           onChange={careTypeChange}
