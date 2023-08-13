@@ -14,6 +14,8 @@ import "../../styles/progress.css";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import FooterPS from "../../components/FooterPS";
+import CheckBoxComponent from "../../components/CheckBoxComponent";
+import QuestionComponent from "../../components/QuestionComponent";
 
 const PSView = () => {
   const navigate = useNavigate();
@@ -62,6 +64,8 @@ const PSView = () => {
   const [reviewKind, setReviewKind] = useState(0); //리뷰 친절도
   const [reviewTime, setReviewTime] = useState(0); //리뷰 시간
 
+  const [petsitterId, setPetsitterId] = useState(""); //펫시터 아이디
+
   //오늘 날짜 알아오기 - 초기화를 위해
   let today = new Date();
   today = format(today, "y-MM-dd");
@@ -74,6 +78,8 @@ const PSView = () => {
       })
       .then((res) => {
         console.log(res.data);
+        console.log(res.data[0].petsitter["userId"]);
+        setPetsitterId(res.data[0].petsitter["userId"]);
 
         //이미지 배열 슬라이싱
         let imgStr = res.data[0].petsitter["sitterHouse"];
@@ -251,6 +257,43 @@ const PSView = () => {
   // }, [scheduleData]);
 
   //////////////////////////////////////////////////////////////////
+  const [petList, setPetList] = useState("");
+  const [petListOptions, setPetListOptions] = useState([]);
+
+  const petTendency1Change = (e) => {
+    const value = e.target.value;
+    setPetList(value);
+  };
+
+  useEffect(() => {
+    axios({
+      url: `/petProfileList/${petsitterId}`,
+      method: "get",
+    })
+      .then((res) => {
+        console.log(res.data);
+        setPetList(res.data);
+        const options = res.data.map((pet) => {
+          let icon = "◌";
+
+          if (pet.petSex === "남아") {
+            icon = "♂️";
+          } else if (pet.petSex === "여아") {
+            icon = "♀";
+          }
+          return {
+            name: "careType",
+            value: `${pet.petNo}`,
+            label: `${icon} ${pet.petName} (${pet.petAge})`,
+          };
+        });
+        setPetListOptions(options);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [petsitterId]);
+
   return (
     <div id={style.aa}>
       <BackTitleHeader title="돌보미 프로필" />
@@ -627,6 +670,12 @@ const PSView = () => {
         <div className={style.box}>
           <p className={style.subtitle}>이용 규칙</p>
         </div>
+        <QuestionComponent
+          questionText2={"반려견 선택"}
+          options={petListOptions}
+          onChange={petTendency1Change}
+          selectedValue={petList}
+        />
       </div>
       {/* 바텀 */}
       <FooterPS sitter={profileName} sitterId={params.userId} />
