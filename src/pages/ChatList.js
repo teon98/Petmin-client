@@ -24,8 +24,10 @@ const ChatList = () => {
       .then((res) => {
         console.log(res.data.map((el) => console.log(el)));
         setChatList(res.data);
+        console.log(res.data.length);
       })
       .catch((ex) => {
+        console.log(ex.length);
         console.log("requset fail : " + ex);
       });
   }
@@ -131,14 +133,14 @@ const ChatList = () => {
         </span>
       </div>
       <ul>
-        {dummy?.map((data, idx) => {
+        {chatList?.map((data, idx) => {
           return (
             <li
               onClick={() => {
                 // navigate(`/${userNick}`);
                 //   navigate(`/room/${data.chatroomNo}/${data.sender.userId}`);
                 navigate(
-                  `/room/${data.chatroomNo}/${
+                  `/room/${data.chatroomId}/${
                     userName === data.sender.userName
                       ? data.receiver.userId
                       : data.sender.userId
