@@ -347,7 +347,12 @@ const PSView = () => {
         <div className={style.box}>
           <p className={style.subtitle}>함께하는 반려동물</p>
           {!!mypet ? (
-            <div className={style.card}>
+            <div
+              className={style.card}
+              onClick={() =>
+                navigate(`/sitterProfile/petlist/${params.userId}`)
+              }
+            >
               <div id={style.petImg}>
                 <img
                   src={!!mypet.petImg ? mypet.petImg : noImg}
