@@ -106,13 +106,21 @@ const TestPage = () => {
           console.log(err);
         });
     }
-    Toast.fire({
-      icon: "success",
-      title: "문제가 제출되었습니다.",
-    });
+    if (score >= 3) {
+      Toast.fire({
+        icon: "success",
+        title: "🎉실버 등급 획득!🎉",
+      });
+    } else {
+      Toast.fire({
+        icon: "error",
+        title: "조금만 더 노력해보아요😅",
+      });
+    }
+
     setTimeout(() => {
       navi("/petsittertest");
-    }, 1000);
+    }, 2000);
   };
 
   return (
