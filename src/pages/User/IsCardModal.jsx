@@ -110,7 +110,7 @@ const IsCardModal = ({ onClose }) => {
 
   //카드 미등록시
   const RegisterCard = () => {
-    nav("/card");
+    nav("/card", { state: { path: "assurance" } });
   };
 
   return (
