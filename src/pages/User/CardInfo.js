@@ -175,10 +175,20 @@ function CardInfo(props) {
         setMsg(() => "");
         setSuccess(true);
         setCard(() => cardNumberStr);
+        !success
+          ? setMsg("카드 정보가 등록되었습니다.")
+          : setMsg("카드 정보가 수정되었습니다.");
+
+        setTimeout(() => {
+          setMsg("");
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);
         setMsg(() => "카드 번호 혹은 카드 비밀번호를 확인해주세요.");
+        setTimeout(() => {
+          setMsg("");
+        }, 2000);
       });
   };
 
