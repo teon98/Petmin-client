@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import BackTitleHeader from "../../components/BackTitleHeader";
 import styled from "styled-components";
 import InsuranceModal from "./InsuranceModal";
+import IsCardModal from "./IsCardModal";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -46,31 +47,44 @@ const StyledTextGroup = withTextGroupStyling(styled.div``);
 
 const Assurance = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [isCardModalOpen, setIsCardModalOpen] = useState(false); // State for modal visibility
+  const [cardCheck, setCardCheck] = useState(false); // State for modal visibility
   const { state } = useLocation();
   console.log(state);
   const nav = useNavigate();
   const handleModalOpen = () => {
-    setIsModalOpen(true);
-    axios({
-      url: "/dolbom/assurance",
-      params: {
-        dolbomNo: state,
-        assuranceName: "신한 종합형 펫 플랜(실버)",
-      },
-      method: "post",
-    })
-      .then((res) => {
-        console.log(res.data);
-        //nav();보험 페이지로 이동
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log("여기 옴");
+    setIsCardModalOpen(true);
+    if (cardCheck) {
+      console.log("맞음");
+    } else {
+      console.log("다름");
+    }
+
+    //기존
+    // setIsModalOpen(true);
+    // axios({
+    //   url: "/dolbom/assurance",
+    //   params: {
+    //     dolbomNo: state,
+    //     assuranceName: "신한 종합형 펫 플랜(실버)",
+    //   },
+    //   method: "post",
+    // })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     //nav();보험 페이지로 이동
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   const handleModalClose = () => {
-    setIsModalOpen(false);
-    nav("/check");
+    setIsCardModalOpen(false);
+    //기존
+    // setIsModalOpen(false);
+    // nav("/checkSitter");
   };
 
   const CardContainer = styled.div`
@@ -171,7 +185,13 @@ const Assurance = () => {
               <BoxBtn>자세히 보기</BoxBtn>
               <BoxBtn onClick={handleModalOpen}>가입하기</BoxBtn>
             </BoxDivContainer>
-            {isModalOpen && <InsuranceModal onClose={handleModalClose} />}
+            {/* {isModalOpen && <InsuranceModal onClose={handleModalClose} />} */}
+            {isCardModalOpen && (
+              <IsCardModal
+                cardCheck={setCardCheck}
+                onClose={handleModalClose}
+              />
+            )}
           </StyledCardDiv>
         ))}
       </CardContainer>

@@ -76,6 +76,18 @@ const List = styled.div`
     height: 15px;
     border: none;
   }
+
+  .delBtn {
+    border: none;
+    outline: none;
+    color: #323232;
+    font-family: PreMedium;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    background-color: white;
+  }
 `;
 
 function PetList(props) {
@@ -96,6 +108,21 @@ function PetList(props) {
   const onClick = (petNo) => {
     console.log("petNo : ", petNo);
     nav("/petinfo", { state: petNo });
+  };
+
+  const deletePet = (e) => {
+    e.stopPropagation();
+    const petNo = e.target.getAttribute("petNo");
+    axios({
+      url: `/petInformainDelete/${petNo}`,
+      method: "delete",
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -124,6 +151,13 @@ function PetList(props) {
                 {item.petName} <span>({item.petAge}세)</span>
               </p>
               <p className="text">{item.petMsg}</p>
+              <button
+                petNo={item.petNo}
+                onClick={(e) => deletePet(e)}
+                className="delBtn"
+              >
+                삭제
+              </button>
             </div>
           </List>
         ))}

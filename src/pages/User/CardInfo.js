@@ -5,7 +5,7 @@ import PinkBtn from "../../components/User/PinkBtn";
 import styled from "styled-components";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { idtextAtom, userCardAtom } from "../../atom/atoms";
+import { idtextAtom, userCardNumber } from "../../atom/atoms";
 
 const CardForm = styled.div`
   .mb {
@@ -72,6 +72,7 @@ function CardInfo(props) {
   const [msg, setMsg] = useState("");
   const [userId] = useRecoilState(idtextAtom);
   const [success, setSuccess] = useState(false);
+  const [card, setCard] = useRecoilState(userCardNumber);
 
   //페이지 로딩 시 유저 정보 가져오기
   useEffect(() => {
@@ -173,10 +174,21 @@ function CardInfo(props) {
         setCardPass("");
         setMsg(() => "");
         setSuccess(true);
+        setCard(() => cardNumberStr);
+        !success
+          ? setMsg("카드 정보가 등록되었습니다.")
+          : setMsg("카드 정보가 수정되었습니다.");
+
+        setTimeout(() => {
+          setMsg("");
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);
         setMsg(() => "카드 번호 혹은 카드 비밀번호를 확인해주세요.");
+        setTimeout(() => {
+          setMsg("");
+        }, 2000);
       });
   };
 

@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import BackTitleHeader from "../../components/BackTitleHeader";
 import styled from "styled-components";
 import InsuranceModal from "./InsuranceModal";
 import style from "../../styles/PSView.module.css";
 import StarRatings from "react-star-ratings";
 import ProgressBar from "@ramonak/react-progress-bar";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { FaStar } from "react-icons/fa";
+import { useRecoilState } from "recoil";
+import { idtextAtom, nametextAtom } from "../../atom/atoms";
 
 const withCardStyling = (WrappedComponent) => {
   const StyledCard = styled(WrappedComponent)`
@@ -50,12 +52,14 @@ const StyledTextGroup = withTextGroupStyling(styled.div``);
 const ReviewWrite = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
+  const navigate = useNavigate();
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+    navigate(-1);
   };
 
   const CardContainer = styled.div`
@@ -164,6 +168,9 @@ const ReviewWrite = () => {
   `;
   const numberOfCards = 1;
 
+  const [startId, setStartId] = useRecoilState(idtextAtom);
+
+  const nav = useNavigate();
   const SmallCard = ({ title, subTitle }) => (
     <StyledTextGroup>
       <SmallText>{title}</SmallText>
@@ -171,7 +178,7 @@ const ReviewWrite = () => {
     </StyledTextGroup>
   );
   const location = useLocation();
-
+  const { state } = useLocation();
   async function getMakeReviewList() {
     const url = `/dolbom/reviewList?sitterId=${
       location.pathname.split("/")[2]
@@ -193,22 +200,33 @@ const ReviewWrite = () => {
   const [clicked, setClicked] = useState([false, false, false, false, false]);
   const [clicked2, setClicked2] = useState([false, false, false, false, false]);
   const [clicked3, setClicked3] = useState([false, false, false, false, false]);
+  const ARRAY1 = [0, 1, 2, 3, 4];
+  const ARRAY2 = [0, 1, 2, 3, 4];
+  const ARRAY3 = [0, 1, 2, 3, 4];
+  const [reviewKind, setReviewKind] = useState("0");
+  const [reviewTime, setReviewTime] = useState("0");
+  const [reviewDelecacy, setReviewDelecacy] = useState("0");
+  const [reviewContent, setReviewContent] = useState("");
 
-  const handleStarClick = (index) => {
+  const handleStarClick1 = (index) => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
       clickStates[i] = i <= index ? true : false;
     }
     setClicked(clickStates);
-    console.log(clicked);
+    console.log(clickStates.filter((el) => el === true));
+    console.log(clickStates.filter(Boolean).length);
+    setReviewKind(clickStates.filter(Boolean).length);
   };
+
   const handleStarClick2 = (index) => {
     let clickStates = [...clicked2];
     for (let i = 0; i < 5; i++) {
       clickStates[i] = i <= index ? true : false;
     }
     setClicked2(clickStates);
-    console.log(clicked2);
+    console.log(clickStates.filter((el) => el === true));
+    setReviewTime(clickStates.filter(Boolean).length);
   };
   const handleStarClick3 = (index) => {
     let clickStates = [...clicked3];
@@ -216,22 +234,111 @@ const ReviewWrite = () => {
       clickStates[i] = i <= index ? true : false;
     }
     setClicked3(clickStates);
-    console.log(clicked3);
+    console.log(clickStates.filter((el) => el === true));
+    setReviewDelecacy(clickStates.filter(Boolean).length);
   };
 
   const sendReview = () => {
     let score = clicked.filter(Boolean).length;
+    setReviewKind(score);
+    let score1 = clicked2.filter(Boolean).length;
+    setReviewTime(score1);
+    let score2 = clicked3.filter(Boolean).length;
+    setReviewDelecacy(score2);
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    sendReview();
+
+    // Log the review content to the console
+    console.log(
+      "Review Content:",
+      reviewKind,
+      reviewTime,
+      reviewDelecacy,
+      reviewContent
+    );
+
+    postMakeReview();
   };
 
   const [review, setReview] = useState();
   useEffect(() => {
     getMakeReviewList();
     sendReview();
-  }, []);
+    console.log(
+      reviewKind,
+      reviewTime,
+      reviewDelecacy,
+      reviewContent,
+      "clicked3clicked3clicked3"
+    );
+  }, [clicked, clicked2, clicked3, reviewKind]);
 
-  const ARRAY1 = [0, 1, 2, 3, 4];
-  const ARRAY2 = [0, 1, 2, 3, 4];
-  const ARRAY3 = [0, 1, 2, 3, 4];
+  async function postMakeReview(event) {
+    const url = `/dolbom/inReview?userId=${startId}&sitterId=${
+      location.pathname.split("/")[2]
+    }&reviewTime=${reviewTime}&reviewKind=${reviewKind}&reviewDelecacy=${reviewDelecacy}&reviewMsg=${event}`;
+    console.log(state);
+    axios({
+      url: "/dolbom/inReview",
+      params: {
+        dolbomNo: state,
+        reviewTime: reviewTime,
+        reviewKind: reviewKind,
+        reviewDelecacy: reviewDelecacy,
+        reviewMsg: event,
+      },
+      method: "post",
+    })
+      .then((res) => {
+        console.log(res.data);
+        nav("/checkUser");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // await axios
+    //   .post(url, {
+    //     headers: {
+    //       "Content-Type": `application/json`,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   })
+    //   .catch((ex) => {
+    //     console.log("requset fail : " + ex);
+    //   });
+  }
+  //   postMakeReview();
+
+  //   const handleModalOpen = () => {
+  //     setIsModalOpen(true);
+  //   };
+
+  //   const handleModalClose = () => {
+  //     setIsModalOpen(false);
+  //   };
+  const handleInputKeyPress = (event) => {
+    if (event.key === "Enter") {
+      console.log("Entered value:", event.target.value);
+      setReviewContent(event.target.value);
+      // 입력된 값을 처리하거나 상태로 저장할 수 있습니다.
+      console.log(
+        startId,
+        location.pathname.split("/")[2],
+        reviewTime,
+        reviewKind,
+        reviewDelecacy,
+        event.target.value
+      );
+      handleModalOpen();
+      postMakeReview(event.target.value);
+    }
+  };
 
   return (
     <>
@@ -244,51 +351,57 @@ const ReviewWrite = () => {
             </StyledTextGroup>
             <div className={style.box}>
               <StyledTextGroup>
-                <LargeText>후기를 작성해주세요 !</LargeText>
+                <LargeText>돌봄 후기를 작성해주세요 !</LargeText>
               </StyledTextGroup>
-              <SmallCard title="친절도" subTitle={`${1}/5`} />
+              <SmallCard title="친절도" subTitle={`${reviewKind}/5`} />
               <Wrap>
-                <RatingText>평가하기</RatingText>
                 <Stars>
                   {ARRAY1.map((el, idx) => {
                     return (
                       <FaStar
+                        style={{
+                          paddingBottom: "15px",
+                        }}
                         key={idx}
                         size="50"
-                        onClick={() => handleStarClick(el)}
+                        onClick={() => handleStarClick1(el)}
                         className={clicked[el] && "yellowStar"}
                       />
                     );
                   })}
                 </Stars>
               </Wrap>
-              <SmallCard title="시간약속" subTitle={`${1}/5`} />
+              <SmallCard title="시간약속" subTitle={`${reviewTime}/5`} />
               <Wrap>
-                <RatingText>평가하기</RatingText>
-                <Stars>
-                  {ARRAY1.map((el, idx) => {
-                    return (
-                      <FaStar
-                        key={idx}
-                        size="50"
-                        onClick={() => handleStarClick2(el)}
-                        className={clicked[el] && "yellowStar"}
-                      />
-                    );
-                  })}
-                </Stars>
-              </Wrap>
-              <SmallCard title="섬세함" subTitle={`${1}/5`} />
-              <Wrap>
-                <RatingText>평가하기</RatingText>
                 <Stars>
                   {ARRAY2.map((el, idx) => {
                     return (
                       <FaStar
+                        style={{
+                          paddingBottom: "15px",
+                        }}
+                        key={idx}
+                        size="50"
+                        onClick={() => handleStarClick2(el)}
+                        className={clicked2[el] && "yellowStar"}
+                      />
+                    );
+                  })}
+                </Stars>
+              </Wrap>
+              <SmallCard title="섬세함" subTitle={`${reviewDelecacy}/5`} />
+              <Wrap>
+                <Stars>
+                  {ARRAY3.map((el, idx) => {
+                    return (
+                      <FaStar
+                        style={{
+                          paddingBottom: "15px",
+                        }}
                         key={idx}
                         size="50"
                         onClick={() => handleStarClick3(el)}
-                        className={clicked[el] && "yellowStar"}
+                        className={clicked3[el] && "yellowStar"}
                       />
                     );
                   })}
@@ -302,9 +415,22 @@ const ReviewWrite = () => {
                   borderRadius: "10px",
                 }}
               >
-                ㅇㅈ
+                <form onSubmit={handleFormSubmit}>
+                  <textarea
+                    type="text"
+                    style={{
+                      backgroundColor: "#f9f9f9",
+                      width: "100%",
+                      border: "none",
+                      padding: "5px",
+                    }}
+                    placeholder="내용을 입력하세요"
+                    onKeyPress={handleInputKeyPress}
+                  />
+                </form>
               </div>
             </div>
+            {isModalOpen && <InsuranceModal onClose={handleModalClose} />}
           </StyledCardDiv>
         ))}
       </CardContainer>

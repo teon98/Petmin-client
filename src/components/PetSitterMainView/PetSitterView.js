@@ -27,9 +27,7 @@ const PetSitterView = () => {
 
   //사용자 위치
   const [location, setLocation] = useState(
-    !!userId
-      ? adds[0] + " " + adds[1] + " " + adds[2]
-      : "서울 마포구 월드컵북로"
+    !!userId ? address : "서울 마포구 월드컵북로"
   ); //ANT빌딩
 
   //주소 변경

@@ -76,6 +76,8 @@ const Checkuser = () => {
 
   const dolbomreview = (no) => {
     //userId:userId sitterId:sangdaeId
+    //"/sitterProfile/:userId/reviewrite"
+    nav("/sitterProfile/" + userId + "/reviewrite", { state: no });
   };
   // 리스트 출력
   const renderMessages = () => {
@@ -118,12 +120,10 @@ const Checkuser = () => {
                     채팅하기
                   </button>
                 </span>
-              ) : msg[i].state === "종료" ? (
+              ) : msg[i].state === "종료:리뷰 작성 전" ? (
                 <span>
                   <button onClick={() => dolbomdel(msg[i].no)}>취소</button>
-                  <button onClick={() => dolbomreview(msg[i].sangdaeId)}>
-                    리뷰
-                  </button>
+                  <button onClick={() => dolbomreview(msg[i].no)}>리뷰</button>
                 </span>
               ) : (
                 <span>
