@@ -46,12 +46,9 @@ import Review from "./pages/User/Review";
 import ReviewWrite from "./pages/User/ReviewWrite";
 import Checkuser from "./pages/CheckUser";
 import CheckSitter from "./pages/CheckSitter";
-<<<<<<< HEAD
 import ReserveForm from "./pages/ReserveForm";
 import PSView2 from "./pages/petsitter/PSView2";
-=======
 import PetProfileUpdate from "./pages/User/PetProfileUpdate";
->>>>>>> 3d520f34ce475bb57fa416dc83955751fc77686d
 
 const App = () => {
   return (
