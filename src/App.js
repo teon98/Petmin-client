@@ -46,12 +46,8 @@ import Review from "./pages/User/Review";
 import ReviewWrite from "./pages/User/ReviewWrite";
 import Checkuser from "./pages/CheckUser";
 import CheckSitter from "./pages/CheckSitter";
-<<<<<<< HEAD
 import ReserveForm from "./pages/ReserveForm";
-import PSView2 from "./pages/petsitter/PSView2";
-=======
 import PetProfileUpdate from "./pages/User/PetProfileUpdate";
->>>>>>> 3d520f34ce475bb57fa416dc83955751fc77686d
 
 const App = () => {
   return (
@@ -89,7 +85,7 @@ const App = () => {
           {/* 펫시터 프로필(예약을 위한) */}
           {/* <Route path="/sitterProfile/:userId" element={<PSView />} /> */}
           {/* 펫시터 프로필(예약을 위한) */}
-          <Route path="/sitterProfile/:userId" element={<PSView2 />} />
+          <Route path="/sitterProfile/:userId" element={<PSView />} />
           {/* 계정 */}
           <Route path="/auth" element={<MainBTNav />}></Route>
           {/* 알림페이지 */}

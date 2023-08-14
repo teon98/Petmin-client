@@ -4,6 +4,7 @@ import style2 from "../styles/RFBT.module.css";
 import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
 import style from "../styles/PSView.module.css";
+import QuestionComponent from "../components/QuestionComponent";
 
 const ReserveForm = () => {
   const [caretype, setCaretype] = useState("산책");
