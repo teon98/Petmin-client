@@ -62,7 +62,7 @@ const FooterPS = (props) => {
       <button
         id={style.b}
         onClick={() => {
-          nav("/careRequest1", {
+          nav("/reserveForm", {
             state: { sitter: props.sitter, sitterId: props.sitterId },
           });
         }}
