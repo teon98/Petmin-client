@@ -7,6 +7,7 @@ import {
   fullAddressAtom,
   gendertextAtom,
   idtextAtom,
+  licenceAtom,
   nametextAtom,
   passwordChecktextAtom,
   passwordtextAtom,
@@ -35,6 +36,7 @@ function Logout(props) {
   const resetPreference3 = useResetRecoilState(preference3Atom);
   const resetPreference4 = useResetRecoilState(preference4Atom);
   const resetPreference5 = useResetRecoilState(preference5Atom);
+  const licence = useResetRecoilState(licenceAtom);
 
   useEffect(() => {
     resetEmail();
@@ -51,6 +53,7 @@ function Logout(props) {
     resetPreference3();
     resetPreference4();
     resetPreference5();
+    licence();
 
     nav("/");
   }, []);
