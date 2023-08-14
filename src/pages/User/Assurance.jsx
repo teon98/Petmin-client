@@ -175,12 +175,17 @@ const Assurance = () => {
           <StyledCardDiv key={index}>
             {/* 카드 내용의 나머지 부분 */}
             <StyledTextGroup>
-              <Title>신한 종합형 펫 플랜(실버)</Title>
+              <Title>
+                신한 종합형 펫 플랜({index === 0 ? "실버" : "골드"})
+              </Title>
               <SubTitle>기간형 보험</SubTitle>
             </StyledTextGroup>
-            <LargeText>시간당 90원</LargeText>
+            <LargeText>시간당 {index * 100 + 90}원</LargeText>
             <SmallCard title="할인률" subTitle="사고/질병 당 20%" />
-            <SmallCard title="최대 지원금" subTitle="사고/질병 당 50만원" />
+            <SmallCard
+              title="최대 지원금"
+              subTitle={`사고/질병 당 ${index * 50 + 50}만원`}
+            />
             <BoxDivContainer>
               <BoxBtn>자세히 보기</BoxBtn>
               <BoxBtn onClick={handleModalOpen}>가입하기</BoxBtn>
