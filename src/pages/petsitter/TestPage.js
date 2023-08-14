@@ -5,7 +5,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { idtextAtom } from "../../atom/atoms";
+import { idtextAtom, licenceAtom } from "../../atom/atoms";
 
 //제출시 알람
 const Toast = Swal.mixin({
@@ -21,6 +21,7 @@ const TestPage = () => {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [btnState, setBtnState] = useState(false);
   const [userId] = useRecoilState(idtextAtom);
+  const [licence, setLicence] = useRecoilState(licenceAtom);
   useEffect(() => {
     // useEffect를 사용하여 selectedAnswers 변경 시에만 실행될 로직을 구현합니다.
     const allAnswersSelected = questions.every((q) => selectedAnswers[q.id]);
@@ -99,18 +100,27 @@ const TestPage = () => {
       })
         .then((res) => {
           console.log(res.data);
+          setLicence(res.data);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-    Toast.fire({
-      icon: "success",
-      title: "문제가 제출되었습니다.",
-    });
+    if (score >= 3) {
+      Toast.fire({
+        icon: "success",
+        title: "🎉실버 등급 획득!🎉",
+      });
+    } else {
+      Toast.fire({
+        icon: "error",
+        title: "조금만 더 노력해보아요😅",
+      });
+    }
+
     setTimeout(() => {
       navi("/petsittertest");
-    }, 1000);
+    }, 2000);
   };
 
   return (

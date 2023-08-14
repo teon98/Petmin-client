@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import BackTitleHeader from "../../components/BackTitleHeader";
 import styled from "styled-components";
 import InsuranceModal from "./InsuranceModal";
+import IsCardModal from "./IsCardModal";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -46,31 +47,44 @@ const StyledTextGroup = withTextGroupStyling(styled.div``);
 
 const Assurance = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [isCardModalOpen, setIsCardModalOpen] = useState(false); // State for modal visibility
+  const [cardCheck, setCardCheck] = useState(false); // State for modal visibility
   const { state } = useLocation();
   console.log(state);
   const nav = useNavigate();
   const handleModalOpen = () => {
-    setIsModalOpen(true);
-    axios({
-      url: "/dolbom/assurance",
-      params: {
-        dolbomNo: state,
-        assuranceName: "신한 종합형 펫 플랜(실버)",
-      },
-      method: "post",
-    })
-      .then((res) => {
-        console.log(res.data);
-        //nav();보험 페이지로 이동
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log("여기 옴");
+    setIsCardModalOpen(true);
+    if (cardCheck) {
+      console.log("맞음");
+    } else {
+      console.log("다름");
+    }
+
+    //기존
+    // setIsModalOpen(true);
+    // axios({
+    //   url: "/dolbom/assurance",
+    //   params: {
+    //     dolbomNo: state,
+    //     assuranceName: "신한 종합형 펫 플랜(실버)",
+    //   },
+    //   method: "post",
+    // })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     //nav();보험 페이지로 이동
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   const handleModalClose = () => {
-    setIsModalOpen(false);
-    nav("/checkSitter");
+    setIsCardModalOpen(false);
+    //기존
+    // setIsModalOpen(false);
+    // nav("/checkSitter");
   };
 
   const CardContainer = styled.div`
@@ -82,11 +96,12 @@ const Assurance = () => {
   `;
 
   const Title = styled.p`
-    color: #000;
+    color: #555;
     font-family: Inter;
     font-size: 17px;
     font-weight: 400;
     margin-bottom: 5px;
+    font-family: PreMedium;
   `;
 
   const SubTitle = styled.p`
@@ -94,7 +109,6 @@ const Assurance = () => {
     font-family: Inter;
     font-size: 15px;
     font-weight: 600;
-    margin-bottom: 10px;
   `;
 
   const SmallText = styled.div`
@@ -144,7 +158,7 @@ const Assurance = () => {
     }
   `;
 
-  const numberOfCards = 2;
+  const numberOfCards = 3;
 
   const SmallCard = ({ title, subTitle }) => (
     <StyledTextGroup>
@@ -156,22 +170,40 @@ const Assurance = () => {
   return (
     <>
       <BackTitleHeader title="보험 확인" />
-      <CardContainer>
+      <CardContainer style={{ paddingBottom: "90px" }}>
         {Array.from({ length: numberOfCards }).map((_, index) => (
           <StyledCardDiv key={index}>
             {/* 카드 내용의 나머지 부분 */}
             <StyledTextGroup>
-              <Title>신한 종합형 펫 플랜(실버)</Title>
+              <Title>
+                신한 종합형 펫 플랜
+                <span style={{ paddingLeft: "10px", color: "#919191" }}>
+                  ({index === 0 ? "일반" : index === 1 ? "실버" : "골드"})
+                </span>
+              </Title>
               <SubTitle>기간형 보험</SubTitle>
             </StyledTextGroup>
-            <LargeText>시간당 90원</LargeText>
+            <LargeText>
+              {" "}
+              {index === 0 ? "90" : index === 1 ? "140" : "170"}원
+            </LargeText>
+            <SmallCard title="" subTitle="시간당" />
             <SmallCard title="할인률" subTitle="사고/질병 당 20%" />
-            <SmallCard title="최대 지원금" subTitle="사고/질병 당 50만원" />
+            <SmallCard
+              title="최대 지원금"
+              subTitle={`사고/질병 당 ${index * 50 + 50}만원`}
+            />
             <BoxDivContainer>
               <BoxBtn>자세히 보기</BoxBtn>
               <BoxBtn onClick={handleModalOpen}>가입하기</BoxBtn>
             </BoxDivContainer>
-            {isModalOpen && <InsuranceModal onClose={handleModalClose} />}
+            {/* {isModalOpen && <InsuranceModal onClose={handleModalClose} />} */}
+            {isCardModalOpen && (
+              <IsCardModal
+                cardCheck={setCardCheck}
+                onClose={handleModalClose}
+              />
+            )}
           </StyledCardDiv>
         ))}
       </CardContainer>
