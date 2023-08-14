@@ -6,6 +6,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { idtextAtom, userCardNumber } from "../../atom/atoms";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CardForm = styled.div`
   .mb {
@@ -59,6 +60,8 @@ const CardForm = styled.div`
 
 //추후 axios 보낼 때 userId 값 변경하기
 function CardInfo(props) {
+  const location = useLocation();
+  const nav = useNavigate();
   const btnTextValue = ["등록하기", "수정하기"];
   const [btnState, setBtnState] = useState(false);
   const [cardPass, setCardPass] = useState("");
@@ -181,6 +184,10 @@ function CardInfo(props) {
 
         setTimeout(() => {
           setMsg("");
+          //예약 수락 전 보험 페이지에서 카드 없어서 넘어왔다면 다시 보내주기
+          if (location?.state?.path === "assurance") {
+            nav("/assurance");
+          }
         }, 2000);
       })
       .catch((err) => {
