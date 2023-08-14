@@ -63,6 +63,7 @@ const PSView = () => {
   const [reviewDelecacy, setReviewDelecacy] = useState(0); //리뷰 섬세함
   const [reviewKind, setReviewKind] = useState(0); //리뷰 친절도
   const [reviewTime, setReviewTime] = useState(0); //리뷰 시간
+  const [reviewList, setReviewList] = useState([]); //리뷰 리스트
 
   const [petsitterId, setPetsitterId] = useState(""); //펫시터 아이디
 
@@ -73,6 +74,18 @@ const PSView = () => {
   let today = new Date();
   today = format(today, "y-MM-dd");
   useEffect(() => {
+    axios
+      .get("/dolbom/reviewList", {
+        params: { sitterId: params.userId },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setReviewList(res.data.length >= 2 ? res.data : []);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     const fetchData = async () => {
       try {
         const res = await axios.get("/dolbom/detail", {
@@ -112,7 +125,7 @@ const PSView = () => {
 
         setProfileAddress(add_str); //주소
         setProfileName(user_name); //이름
-        setProfileTemp(res.data[0].userTemp); //온도
+        setProfileTemp(Math.ceil(res.data[0].userTemp * 10) / 10); //온도
         setProfileMsg(res.data[0].petsitter["sitterMsg"]); //메세지
 
         setGender(res.data[0].sitterSex); //성별
@@ -137,7 +150,7 @@ const PSView = () => {
 
         console.log("mypet", res.data[0].pet[0]);
         setMypet(
-          typeof res.data[0].pet[0] === "undefined" ? res.data[0].pet[0] : {}
+          typeof res.data[0].pet[0] === "undefined" ? {} : res.data[0].pet[0]
         );
       } catch (err) {
         console.log(err);
@@ -350,7 +363,7 @@ const PSView = () => {
                     : "♀"}{" "}
                   {mypet.petName}(3세)
                 </div>
-                <div>인스타그램을 운영중입니다.</div>
+                <div>{mypet.petMsg}</div>
               </div>
               <div id={style.cardRight}>
                 <FaAngleRight color="#FF8989" size={25} />
@@ -384,20 +397,14 @@ const PSView = () => {
             }}
           >{`리뷰 전체보기 >`}</div>
           <div className={`${style.box} ${style.reviewBox}`}>
-            <div className={style.reviewCard}>
-              <p id={style.reviewtitleName}>김0민</p>
-              <p id={style.reviewtitleContent}>
-                강아지가 편하게 잘 놀고 왔다는 것이 느껴졌어요 돌보미님 최고!
-              </p>
-            </div>
-            <div className={style.reviewCard}>
-              <p id={style.reviewtitleName}>김0민</p>
-              <p id={style.reviewtitleContent}>
-                강아지가 편하게 잘 놀고 왔다는 것이 느껴졌어요 돌보미님 최고!
-                강아지가 편하게 잘 놀고 왔다는 것이 느껴졌어요 돌보미님 최고!
-                강아지가 편하게 잘 놀고 왔다는 것이 느껴졌어요 돌보미님 최고!
-              </p>
-            </div>
+            {reviewList.map((item) => {
+              return (
+                <div className={style.reviewCard}>
+                  <p id={style.reviewtitleName}>{item.userName}</p>
+                  <p id={style.reviewtitleContent}>{item.reviewMsg}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
         <hr />
