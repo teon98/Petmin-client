@@ -47,6 +47,7 @@ import ReviewWrite from "./pages/User/ReviewWrite";
 import Checkuser from "./pages/CheckUser";
 import CheckSitter from "./pages/CheckSitter";
 import ReserveForm from "./pages/ReserveForm";
+import PSView2 from "./pages/petsitter/PSView2";
 
 const App = () => {
   return (
@@ -82,7 +83,9 @@ const App = () => {
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/reservation2" element={<Reservation2 />} />
           {/* 펫시터 프로필(예약을 위한) */}
-          <Route path="/sitterProfile/:userId" element={<PSView />} />
+          {/* <Route path="/sitterProfile/:userId" element={<PSView />} /> */}
+          {/* 펫시터 프로필(예약을 위한) */}
+          <Route path="/sitterProfile/:userId" element={<PSView2 />} />
           {/* 계정 */}
           <Route path="/auth" element={<MainBTNav />}></Route>
           {/* 알림페이지 */}
