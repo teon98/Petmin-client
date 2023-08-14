@@ -125,6 +125,13 @@ function PetList(props) {
       });
   };
 
+  const navigate = useNavigate();
+
+  const moveToUpdate = (e, petNo) => {
+    e.stopPropagation();
+    // navigate("/petprofileupdate", { state: { petNo } });
+  };
+
   return (
     <div style={{ paddingBottom: "70px" }}>
       <BackTitleHeader title="반려동물 리스트" />
@@ -151,6 +158,12 @@ function PetList(props) {
                 {item.petName} <span>({item.petAge}세)</span>
               </p>
               <p className="text">{item.petMsg}</p>
+              <button
+                onClick={(e) => moveToUpdate(e, item.petNo)}
+                className="delBtn"
+              >
+                수정
+              </button>
               <button
                 petNo={item.petNo}
                 onClick={(e) => deletePet(e)}
