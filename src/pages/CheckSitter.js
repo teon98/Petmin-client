@@ -275,7 +275,7 @@ const Checkuser = () => {
 
   return (
     <div>
-      <BackTitleHeader title="예약확인" />
+      <BackTitleHeader title="펫시터 예약확인" />
       <div>{renderMessages()}</div>
       {/* 화면변경  버튼 */}
       {userLicence === "일반" ? (
