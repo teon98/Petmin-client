@@ -15,6 +15,7 @@ const Chat = () => {
     location.pathname.split("/")[location.pathname.split("/").length - 1]
   );
   const [msg, setMsg] = useState("");
+  const [chatCheck, setChatCheck] = useState(false);
   const [name, setName] = useState("");
   const [chatt, setChatt] = useState([]);
   const [chkLog, setChkLog] = useState(false);
@@ -27,15 +28,31 @@ const Chat = () => {
 
   //스크롤
   const scrollRef = useRef();
-
+  const aa = {
+    marginLeft: "-60px",
+    fontFamily: "Inter",
+    fontSize: "12px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal",
+    width: "fit-content",
+  };
+  const bb = {
+    marginLeft: "245px",
+    fontFamily: "Inter",
+    fontSize: "12px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal",
+    width: "fit-content",
+  };
   const timeRegex = /(\S+\s)(\d{1,2}:\d{2})/;
 
   const msgBox = chatt.map((item, idx) => (
-
     <>
       <div
         key={idx}
-        className={item.startId === startId.toString() ? "me" : "other"}
+        className={item.startId === startId ? "me" : "other"}
         style={{
           // overflow: "scroll",
           whiteSpace: "wrap",
@@ -53,47 +70,23 @@ const Chat = () => {
             borderRadius: "5px",
             fontWeight: "600",
             marginLeft: "5px",
-            maxHeight: "10px" /* Set the maximum height for the container */,
-            // overflowY: "auto",
-
-            // width: "80px",
+            width: "fit-content",
           }}
         >
           {item.msg}
         </p>
-        {item.startId === startId.toString() ? (
-          <p
-            style={{
-              marginLeft: "-60px",
-              fontFamily: "Inter",
-              fontSize: "12px",
-              fontStyle: "normal",
-              fontWeight: "400",
-              lineHeight: "normal",
-            }}
-          >
-            {item?.chatCheck === undefined || item?.chatCheck === true
-              ? "1️⃣"
-              : ""}
+        {item.startId === startId ? (
+          <p style={aa}>
+            {/* {console.log(item, "^^^^^^^^^^")} */}
+            {item.chatCheck === true ? "" : "1️⃣"}
             &nbsp;
             {item.date.match(timeRegex)[2]}
           </p>
         ) : (
-          <p
-            style={{
-              marginLeft: "245px",
-              fontFamily: "Inter",
-              fontSize: "12px",
-              fontStyle: "normal",
-              fontWeight: "400",
-              lineHeight: "normal",
-            }}
-          >
+          <p style={bb}>
             {item.date.match(timeRegex)[2]}
             &nbsp;
-            {item?.chatCheck === undefined || item?.chatCheck === true
-              ? "1️⃣"
-              : ""}
+            {item.chatCheck === true ? "" : "1️⃣"}
           </p>
         )}
       </div>
@@ -123,12 +116,6 @@ const Chat = () => {
         },
       })
       .then((res) => {
-        console.log(
-          res.data.chatHistory[0],
-          "res.data.chatHistory[0]res.data.chatHistory[0]"
-        );
-        console.log(res.data.chatHistory[0].startId.userId);
-        // console.log(res.data.startId);
         if (
           res.data.message ===
           "상담 신청 내역이 있습니다. 이전 채팅방에 입장합니다."
@@ -185,25 +172,25 @@ const Chat = () => {
     console.log(startId, receiverId, "startId, receiverIdstartId, receiverId");
     makeRoom(startId, receiverId);
     // makeRoom(receiverId, startId);
-  }, [webSocketLogin]);
+  }, []);
 
   useEffect(() => {
-    // console.log(
-    //   startId,
-    //   userName,
-    //   receiverId,
-    //   "startId, userName, receiverId,"
-    // );
     console.log(chatt, startId.toString(), "chatt@@@");
     console.log(socketData, "socketData");
     if (socketData !== undefined) {
-      const tempData = chatt.concat(socketData);
+      const tempData = [...chatt, socketData];
       console.log(tempData, "tempData");
       setChatt(tempData);
     }
   }, [socketData]);
 
-  const GlobalStyle = createGlobalStyle`  //css 초기화가 된 component
+  useEffect(() => {
+    console.log("chat변경됨");
+    console.log(chatt);
+    //  /window.location.reload();
+  }, [chatt]);
+
+  const GlobalStyle = createGlobalStyle`  //css 초기화가 된 component998
         ${reset}
     `;
 
@@ -234,7 +221,7 @@ const Chat = () => {
         startId: startId,
         receiverId: receiverId,
         chatroomId: room,
-        // chatCheck:
+        // chatCheck: chatCheck,
         // chat,
         date: new Date().toLocaleString(),
       }; //전송 데이터(JSON)

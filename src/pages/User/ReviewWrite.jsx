@@ -300,28 +300,7 @@ const ReviewWrite = () => {
       .catch((error) => {
         console.log(error);
       });
-    // await axios
-    //   .post(url, {
-    //     headers: {
-    //       "Content-Type": `application/json`,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((ex) => {
-    //     console.log("requset fail : " + ex);
-    //   });
   }
-  //   postMakeReview();
-
-  //   const handleModalOpen = () => {
-  //     setIsModalOpen(true);
-  //   };
-
-  //   const handleModalClose = () => {
-  //     setIsModalOpen(false);
-  //   };
   const handleInputKeyPress = (event) => {
     if (event.key === "Enter") {
       console.log("Entered value:", event.target.value);
