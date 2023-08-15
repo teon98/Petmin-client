@@ -8,6 +8,8 @@ import { useNavigate } from "react-router";
 import style from "../styles/Alarm.module.css";
 import { FaArrowUp, FaArrowsRotate } from "react-icons/fa6";
 import Swal from "sweetalert2";
+import styled from "styled-components";
+
 //제출시 알람
 const Toast = Swal.mixin({
   toast: true,
@@ -16,6 +18,41 @@ const Toast = Swal.mixin({
   timer: 1000,
   timerProgressBar: true,
 });
+
+const withCardStyling = (WrappedComponent) => {
+  const StyledCard = styled(WrappedComponent)`
+    width: 360px;
+    border-radius: 10px;
+    border: 1px solid rgba(217, 217, 217, 0.37);
+    background: #fff;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+  `;
+
+  return function (props) {
+    console.log(props, "withCardStyling");
+    return <StyledCard {...props} />;
+  };
+};
+
+const withTextGroupStyling = (WrappedComponent) => {
+  const StyledTextGroup = styled(WrappedComponent)`
+    padding: 5px;
+    display: flex;
+    align-items: center;
+  `;
+
+  return function (props) {
+    console.log(props, "withTextGroupStyling");
+
+    return <StyledTextGroup {...props} />;
+  };
+};
+
 const Checkuser = () => {
   const [userId] = useRecoilState(idtextAtom);
   const [userLicence] = useRecoilState(licenceAtom);
@@ -79,59 +116,147 @@ const Checkuser = () => {
     //"/sitterProfile/:userId/reviewrite"
     nav("/sitterProfile/" + userId + "/reviewrite", { state: no });
   };
+
+  const SmallCard = ({ title, subTitle }) => (
+    <StyledTextGroup>
+      <SmallText style={{ width: "150px" }}>{title}</SmallText>
+      <SmallText style={{ color: "#f66" }}>{subTitle}</SmallText>
+    </StyledTextGroup>
+  );
+
+  const StyledCardDiv = withCardStyling(styled.div``);
+  const StyledTextGroup = withTextGroupStyling(styled.div``);
+
+  const CardContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  `;
+
+  const Title = styled.p`
+    color: #000;
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 5px;
+  `;
+
+  const SubTitle = styled.p`
+    color: #f66;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  `;
+
+  const SmallText = styled.div`
+    color: #000;
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 400;
+  `;
+
+  const LargeText = styled.p`
+    color: #f66;
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 10px 0;
+    text-align: right;
+  `;
+
+  const TextGroup = styled.div`
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  `;
+
+  const BoxDivContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  `;
+
+  const BoxBtn = styled.button`
+    width: 120px;
+    height: 39px;
+    border-radius: 5px;
+    background: #f66;
+    color: #ffff;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: white;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #ff9999;
+    }
+  `;
+
   // 리스트 출력
   const renderMessages = () => {
     const messageElements = [];
     for (let i = 0; i < msg.length; i++) {
       messageElements.push(
         <div key={i} className={styles2.aldiv}>
-          <span className={styles2.chspan}>
-            <div>
-              <p>
-                {msg[i].sangdaeName} 예약 시작 시간 {msg[i].startday} ~
-              </p>
-              <p> 끝나는 시간 {msg[i].endday}</p>
-              <p>
-                상태 :{msg[i].state}
-                {"     "} 펫: {msg[i].pet.petName} {msg[i].pet.petAge}{" "}
-                {msg[i].petW}
-              </p>
-              {msg[i].state === "대기중" ? (
-                <span>
-                  <button onClick={() => dolbomdel(msg[i].no)}>취소</button>
-                  <button
-                    className="yobtn"
-                    onClick={() => dolbomchat(msg[i].sangdaeId)}
-                  >
-                    문의하기
-                  </button>
-                </span>
-              ) : msg[i].state === "수락완료" ? (
-                <span>
-                  <button onClick={() => dolbomdel(msg[i].no)}>취소</button>
-                  <button onClick={() => dolbomchat(msg[i].sangdaeId)}>
-                    채팅하기
-                  </button>
-                </span>
-              ) : msg[i].state === "진행중" ? (
-                <span>
-                  <button onClick={() => dolbomdel(msg[i].no)}>취소</button>
-                  <button onClick={() => dolbomchat(msg[i].sangdaeId)}>
-                    채팅하기
-                  </button>
-                </span>
-              ) : msg[i].state === "종료:리뷰 작성 전" ? (
-                <span>
-                  <button onClick={() => dolbomdel(msg[i].no)}>취소</button>
-                  <button onClick={() => dolbomreview(msg[i].no)}>리뷰</button>
-                </span>
-              ) : (
-                <span>
-                  <button onClick={() => dolbomdel(msg[i].no)}>취소</button>
-                </span>
-              )}
-            </div>
-          </span>
+          <CardContainer>
+            {Array.from({ length: 1 }).map((val, index) => (
+              <StyledCardDiv key={index}>
+                <StyledTextGroup>
+                  <Title>🐶 {msg[i].sangdaeName}</Title>
+                </StyledTextGroup>
+                <div className={style.box}>
+                  <SmallCard
+                    title="예약 시작 시간"
+                    subTitle={msg[i].startday}
+                  />
+                  <SmallCard title="끝나는 시간" subTitle={msg[i].endday} />
+                  <SmallCard title="상태" subTitle={msg[i].state} />
+                  <SmallCard title="펫 이름" subTitle={msg[i].pet?.petName} />
+                  <SmallCard title="펫 나이" subTitle={msg[i].pet?.petAge} />
+                  <SmallCard title="펫 정보" subTitle={msg[i]?.petW} />
+                  {msg[i].state === "대기중" ? (
+                    <BoxDivContainer>
+                      <BoxBtn onClick={() => dolbomdel(msg[i].no)}>취소</BoxBtn>
+                      <BoxBtn onClick={() => dolbomchat(msg[i].sangdaeId)}>
+                        문의하기
+                      </BoxBtn>
+                    </BoxDivContainer>
+                  ) : msg[i].state === "수락완료" ? (
+                    <BoxDivContainer>
+                      <BoxBtn onClick={() => dolbomdel(msg[i].no)}>취소</BoxBtn>
+                      <BoxBtn onClick={() => dolbomchat(msg[i].sangdaeId)}>
+                        채팅하기
+                      </BoxBtn>
+                    </BoxDivContainer>
+                  ) : msg[i].state === "진행중" ? (
+                    <BoxDivContainer>
+                      <BoxBtn onClick={() => dolbomdel(msg[i].no)}>취소</BoxBtn>
+                      <BoxBtn onClick={() => dolbomchat(msg[i].sangdaeId)}>
+                        채팅하기
+                      </BoxBtn>
+                    </BoxDivContainer>
+                  ) : msg[i].state === "종료:리뷰 작성 전" ? (
+                    <BoxDivContainer>
+                      <BoxBtn onClick={() => dolbomdel(msg[i].no)}>취소</BoxBtn>
+                      <BoxBtn onClick={() => dolbomreview(msg[i].no)}>
+                        리뷰
+                      </BoxBtn>
+                    </BoxDivContainer>
+                  ) : (
+                    <BoxDivContainer>
+                      <BoxBtn onClick={() => dolbomdel(msg[i].no)}>취소</BoxBtn>
+                    </BoxDivContainer>
+                  )}
+                </div>
+              </StyledCardDiv>
+            ))}
+          </CardContainer>
         </div>
       );
     }
