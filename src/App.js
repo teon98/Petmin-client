@@ -172,7 +172,10 @@ const App = () => {
           {/* 돌봄 요청 페이지 3 (태영 요청) */}
           <Route path="/careRequest3" element={<CareRequest3 />}></Route>
 
-          <Route path="/reserveForm" element={<ReserveForm />}></Route>
+          <Route
+            path="/reserveForm/:sitterID"
+            element={<ReserveForm />}
+          ></Route>
           {/* 보험 적용 페이지 */}
           <Route path="/" element={<MainBTNav />}>
             <Route path="/assurance" element={<Assurance />}></Route>
