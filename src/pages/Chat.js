@@ -78,7 +78,8 @@ const Chat = () => {
         {item.startId === startId ? (
           <p style={aa}>
             {/* {console.log(item, "^^^^^^^^^^")} */}
-            {item.chatCheck === true ? "" : "1️⃣"}
+            {/* {item.chatCheck === true ? "" : "1️⃣"} */}
+            {item.chatCheck === true ? "" : ""}
             &nbsp;
             {item.date.match(timeRegex)[2]}
           </p>
@@ -86,7 +87,8 @@ const Chat = () => {
           <p style={bb}>
             {item.date.match(timeRegex)[2]}
             &nbsp;
-            {item.chatCheck === true ? "" : "1️⃣"}
+            {/* {item.chatCheck === true ? "" : "1️⃣"} */}
+            {item.chatCheck === true ? "" : ""}
           </p>
         )}
       </div>

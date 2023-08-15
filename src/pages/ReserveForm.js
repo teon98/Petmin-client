@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import QuestionComponent from "../components/QuestionComponent";
 import { useRecoilState } from "recoil";
 import { idtextAtom } from "../atom/atoms";
-import { Form, useParams } from "react-router-dom";
+import { Form, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -19,6 +19,7 @@ const Toast = Swal.mixin({
 });
 
 const ReserveForm = () => {
+  const navigation = useNavigate();
   const [userId] = useRecoilState(idtextAtom); //로그인한 유저
   console.log("userId!!!!!!!!!!!!!" + userId);
   const params = useParams(); //sitterID
@@ -217,6 +218,7 @@ const ReserveForm = () => {
           title: "요청이 완료되었습니다.:)!.",
         });
         console.log(res.data);
+        navigation("/");
       })
       .catch((err) => {
         console.log(err);
@@ -301,7 +303,6 @@ const ReserveForm = () => {
           {scheduleData.length > 0
             ? scheduleData.sort().map((item, index) => {
                 if (
-                  item === "12:00" ||
                   item === "13:00" ||
                   item === "14:00" ||
                   item === "15:00" ||

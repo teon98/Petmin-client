@@ -116,7 +116,7 @@ function PetList2(props) {
 
   return (
     <div style={{ paddingBottom: "70px" }}>
-      <BackTitleHeader title={`${userName}님의 반려동물`} />
+      <BackTitleHeader title={`하동훈님의 반려동물`} />
       {petList &&
         petList.map((item, index) => (
           <List key={index} onClick={() => onClick(item.petNo)}>
