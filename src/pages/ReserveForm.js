@@ -107,6 +107,8 @@ const ReserveForm = () => {
       });
   };
 
+  const [checkedTime, setCheckedTime] = useState([]);
+
   const timeCheckhandle = (e) => {
     console.log(e.target.checked, e.target.value);
   };
@@ -158,6 +160,14 @@ const ReserveForm = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const reserveClick = () => {
+    console.log("돌봄유형", caretype);
+    console.log(
+      "날짜",
+      typeof selectedDay === "undefined" ? today : selectedDay
+    );
   };
 
   return (
@@ -261,7 +271,9 @@ const ReserveForm = () => {
       </div>
 
       <div className={style.bottom}>
-        <button type="button">요청하기</button>
+        <button type="button" onClick={reserveClick}>
+          요청하기
+        </button>
       </div>
     </div>
   );
