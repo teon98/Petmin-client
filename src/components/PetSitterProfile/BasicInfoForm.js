@@ -2,10 +2,18 @@ import React, { useCallback, useEffect, useRef } from "react";
 import style from "../../styles/PetSitterProfile.module.css";
 import { useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { FaImages } from "react-icons/fa6";
 import { useRecoilState } from "recoil";
 import { idtextAtom } from "../../atom/atoms";
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "center",
+  showConfirmButton: false,
+  timer: 1000,
+  timerProgressBar: true,
+});
 const BasicInfoForm = () => {
   const [about, setAbout] = useState("");
   const [place, setPlace] = useState("");
@@ -116,7 +124,10 @@ const BasicInfoForm = () => {
           },
         })
         .then((res) => {
-          alert("자기소개가 수정되었습니다:)!");
+          Toast.fire({
+            icon: "success",
+            title: "자기소개가 수정되었습니다:)!.",
+          });
           console.log(res.data);
         })
         .catch((err) => {
@@ -130,7 +141,10 @@ const BasicInfoForm = () => {
           },
         })
         .then((res) => {
-          alert("자기소개가 수정되었습니다(●'◡'●)!");
+          Toast.fire({
+            icon: "success",
+            title: "자기소개가 수정되었습니다(●'◡'●)!",
+          });
           console.log(res.data);
         })
         .catch((err) => {
