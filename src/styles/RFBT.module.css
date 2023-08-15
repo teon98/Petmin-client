@@ -55,6 +55,7 @@
 .caretypeButton input[type="radio"]:checked + label {
   color: #ff6666;
   border-color: #ff6666;
+  margin-right: 7px;
 }
 
 .timetable {

@@ -110,7 +110,26 @@ const ReserveForm = () => {
   const [checkedTime, setCheckedTime] = useState([]);
 
   const timeCheckhandle = (e) => {
+    // console.log(
+    //   "날짜",
+    //   typeof selectedDay === "undefined"
+    //     ? today
+    //     : format(selectedDay, "y-MM-dd")
+    // );
+
+    let daybyday =
+      typeof selectedDay === "undefined"
+        ? today
+        : format(selectedDay, "y-MM-dd");
+    //클릭 됐을 때
     console.log(e.target.checked, e.target.value);
+    if (e.target.checked) {
+      setCheckedTime([...checkedTime, daybyday + " " + e.target.value]);
+    } else {
+      setCheckedTime(
+        checkedTime.filter((item) => item !== daybyday + " " + e.target.value)
+      );
+    }
   };
 
   const [selectedDay, setSelectedDay] = useState();
@@ -163,11 +182,15 @@ const ReserveForm = () => {
   };
 
   const reserveClick = () => {
-    console.log("돌봄유형", caretype);
+    console.log("userId", userId);
+    console.log("sitterId", params.sitterID);
     console.log(
       "날짜",
-      typeof selectedDay === "undefined" ? today : selectedDay
+      typeof selectedDay === "undefined"
+        ? today
+        : format(selectedDay, "y-MM-dd")
     );
+    console.log("checkedTime", checkedTime);
   };
 
   return (
