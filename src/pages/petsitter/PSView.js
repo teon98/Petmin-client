@@ -63,20 +63,37 @@ const PSView = () => {
   const [reviewDelecacy, setReviewDelecacy] = useState(0); //리뷰 섬세함
   const [reviewKind, setReviewKind] = useState(0); //리뷰 친절도
   const [reviewTime, setReviewTime] = useState(0); //리뷰 시간
+  const [reviewList, setReviewList] = useState([]); //리뷰 리스트
 
   const [petsitterId, setPetsitterId] = useState(""); //펫시터 아이디
+
+  //함께하는 반려동물 상단
+  const [mypet, setMypet] = useState({});
 
   //오늘 날짜 알아오기 - 초기화를 위해
   let today = new Date();
   today = format(today, "y-MM-dd");
   useEffect(() => {
     axios
-      .get("/dolbom/detail", {
-        params: {
-          sitterId: params.userId,
-        },
+      .get("/dolbom/reviewList", {
+        params: { sitterId: params.userId },
       })
       .then((res) => {
+        console.log(res.data);
+        setReviewList(res.data.length >= 2 ? res.data : []);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("/dolbom/detail", {
+          params: {
+            sitterId: params.userId,
+          },
+        });
+
         console.log(res.data);
         console.log(res.data[0].petsitter["userId"]);
         setPetsitterId(res.data[0].petsitter["userId"]);
@@ -108,7 +125,7 @@ const PSView = () => {
 
         setProfileAddress(add_str); //주소
         setProfileName(user_name); //이름
-        setProfileTemp(res.data[0].userTemp); //온도
+        setProfileTemp(Math.ceil(res.data[0].userTemp * 10) / 10); //온도
         setProfileMsg(res.data[0].petsitter["sitterMsg"]); //메세지
 
         setGender(res.data[0].sitterSex); //성별
@@ -130,11 +147,17 @@ const PSView = () => {
             ? 0
             : res.data[0].reviewDelecacy * 20
         ); //섬세함
-      })
-      .catch((err) => {
-        console.log(err);
-      });
 
+        console.log("mypet", res.data[0].pet[0]);
+        setMypet(
+          typeof res.data[0].pet[0] === "undefined" ? {} : res.data[0].pet[0]
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
     axios
       .get("/sitter/getSchedule", {
         params: {
@@ -257,42 +280,6 @@ const PSView = () => {
   // }, [scheduleData]);
 
   //////////////////////////////////////////////////////////////////
-  const [petList, setPetList] = useState("");
-  const [petListOptions, setPetListOptions] = useState([]);
-
-  const petTendency1Change = (e) => {
-    const value = e.target.value;
-    setPetList(value);
-  };
-
-  useEffect(() => {
-    axios({
-      url: `/petProfileList/${petsitterId}`,
-      method: "get",
-    })
-      .then((res) => {
-        console.log(res.data);
-        setPetList(res.data);
-        const options = res.data.map((pet) => {
-          let icon = "◌";
-
-          if (pet.petSex === "남아") {
-            icon = "♂️";
-          } else if (pet.petSex === "여아") {
-            icon = "♀";
-          }
-          return {
-            name: "careType",
-            value: `${pet.petNo}`,
-            label: `${icon} ${pet.petName} (${pet.petAge})`,
-          };
-        });
-        setPetListOptions(options);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [petsitterId]);
 
   return (
     <div id={style.aa}>
@@ -359,18 +346,37 @@ const PSView = () => {
         <hr />
         <div className={style.box}>
           <p className={style.subtitle}>함께하는 반려동물</p>
-          <div className={style.card}>
-            <div id={style.petImg}>
-              <img src={noImg} alt="펫시터 프로필 이미지" />
+          {!!mypet ? (
+            <div
+              className={style.card}
+              onClick={() =>
+                navigate(`/sitterProfile/petlist/${params.userId}`)
+              }
+            >
+              <div id={style.petImg}>
+                <img
+                  src={!!mypet.petImg ? mypet.petImg : noImg}
+                  alt="펫시터 프로필 이미지"
+                />
+              </div>
+              <div id={style.cardMiddle}>
+                <div style={{ marginBottom: "20px" }}>
+                  {mypet.petSex === "중성화"
+                    ? "◌"
+                    : mypet.petSex === "남아"
+                    ? "♂️"
+                    : "♀"}{" "}
+                  {mypet.petName}(3세)
+                </div>
+                <div>{mypet.petMsg}</div>
+              </div>
+              <div id={style.cardRight}>
+                <FaAngleRight color="#FF8989" size={25} />
+              </div>
             </div>
-            <div id={style.cardMiddle}>
-              <div style={{ marginBottom: "20px" }}>♂️ 유자두(3세)</div>
-              <div>인스타그램을 운영중입니다.</div>
-            </div>
-            <div id={style.cardRight}>
-              <FaAngleRight color="#FF8989" size={25} />
-            </div>
-          </div>
+          ) : (
+            " "
+          )}
         </div>
         <hr />
         <div className={style.box}>
@@ -396,20 +402,14 @@ const PSView = () => {
             }}
           >{`리뷰 전체보기 >`}</div>
           <div className={`${style.box} ${style.reviewBox}`}>
-            <div className={style.reviewCard}>
-              <p id={style.reviewtitleName}>김0민</p>
-              <p id={style.reviewtitleContent}>
-                강아지가 편하게 잘 놀고 왔다는 것이 느껴졌어요 돌보미님 최고!
-              </p>
-            </div>
-            <div className={style.reviewCard}>
-              <p id={style.reviewtitleName}>김0민</p>
-              <p id={style.reviewtitleContent}>
-                강아지가 편하게 잘 놀고 왔다는 것이 느껴졌어요 돌보미님 최고!
-                강아지가 편하게 잘 놀고 왔다는 것이 느껴졌어요 돌보미님 최고!
-                강아지가 편하게 잘 놀고 왔다는 것이 느껴졌어요 돌보미님 최고!
-              </p>
-            </div>
+            {reviewList.map((item) => {
+              return (
+                <div className={style.reviewCard}>
+                  <p id={style.reviewtitleName}>{item.userName}</p>
+                  <p id={style.reviewtitleContent}>{item.reviewMsg}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
         <hr />
@@ -670,15 +670,9 @@ const PSView = () => {
         <div className={style.box}>
           <p className={style.subtitle}>이용 규칙</p>
         </div>
-        <QuestionComponent
-          questionText2={"반려견 선택"}
-          options={petListOptions}
-          onChange={petTendency1Change}
-          selectedValue={petList}
-        />
       </div>
       {/* 바텀 */}
-      <FooterPS sitter={profileName} sitterId={params.userId} />
+      <FooterPS sitter={profileName} sitterId={petsitterId} />
     </div>
   );
 };

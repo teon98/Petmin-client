@@ -106,7 +106,9 @@ const PetSitterCardList = (props) => {
                     item.userName.substr(-1, 1)}
                 </span>
               </p>
-              <div id={style.progressBar}>{item.sitterTem}ºC</div>
+              <div id={style.progressBar}>
+                {Math.ceil(item.sitterTem * 10) / 10}ºC
+              </div>
             </div>
             <div id={style.secondRow}>{item.sitterMsg}</div>
           </div>

@@ -5,7 +5,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { idtextAtom } from "../../atom/atoms";
+import { idtextAtom, licenceAtom } from "../../atom/atoms";
 
 //제출시 알람
 const Toast = Swal.mixin({
@@ -21,6 +21,7 @@ const TestPage = () => {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [btnState, setBtnState] = useState(false);
   const [userId] = useRecoilState(idtextAtom);
+  const [licence, setLicence] = useRecoilState(licenceAtom);
   useEffect(() => {
     // useEffect를 사용하여 selectedAnswers 변경 시에만 실행될 로직을 구현합니다.
     const allAnswersSelected = questions.every((q) => selectedAnswers[q.id]);
@@ -30,41 +31,41 @@ const TestPage = () => {
   const questions = [
     {
       id: 1,
-      question: "강아지는 총 몇 마리인가요?",
+      question: "펫시터의 자격 요건은 무엇일까요?",
       options: [
-        { id: "a1", text: "1마리" },
-        { id: "a2", text: "2마리" },
-        { id: "a3", text: "3마리" },
+        { id: "a1", text: "조건없음" },
+        { id: "a2", text: "자격 취득" },
+        { id: "a3", text: "면허 취득" },
       ],
-      correctAnswer: "a2",
+      correctAnswer: "a1",
     },
     {
       id: 2,
-      question: "기침하는 강아지는 어떤 색깔인가요?",
+      question: "펫시터의 업무는 무엇인가요?",
       options: [
-        { id: "b1", text: "하얀색" },
-        { id: "b2", text: "검정색" },
-        { id: "b3", text: "갈색" },
+        { id: "b1", text: "사람 상대" },
+        { id: "b2", text: "동물 배달" },
+        { id: "b3", text: "동물 상대" },
       ],
       correctAnswer: "b3",
     },
     {
       id: 3,
-      question: "하얀색 강아지가 관심이있는 장난감은 어떤 것 일까요?",
+      question: "펫시터의 특수성은 무엇일까요?",
       options: [
-        { id: "c1", text: "휴지심" },
-        { id: "c2", text: "뼈다귀" },
-        { id: "c3", text: "공" },
+        { id: "c1", text: "정규직" },
+        { id: "c2", text: "인턴" },
+        { id: "c3", text: "프리랜서" },
       ],
-      correctAnswer: "c1",
+      correctAnswer: "c3",
     },
     {
       id: 4,
       question: "펫시터가 가져야할 마음가짐은 무엇이 있을까요?",
       options: [
-        { id: "d1", text: "사랑" },
+        { id: "d1", text: "자기애" },
         { id: "d2", text: "책임감" },
-        { id: "d3", text: "소통" },
+        { id: "d3", text: "발전성" },
       ],
       correctAnswer: "d2",
     },
@@ -99,18 +100,27 @@ const TestPage = () => {
       })
         .then((res) => {
           console.log(res.data);
+          setLicence(res.data);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-    Toast.fire({
-      icon: "success",
-      title: "문제가 제출되었습니다.",
-    });
+    if (score >= 3) {
+      Toast.fire({
+        icon: "success",
+        title: "🎉실버 등급 획득!🎉",
+      });
+    } else {
+      Toast.fire({
+        icon: "error",
+        title: "조금만 더 노력해보아요😅",
+      });
+    }
+
     setTimeout(() => {
       navi("/petsittertest");
-    }, 1000);
+    }, 2000);
   };
 
   return (

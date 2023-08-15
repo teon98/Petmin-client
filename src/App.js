@@ -46,6 +46,9 @@ import Review from "./pages/User/Review";
 import ReviewWrite from "./pages/User/ReviewWrite";
 import Checkuser from "./pages/CheckUser";
 import CheckSitter from "./pages/CheckSitter";
+import ReserveForm from "./pages/ReserveForm";
+import PetProfileUpdate from "./pages/User/PetProfileUpdate";
+import PetList2 from "./pages/User/PetList2";
 
 const App = () => {
   return (
@@ -81,7 +84,10 @@ const App = () => {
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/reservation2" element={<Reservation2 />} />
           {/* 펫시터 프로필(예약을 위한) */}
-          <Route path="/sitterProfile/:userId" element={<PSView />} />
+          {/* <Route path="/sitterProfile/:userId" element={<PSView />} /> */}
+          {/* 펫시터 프로필(예약을 위한) */}
+          <Route path="/sitterProfile/:userId" element={<PSView />}></Route>
+          <Route path="/sitterProfile/petlist/:userId" element={<PetList2 />} />
           {/* 계정 */}
           <Route path="/auth" element={<MainBTNav />}></Route>
           {/* 알림페이지 */}
@@ -165,9 +171,20 @@ const App = () => {
 
           {/* 돌봄 요청 페이지 3 (태영 요청) */}
           <Route path="/careRequest3" element={<CareRequest3 />}></Route>
+
+          <Route
+            path="/reserveForm/:sitterID"
+            element={<ReserveForm />}
+          ></Route>
           {/* 보험 적용 페이지 */}
           <Route path="/" element={<MainBTNav />}>
             <Route path="/assurance" element={<Assurance />}></Route>
+
+            {/* 펫 프로필 업데이트 */}
+            <Route
+              path="/petprofileupdate"
+              element={<PetProfileUpdate />}
+            ></Route>
           </Route>
         </Routes>
       </RecoilRoot>
