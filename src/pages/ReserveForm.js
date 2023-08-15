@@ -6,8 +6,17 @@ import { format } from "date-fns";
 import QuestionComponent from "../components/QuestionComponent";
 import { useRecoilState } from "recoil";
 import { idtextAtom } from "../atom/atoms";
-import { useParams } from "react-router-dom";
+import { Form, useParams } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: "center",
+  showConfirmButton: false,
+  timer: 1000,
+  timerProgressBar: true,
+});
 
 const ReserveForm = () => {
   const [userId] = useRecoilState(idtextAtom); //로그인한 유저
@@ -33,7 +42,7 @@ const ReserveForm = () => {
         let careTypeFilltering = [];
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i]["dolbomOption"] === caretype) {
-            //console.log("응애", res.data[i]["Hour"]);
+            console.log("응애", res.data[i]["Hour"]);
 
             let baby = res.data[i]["Hour"];
             if (baby.dolbomStatus === 0) {
@@ -111,7 +120,26 @@ const ReserveForm = () => {
   const [checkedTime, setCheckedTime] = useState([]);
 
   const timeCheckhandle = (e) => {
+    // console.log(
+    //   "날짜",
+    //   typeof selectedDay === "undefined"
+    //     ? today
+    //     : format(selectedDay, "y-MM-dd")
+    // );
+
+    let daybyday =
+      typeof selectedDay === "undefined"
+        ? today
+        : format(selectedDay, "y-MM-dd");
+    //클릭 됐을 때
     console.log(e.target.checked, e.target.value);
+    if (e.target.checked) {
+      setCheckedTime([...checkedTime, daybyday + " " + e.target.value]);
+    } else {
+      setCheckedTime(
+        checkedTime.filter((item) => item !== daybyday + " " + e.target.value)
+      );
+    }
   };
 
   const [selectedDay, setSelectedDay] = useState();
@@ -136,7 +164,7 @@ const ReserveForm = () => {
         let careTypeFilltering = [];
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i]["dolbomOption"] === caretype) {
-            //console.log("응애", res.data[i]["Hour"]);
+            console.log("응애", res.data[i]["Hour"]);
 
             let baby = res.data[i]["Hour"];
             if (baby.dolbomStatus === 0) {
@@ -164,11 +192,35 @@ const ReserveForm = () => {
   };
 
   const reserveClick = () => {
-    console.log("돌봄유형", caretype);
-    console.log(
-      "날짜",
-      typeof selectedDay === "undefined" ? today : selectedDay
-    );
+    console.log("userId", userId);
+    console.log("sitterId", params.sitterID);
+    // console.log(
+    //   "날짜",
+    //   typeof selectedDay === "undefined"
+    //     ? today
+    //     : format(selectedDay, "y-MM-dd")
+    // );
+    console.log("checkedTime", checkedTime);
+    console.log("반려견", petList);
+
+    var formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("sitterId", params.sitterID);
+    formData.append("scheduleDay", checkedTime);
+    formData.append("petName", petList);
+
+    axios
+      .post("/dolbom/reservation", formData)
+      .then((res) => {
+        Toast.fire({
+          icon: "success",
+          title: "요청이 완료되었습니다.:)!.",
+        });
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const [petList, setPetList] = useState("");
@@ -197,7 +249,7 @@ const ReserveForm = () => {
           }
           return {
             name: "careType",
-            value: `${pet.petNo}`,
+            value: `${pet.petName}`,
             label: `${icon} ${pet.petName} (${pet.petAge})`,
           };
         });
@@ -207,6 +259,8 @@ const ReserveForm = () => {
         console.log(err);
       });
   }, [userId]);
+
+  //console.log(petList);
 
   return (
     <div>
@@ -307,7 +361,7 @@ const ReserveForm = () => {
         </div>
         <p className={style.subtitle2}>반려견 선택</p>
         <QuestionComponent
-          questionText2={"반려견 선택"}
+          questionText2={""}
           options={petListOptions}
           onChange={petListChange}
           selectedValue={petList}
