@@ -11,6 +11,7 @@ import axios from "axios";
 
 const ReserveForm = () => {
   const [userId] = useRecoilState(idtextAtom); //로그인한 유저
+  console.log("userId!!!!!!!!!!!!!" + userId);
   const params = useParams(); //sitterID
   console.log(params);
 
@@ -170,6 +171,43 @@ const ReserveForm = () => {
     );
   };
 
+  const [petList, setPetList] = useState("");
+  const [petListOptions, setPetListOptions] = useState([]);
+
+  const petListChange = (e) => {
+    const value = e.target.value;
+    setPetList(value);
+  };
+
+  useEffect(() => {
+    axios({
+      url: `/petProfileList/${userId}`,
+      method: "get",
+    })
+      .then((res) => {
+        console.log(res.data);
+        setPetList(res.data);
+        const options = res.data.map((pet) => {
+          let icon = "◌";
+
+          if (pet.petSex === "남아") {
+            icon = "♂️";
+          } else if (pet.petSex === "여아") {
+            icon = "♀";
+          }
+          return {
+            name: "careType",
+            value: `${pet.petNo}`,
+            label: `${icon} ${pet.petName} (${pet.petAge})`,
+          };
+        });
+        setPetListOptions(options);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userId]);
+
   return (
     <div>
       <BackTitleHeader title="돌봄요청서" />
@@ -268,6 +306,12 @@ const ReserveForm = () => {
             : " "}
         </div>
         <p className={style.subtitle2}>반려견 선택</p>
+        <QuestionComponent
+          questionText2={"반려견 선택"}
+          options={petListOptions}
+          onChange={petListChange}
+          selectedValue={petList}
+        />
       </div>
 
       <div className={style.bottom}>
