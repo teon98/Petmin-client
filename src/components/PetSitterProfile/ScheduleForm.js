@@ -8,6 +8,15 @@ import FocusTrap from "focus-trap-react";
 import axios from "axios";
 import { idtextAtom } from "../../atom/atoms";
 import { useRecoilState } from "recoil";
+import Swal from "sweetalert2";
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: "center",
+  showConfirmButton: false,
+  timer: 1000,
+  timerProgressBar: true,
+});
 
 const ScheduleForm = () => {
   const [userId] = useRecoilState(idtextAtom);
@@ -170,7 +179,10 @@ const ScheduleForm = () => {
     axios
       .post("/sitter/schedule", formData)
       .then((res) => {
-        alert("일정이 등록되었습니다.");
+        Toast.fire({
+          icon: "success",
+          title: "일정이 등록되었습니다.",
+        });
 
         //체크박스 해제
         let alldayCheckbox = document.querySelector("#allday");
