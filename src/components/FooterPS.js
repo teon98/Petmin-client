@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import style from "../styles/PSView.module.css";
 
@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import axios from "axios";
 
 const FooterPS = (props) => {
+  console.log("잉?", props.sitter);
   const nav = useNavigate();
   const location = useLocation();
 
@@ -37,23 +38,60 @@ const FooterPS = (props) => {
       });
   }
 
-  console.log("profileName--------------");
-  console.log(props.sitter);
+  //console.log("profileName--------------");
+  //console.log(props.sitter);
   const [userId] = useRecoilState(idtextAtom);
 
-  const dolbomchat = (sangdaeId) => {
-    axios({
-      url: "/chat/chatting",
-      params: { sender: userId, receiver: props.sitterId },
-      method: "get",
-    })
-      .then((res) => {
-        nav("/room/" + res.data.chatroomId + "/" + props.sitterId);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const [petList, setPetList] = useState("");
+  const [petListOptions, setPetListOptions] = useState([]);
+
+  const petTendency1Change = (e) => {
+    const value = e.target.value;
+    setPetList(value);
   };
+
+  // useEffect(() => {
+  //   axios({
+  //     url: `/petProfileList/${props.sitter}`,
+  //     method: "get",
+  //   })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setPetList(res.data);
+  //       const options = res.data.map((pet) => {
+  //         let icon = "◌";
+
+  //         if (pet.petSex === "남아") {
+  //           icon = "♂️";
+  //         } else if (pet.petSex === "여아") {
+  //           icon = "♀";
+  //         }
+  //         return {
+  //           name: "careType",
+  //           value: `${pet.petNo}`,
+  //           label: `${icon} ${pet.petName} (${pet.petAge})`,
+  //         };
+  //       });
+  //       setPetListOptions(options);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [props.sitter]);
+
+  // const dolbomchat = (sangdaeId) => {
+  //   axios({
+  //     url: "/chat/chatting",
+  //     params: { sender: userId, receiver: props.sitterId },
+  //     method: "get",
+  //   })
+  //     .then((res) => {
+  //       nav("/room/" + res.data.chatroomId + "/" + props.sitterId);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
   return (
     <div className={style.buttonFooter}>
       <button id={style.a} onClick={() => makeRoom(startId, receiver)}>
@@ -62,7 +100,7 @@ const FooterPS = (props) => {
       <button
         id={style.b}
         onClick={() => {
-          nav("/reserveForm", {
+          nav(`/reserveForm/${props.sitterId}`, {
             state: { sitter: props.sitter, sitterId: props.sitterId },
           });
         }}
