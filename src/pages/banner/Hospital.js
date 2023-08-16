@@ -44,10 +44,10 @@ export default function Hospital() {
       .then((res) => {
         setMList(res.data.hospitals);
         // setIsValid(false);
-        console.log("hi");
+        //console.log("hi");
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -61,7 +61,7 @@ export default function Hospital() {
     axios
       .get(`/hospitals/useraddress?userId=${startId}`)
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         // setIsValid(false);
 
         setLoc(res.data);
@@ -70,7 +70,7 @@ export default function Hospital() {
         setShouldRender(true);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 

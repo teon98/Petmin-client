@@ -12,8 +12,8 @@ function CareRequest1(props) {
   const sitterId = location.state.sitterId;
   const address = location.state.address;
 
-  console.log(sitter);
-  console.log(address);
+  //console.log(sitter);
+  //console.log(address);
 
   // const [address] = useRecoilState(userAddrAtom);
   // const frontAdress = address.substring(0, 6);

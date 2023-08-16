@@ -152,7 +152,7 @@ function Reservation(props) {
 
   //시터 일정 가져오기
   const sitterSchedule = (scheduleDay, i) => {
-    console.log(sitter + "시터 일정가져오겠습니다.");
+    //console.log(sitter + "시터 일정가져오겠습니다.");
 
     axios({
       method: "get",
@@ -162,15 +162,15 @@ function Reservation(props) {
         scheduleDay: scheduleDay,
       },
     }).then((res) => {
-      console.log("****************시터 일정 가져오기입니다.****************");
+      //console.log("****************시터 일정 가져오기입니다.****************");
       setBtnState(false);
 
       //시터 일정 가져와서 dolbomStatus가 0인 것만 다시 배열에 넣기. => 예약 가능한 상태만
       var arr = res.data.filter(
         (item) => item.Hour.dolbomStatus === 0 && item.dolbomOption === "산책"
       );
-      console.log("시터 일정임");
-      console.log(arr);
+      //console.log("시터 일정임");
+      //console.log(arr);
 
       //기존 코드
       //시작날짜 클릭하면
@@ -179,7 +179,7 @@ function Reservation(props) {
   };
 
   const handleClick = () => {
-    console.log("요청하기 버튼 클릭함");
+    //console.log("요청하기 버튼 클릭함");
     nav("/careRequest3", {
       state: {
         startDate: inputValue,

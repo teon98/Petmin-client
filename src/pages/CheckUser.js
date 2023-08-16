@@ -38,7 +38,7 @@ const withCardStyling = (WrappedComponent) => {
   `;
 
   return function (props) {
-    console.log(props, "withCardStyling");
+    //console.log(props, "withCardStyling");
     return <StyledCard {...props} />;
   };
 };
@@ -51,7 +51,7 @@ const withTextGroupStyling = (WrappedComponent) => {
   `;
 
   return function (props) {
-    console.log(props, "withTextGroupStyling");
+    //console.log(props, "withTextGroupStyling");
 
     return <StyledTextGroup {...props} />;
   };
@@ -62,7 +62,7 @@ const Checkuser = () => {
   const [userLicence] = useRecoilState(licenceAtom);
   const [msg, setMsg] = useState("");
   const nav = useNavigate();
-  console.log(userLicence);
+  //console.log(userLicence);
   useEffect(() => {
     //로그인 안되어있으면 로그인으로
     if (userId === "") {
@@ -75,11 +75,11 @@ const Checkuser = () => {
       method: "get",
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setMsg(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   }, []);
 
@@ -93,7 +93,7 @@ const Checkuser = () => {
         nav("/room/" + res.data.chatroomId + "/" + sangdaeId);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 
@@ -111,7 +111,7 @@ const Checkuser = () => {
         setTimeout(() => {}, 1000);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 
@@ -286,6 +286,7 @@ const Checkuser = () => {
         <br></br>
       ) : (
         <div
+          style={{ position: "fixed", bottom: "80px" }}
           className={style.flexBT}
           onClick={() => {
             nav("/CheckSitter");

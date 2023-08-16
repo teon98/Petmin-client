@@ -23,7 +23,7 @@ const withCardStyling = (WrappedComponent) => {
   `;
 
   return function (props) {
-    console.log(props, "withCardStyling");
+    //console.log(props, "withCardStyling");
     return <StyledCard {...props} />;
   };
 };
@@ -37,7 +37,7 @@ const withTextGroupStyling = (WrappedComponent) => {
   `;
 
   return function (props) {
-    console.log(props, "withTextGroupStyling");
+    //console.log(props, "withTextGroupStyling");
 
     return <StyledTextGroup {...props} />;
   };
@@ -147,11 +147,11 @@ const Review = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setReview(res.data);
       })
       .catch((ex) => {
-        console.log("requset fail : " + ex);
+        //console.log("requset fail : " + ex);
       });
   }
 

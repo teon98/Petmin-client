@@ -68,9 +68,9 @@ const PopupPostCode = (props) => {
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
-    console.log(data);
-    console.log(fullAddress);
-    console.log(data.zonecode);
+    //console.log(data);
+    //console.log(fullAddress);
+    //console.log(data.zonecode);
     setFullAddress(fullAddress);
     props.setAddr(fullAddress);
     props.onClose();

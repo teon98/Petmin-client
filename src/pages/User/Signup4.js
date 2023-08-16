@@ -127,11 +127,11 @@ function Signup4(props) {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         SavePreference();
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -148,7 +148,7 @@ function Signup4(props) {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         resetEmail();
         resetId();
         resetName();
@@ -166,7 +166,7 @@ function Signup4(props) {
         navigate("/login");
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 

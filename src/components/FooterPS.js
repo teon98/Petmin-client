@@ -9,7 +9,7 @@ import { useRecoilState } from "recoil";
 import axios from "axios";
 
 const FooterPS = (props) => {
-  console.log("잉?", props.sitter);
+  //console.log("잉?", props.sitter);
   const nav = useNavigate();
   const location = useLocation();
 
@@ -30,16 +30,16 @@ const FooterPS = (props) => {
         },
       })
       .then((res) => {
-        console.log(res.data.chatroomId);
+        //console.log(res.data.chatroomId);
         nav(`/room/${res.data.chatroomId}/${receiver}`);
       })
       .catch((ex) => {
-        console.log("requset fail : " + ex);
+        //console.log("requset fail : " + ex);
       });
   }
 
-  //console.log("profileName--------------");
-  //console.log(props.sitter);
+  ////console.log("profileName--------------");
+  ////console.log(props.sitter);
   const [userId] = useRecoilState(idtextAtom);
 
   const [petList, setPetList] = useState("");
@@ -56,7 +56,7 @@ const FooterPS = (props) => {
   //     method: "get",
   //   })
   //     .then((res) => {
-  //       console.log(res.data);
+  //       //console.log(res.data);
   //       setPetList(res.data);
   //       const options = res.data.map((pet) => {
   //         let icon = "◌";
@@ -75,7 +75,7 @@ const FooterPS = (props) => {
   //       setPetListOptions(options);
   //     })
   //     .catch((err) => {
-  //       console.log(err);
+  //       //console.log(err);
   //     });
   // }, [props.sitter]);
 
@@ -89,7 +89,7 @@ const FooterPS = (props) => {
   //       nav("/room/" + res.data.chatroomId + "/" + props.sitterId);
   //     })
   //     .catch((error) => {
-  //       console.log(error);
+  //       //console.log(error);
   //     });
   // };
   return (

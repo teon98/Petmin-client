@@ -26,7 +26,7 @@ function CheckBoxComponent({
     pathname === "/petvaccine3" || pathname === "/pettendency6";
 
   useEffect(() => {
-    console.log(checkValueList);
+    //console.log(checkValueList);
   }, [checkValueList]);
 
   return (

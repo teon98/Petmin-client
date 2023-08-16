@@ -23,7 +23,7 @@ const Alarm = () => {
         setMsg(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   }, []);
 

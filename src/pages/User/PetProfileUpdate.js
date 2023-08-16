@@ -114,13 +114,13 @@ function PetProfileUpdate(props) {
       method: "get",
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         // setPetNum(res.data);
         savePetTendency(res.data);
         petVaccineSave(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -146,10 +146,10 @@ function PetProfileUpdate(props) {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -173,10 +173,10 @@ function PetProfileUpdate(props) {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -224,11 +224,11 @@ function PetProfileUpdate(props) {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         // getPetNumber();
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
     resetpetName();
     resetpetGender();
@@ -289,8 +289,8 @@ function PetProfileUpdate(props) {
     isVaccinLastButtonClicked,
   ]);
 
-  // console.log("성향 체크완료 했는지 :" + isTendencyLastButtonClicked);
-  // console.log("백신 체크완료 했는지 :" + isVaccinLastButtonClicked);
+  // //console.log("성향 체크완료 했는지 :" + isTendencyLastButtonClicked);
+  // //console.log("백신 체크완료 했는지 :" + isVaccinLastButtonClicked);
 
   const location = useLocation();
   const petNo = location.state.petNo;
@@ -301,7 +301,7 @@ function PetProfileUpdate(props) {
       method: "get",
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
 
         setPetName(res.data.petName);
         setPetGender(res.data.petSex);
@@ -323,7 +323,7 @@ function PetProfileUpdate(props) {
         setVaccineMsg(res.data.petVaccine.vaccineMsg);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, []);
 
