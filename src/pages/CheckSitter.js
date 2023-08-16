@@ -296,6 +296,7 @@ const Checkuser = () => {
         <br></br>
       ) : (
         <div
+          style={{ position: "fixed", bottom: "80px" }}
           className={style.flexBT}
           onClick={() => {
             nav("/CheckUser");
