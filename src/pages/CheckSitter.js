@@ -6,7 +6,11 @@ import { idtextAtom, licenceAtom } from "../atom/atoms";
 import styles2 from "../styles/Alarm.module.css";
 import { useNavigate } from "react-router";
 import style from "../styles/Alarm.module.css";
-import { FaArrowUp, FaArrowsRotate } from "react-icons/fa6";
+import {
+  FaArrowUp,
+  FaArrowsRotate,
+  FaArrowRightArrowLeft,
+} from "react-icons/fa6";
 import Swal from "sweetalert2";
 import styled from "styled-components";
 import { left } from "@popperjs/core";
@@ -276,6 +280,16 @@ const Checkuser = () => {
   return (
     <div>
       <BackTitleHeader title="펫시터 예약확인" />
+      <div
+        style={{
+          fontFamily: "PreSemiBold",
+          fontSize: "20px",
+          marginLeft: "20px",
+          marginTop: "20px",
+        }}
+      >
+        📥 요청 받은 예약 목록
+      </div>
       <div>{renderMessages()}</div>
       {/* 화면변경  버튼 */}
       {userLicence === "일반" ? (
@@ -284,10 +298,10 @@ const Checkuser = () => {
         <div
           className={style.flexBT}
           onClick={() => {
-            nav("/CheckSitter");
+            nav("/CheckUser");
           }}
         >
-          <FaArrowsRotate size="30" id={style.plusIcon} color="white" />
+          <FaArrowRightArrowLeft size="30" id={style.plusIcon} color="white" />
         </div>
       )}{" "}
     </div>
