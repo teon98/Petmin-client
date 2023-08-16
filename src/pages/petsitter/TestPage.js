@@ -99,11 +99,11 @@ const TestPage = () => {
         params: { userId: userId, score: score },
       })
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           setLicence(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
     if (score >= 3) {

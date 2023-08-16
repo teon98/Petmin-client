@@ -106,7 +106,7 @@ function PetList(props) {
   });
 
   const onClick = (petNo) => {
-    console.log("petNo : ", petNo);
+    //console.log("petNo : ", petNo);
     nav("/petinfo", { state: petNo });
   };
 
@@ -118,10 +118,10 @@ function PetList(props) {
       method: "delete",
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 

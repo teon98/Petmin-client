@@ -245,7 +245,7 @@ export const isTendencyLastButtonClickedAtom = atom({
 });
 
 export const isVaccineLastButtonClickedAtom = atom({
-  key: "isTendencyLastButtonClicked",
+  key: "isaccineLastButtonClicked",
   default: false,
   effects_UNSTABLE: [persistAtom],
 });

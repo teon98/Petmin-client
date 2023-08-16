@@ -114,13 +114,13 @@ function PetRegistration(props) {
       method: "get",
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         // setPetNum(res.data);
         savePetTendency(res.data);
         petVaccineSave(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -146,10 +146,10 @@ function PetRegistration(props) {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -173,10 +173,10 @@ function PetRegistration(props) {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -224,11 +224,11 @@ function PetRegistration(props) {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         getPetNumber();
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
     resetpetName();
     resetpetGender();
@@ -289,8 +289,8 @@ function PetRegistration(props) {
     isVaccinLastButtonClicked,
   ]);
 
-  console.log("성향 체크완료 했는지 :" + isTendencyLastButtonClicked);
-  console.log("백신 체크완료 했는지 :" + isVaccinLastButtonClicked);
+  //console.log("성향 체크완료 했는지 :" + isTendencyLastButtonClicked);
+  //console.log("백신 체크완료 했는지 :" + isVaccinLastButtonClicked);
 
   return (
     <div style={{ paddingBottom: "70px" }}>

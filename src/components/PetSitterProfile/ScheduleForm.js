@@ -42,7 +42,7 @@ const ScheduleForm = () => {
   };
 
   const handleInputChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     setInputValue(e.target.value);
     const date = parse(e.target.value, "y-MM-dd", new Date());
     if (isValid(date)) {
@@ -57,7 +57,7 @@ const ScheduleForm = () => {
   };
 
   const handleDaySelect = (date) => {
-    console.log("date", date);
+    //console.log("date", date);
     setScheduleTimeList([]);
 
     // 기존 일정 불러오기
@@ -69,16 +69,16 @@ const ScheduleForm = () => {
         },
       })
       .then((res) => {
-        console.log("응애", res.data);
+        //console.log("응애", res.data);
         let timearr = [];
         for (let i = 0; i < res.data.length; i++) {
-          console.log(res.data[i].Hour["Hour2"]);
+          //console.log(res.data[i].Hour["Hour2"]);
           timearr.push(res.data[i].Hour["Hour2"]);
         }
         setScheduleTimeList(timearr);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
     setSelected(date);
     if (date) {
@@ -110,7 +110,7 @@ const ScheduleForm = () => {
   const [scheduleTimeList, setScheduleTimeList] = useState([]);
 
   const handleChange = (e) => {
-    console.log("??", e.target.checked);
+    //console.log("??", e.target.checked);
     if (e.target.checked === true) {
       setScheduleTimeList([...scheduleTimeList, e.target.id]);
     } else if (e.target.checked === false) {
@@ -121,7 +121,7 @@ const ScheduleForm = () => {
           aa.splice(i, 1);
         }
       }
-      console.log(aa);
+      //console.log(aa);
       setScheduleTimeList(aa);
     }
   };
@@ -148,8 +148,8 @@ const ScheduleForm = () => {
         }
 
         for (let i = 0; i < res.data.length; i++) {
-          console.log(res.data[i].Hour["Hour2"]);
-          console.log(res.data[i].Hour["dolbomStatus"]);
+          //console.log(res.data[i].Hour["Hour2"]);
+          //console.log(res.data[i].Hour["dolbomStatus"]);
           for (let j = 0; j < timetable.length; j++) {
             if (res.data[i].Hour["Hour2"] === timetable[j].id) {
               if (!res.data[i].Hour["dolbomStatus"]) {
@@ -162,13 +162,13 @@ const ScheduleForm = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [inputValue]);
 
   const handleClick = () => {
-    console.log(scheduleTimeList);
-    //console.log(type);
+    //console.log(scheduleTimeList);
+    ////console.log(type);
 
     var formData = new FormData();
     formData.append("sitterId", userId);
@@ -193,16 +193,16 @@ const ScheduleForm = () => {
           "input[type=radio][name=type]"
         );
         typeRadiobutton.checked = false;
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
   const allHandleClick = (e) => {
     const value = e.target.checked;
-    //console.log(value);
+    ////console.log(value);
     var timetable = document.querySelectorAll(
       "#timetable input[type='checkbox']"
     );

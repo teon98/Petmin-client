@@ -68,7 +68,7 @@ function Reservation2(props) {
       setEndTime("6");
       setStartTime("6");
       //시터 일정 불러오기
-      console.log("날짜 입력 받음. 시터 ㅇ리정 가져오겠습니다.");
+      //console.log("날짜 입력 받음. 시터 ㅇ리정 가져오겠습니다.");
       sitterSchedule(format(date, "y-MM-dd"), 1);
       // setTime(time.filter((item) => item == ))
     } else {
@@ -76,12 +76,12 @@ function Reservation2(props) {
     }
   };
   const handleDaySelect2 = (date) => {
-    console.log("끝나는 날이 더 큰가? ");
-    console.log(inputValue < format(date, "y-MM-dd"));
+    //console.log("끝나는 날이 더 큰가? ");
+    //console.log(inputValue < format(date, "y-MM-dd"));
     if (inputValue > format(date, "y-MM-dd")) {
       setBtnState(false);
     }
-    // console.log(startTime);
+    // //console.log(startTime);
     setSelected2(date);
     if (date) {
       setInputValue2(format(date, "y-MM-dd"));
@@ -100,8 +100,8 @@ function Reservation2(props) {
     if (n === "StartTime") {
       setStartTime(e);
       const n = parseInt(e);
-      console.log("n 시간 선택시");
-      console.log(n);
+      //console.log("n 시간 선택시");
+      //console.log(n);
       setBtnState(false);
       setEndTime(e);
       // setTime(stime.filter((item) => item > n));
@@ -117,25 +117,25 @@ function Reservation2(props) {
           parseInt(startTime.split(":")[0]) < parseInt(e.split(":"))) ||
         inputValue < inputValue2
       ) {
-        console.log("1. 시작날짜 === 종료날짜이면서 시간은 큼");
-        console.log("2. 시작날짜 < 종료날짜");
+        //console.log("1. 시작날짜 === 종료날짜이면서 시간은 큼");
+        //console.log("2. 시작날짜 < 종료날짜");
         setBtnState(true);
       } else {
-        console.log("3. 일정을 다시 확인해 주세요");
+        //console.log("3. 일정을 다시 확인해 주세요");
         setBtnState(false);
       }
-      console.log("******************************************");
-      console.log("시간 선택 완료");
-      console.log("시작날짜");
-      console.log(inputValue);
-      console.log("시작시간");
-      console.log(startTime);
-      console.log("끝나는 날짜");
-      console.log(inputValue2);
-      console.log("끝나는 시간");
-      console.log(e);
-      console.log(endTime);
-      console.log("******************************************");
+      //console.log("******************************************");
+      //console.log("시간 선택 완료");
+      //console.log("시작날짜");
+      //console.log(inputValue);
+      //console.log("시작시간");
+      //console.log(startTime);
+      //console.log("끝나는 날짜");
+      //console.log(inputValue2);
+      //console.log("끝나는 시간");
+      //console.log(e);
+      //console.log(endTime);
+      //console.log("******************************************");
     }
   };
 
@@ -213,7 +213,7 @@ function Reservation2(props) {
   });
 
   const closePopper = () => {
-    console.log("closePopper 날짜 선택 하면 창이 닫힘");
+    //console.log("closePopper 날짜 선택 하면 창이 닫힘");
     setIsPopperOpen(false);
     buttonRef?.current?.focus();
   };
@@ -224,8 +224,8 @@ function Reservation2(props) {
 
   //선택하면 날짜 바뀜
   const handleInputChange = (e) => {
-    console.log("handleInputChange ... 선택하면 날짜 바뀌게 하는 것인듯");
-    console.log(e.target.value);
+    //console.log("handleInputChange ... 선택하면 날짜 바뀌게 하는 것인듯");
+    //console.log(e.target.value);
 
     setInputValue(e.target.value);
     const date = parse(e.target.value, "y-MM-dd", new Date());
@@ -247,17 +247,17 @@ function Reservation2(props) {
 
   //달력 클릭... 시간 초기화 됨
   const handleButtonClick = () => {
-    console.log("handleButtonClick 달력 클릭 시 ... 시간도 초기화 됨");
+    //console.log("handleButtonClick 달력 클릭 시 ... 시간도 초기화 됨");
     setIsPopperOpen(true);
   };
   const handleButtonClick2 = () => {
-    console.log("handleButtonClick 달력 클릭 시 ... 시간도 초기화 됨");
+    //console.log("handleButtonClick 달력 클릭 시 ... 시간도 초기화 됨");
     setIsPopperOpen2(true);
   };
 
   //날짜 클릭하면 시터 스케줄 가져오기
   const sitterSchedule = (scheduleDay, i) => {
-    console.log(sitter + "시터 일정가져오겠습니다.");
+    //console.log(sitter + "시터 일정가져오겠습니다.");
 
     axios({
       method: "get",
@@ -267,7 +267,7 @@ function Reservation2(props) {
         scheduleDay: scheduleDay,
       },
     }).then((res) => {
-      console.log("****************시터 일정 가져오기입니다.****************");
+      //console.log("****************시터 일정 가져오기입니다.****************");
       setBtnState(false);
 
       //시터 일정 가져와서 dolbomStatus가 0인 것만 다시 배열에 넣기. => 예약 가능한 상태만

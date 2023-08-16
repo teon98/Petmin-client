@@ -79,11 +79,11 @@ const PSView = () => {
         params: { sitterId: params.userId },
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setReviewList(res.data.length >= 2 ? res.data : []);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
 
     const fetchData = async () => {
@@ -94,8 +94,8 @@ const PSView = () => {
           },
         });
 
-        console.log(res.data);
-        console.log(res.data[0].petsitter["userId"]);
+        //console.log(res.data);
+        //console.log(res.data[0].petsitter["userId"]);
         setPetsitterId(res.data[0].petsitter["userId"]);
 
         //이미지 배열 슬라이싱
@@ -109,7 +109,7 @@ const PSView = () => {
 
         //펫시터 정보
         let address_slice = res.data[0].userAddress;
-        //console.log("슬라이싱", address_slice.split(" "));
+        ////console.log("슬라이싱", address_slice.split(" "));
         let address_slice_arr = address_slice.split(" ");
         let add_str =
           address_slice_arr[0] +
@@ -148,12 +148,12 @@ const PSView = () => {
             : res.data[0].reviewDelecacy * 20
         ); //섬세함
 
-        console.log("mypet", res.data[0].pet[0]);
+        //console.log("mypet", res.data[0].pet[0]);
         setMypet(
           typeof res.data[0].pet[0] === "undefined" ? {} : res.data[0].pet[0]
         );
       } catch (err) {
-        console.log(err);
+        //console.log(err);
       }
     };
 
@@ -166,12 +166,12 @@ const PSView = () => {
         },
       })
       .then((res) => {
-        console.log("날자", res.data);
+        //console.log("날자", res.data);
         //케어타입이 산책인지,날짜인지 구분
         let careTypeFilltering = [];
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i]["dolbomOption"] === caretype) {
-            console.log("응애", res.data[i]["Hour"]);
+            //console.log("응애", res.data[i]["Hour"]);
 
             let baby = res.data[i]["Hour"];
             if (baby.dolbomStatus === 0) {
@@ -179,18 +179,18 @@ const PSView = () => {
             }
           }
         }
-        console.log("careTypeFilltering", careTypeFilltering);
+        //console.log("careTypeFilltering", careTypeFilltering);
         setScheduleData(careTypeFilltering);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, []);
 
   const [caretype, setCaretype] = useState("산책");
 
   const handleChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     setCaretype(e.target.value);
 
     let sitterdate;
@@ -201,7 +201,7 @@ const PSView = () => {
       sitterdate = format(selectedDay, "y-MM-dd");
     }
 
-    console.log("케어타입", caretype);
+    //console.log("케어타입", caretype);
     axios
       .get("/sitter/getSchedule", {
         params: {
@@ -210,12 +210,12 @@ const PSView = () => {
         },
       })
       .then((res) => {
-        console.log("날자", res.data);
+        //console.log("날자", res.data);
         //케어타입이 산책인지,날짜인지 구분
         let careTypeFilltering = [];
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i]["dolbomOption"] === e.target.value) {
-            console.log("응애", res.data[i]["Hour"]);
+            //console.log("응애", res.data[i]["Hour"]);
 
             let baby = res.data[i]["Hour"];
             if (baby.dolbomStatus === 0) {
@@ -223,11 +223,11 @@ const PSView = () => {
             }
           }
         }
-        console.log("careTypeFilltering", careTypeFilltering);
+        //console.log("careTypeFilltering", careTypeFilltering);
         setScheduleData(careTypeFilltering);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -241,11 +241,11 @@ const PSView = () => {
     if (!e) {
       return;
     }
-    console.log("잉잉", e);
+    //console.log("잉잉", e);
     setSelectedDay(e);
     let sitterdate = format(e, "y-MM-dd");
 
-    console.log("케어타입", caretype);
+    //console.log("케어타입", caretype);
     axios
       .get("/sitter/getSchedule", {
         params: {
@@ -254,12 +254,12 @@ const PSView = () => {
         },
       })
       .then((res) => {
-        console.log("날자", res.data);
+        //console.log("날자", res.data);
         //케어타입이 산책인지,날짜인지 구분
         let careTypeFilltering = [];
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i]["dolbomOption"] === caretype) {
-            console.log("응애", res.data[i]["Hour"]);
+            //console.log("응애", res.data[i]["Hour"]);
 
             let baby = res.data[i]["Hour"];
             if (baby.dolbomStatus === 0) {
@@ -267,16 +267,16 @@ const PSView = () => {
             }
           }
         }
-        console.log("careTypeFilltering", careTypeFilltering);
+        //console.log("careTypeFilltering", careTypeFilltering);
         setScheduleData(careTypeFilltering);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
   // useEffect(() => {
-  //   console.log("scheduleData:", scheduleData);
+  //   //console.log("scheduleData:", scheduleData);
   // }, [scheduleData]);
 
   //////////////////////////////////////////////////////////////////

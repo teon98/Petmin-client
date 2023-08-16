@@ -127,12 +127,12 @@ function Login(props) {
           setPwd(() => "");
           setImg(() => res.data.userImg);
           setCardNumber(() => res.data.userCardNumber);
-          console.log(res.data);
+          //console.log(res.data);
           nav("/");
         }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 

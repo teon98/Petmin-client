@@ -77,7 +77,7 @@ const Chat = () => {
         </p>
         {item.startId === startId ? (
           <p style={aa}>
-            {/* {console.log(item, "^^^^^^^^^^")} */}
+            {/* {//console.log(item, "^^^^^^^^^^")} */}
             {/* {item.chatCheck === true ? "" : "1️⃣"} */}
             {item.chatCheck === true ? "" : ""}
             &nbsp;
@@ -97,7 +97,7 @@ const Chat = () => {
   const webSocketLogin = useCallback(() => {
     ws.current = new WebSocket(`ws://localhost:8888/socket/chatt/${room}`);
     // ws.current = new WebSocket(`ws://localhost:8888/socket/chatt`);
-    console.log(ws.current, "ws.current");
+    //console.log(ws.current, "ws.current");
 
     ws.current.onmessage = (message) => {
       const dataSet = JSON.parse(message?.data);
@@ -144,14 +144,14 @@ const Chat = () => {
             };
             historylist.push(historyChat);
           });
-          console.log(historylist, "historylist##");
+          //console.log(historylist, "historylist##");
           setChatt(historylist);
         }
         // setRoom(res.data.room);
         // setMyname(res.data.myname);
       })
       .catch((ex) => {
-        console.log("requset fail : " + ex);
+        //console.log("requset fail : " + ex);
       });
   }
 
@@ -161,7 +161,7 @@ const Chat = () => {
       block: "end",
       inline: "nearest",
     });
-    // console.log("hi");
+    // //console.log("hi");
   }, [msgBox]);
 
   // useEffect(() => {
@@ -169,26 +169,26 @@ const Chat = () => {
   // }, []);
 
   useEffect(() => {
-    // console.log(location.pathname);
+    // //console.log(location.pathname);
     webSocketLogin();
-    console.log(startId, receiverId, "startId, receiverIdstartId, receiverId");
+    //console.log(startId, receiverId, "startId, receiverIdstartId, receiverId");
     makeRoom(startId, receiverId);
     // makeRoom(receiverId, startId);
   }, []);
 
   useEffect(() => {
-    console.log(chatt, startId.toString(), "chatt@@@");
-    console.log(socketData, "socketData");
+    //console.log(chatt, startId.toString(), "chatt@@@");
+    //console.log(socketData, "socketData");
     if (socketData !== undefined) {
       const tempData = [...chatt, socketData];
-      console.log(tempData, "tempData");
+      //console.log(tempData, "tempData");
       setChatt(tempData);
     }
   }, [socketData]);
 
   useEffect(() => {
-    console.log("chat변경됨");
-    console.log(chatt);
+    //console.log("chat변경됨");
+    //console.log(chatt);
     //  /window.location.reload();
   }, [chatt]);
 
@@ -197,7 +197,7 @@ const Chat = () => {
     `;
 
   const onText = (event) => {
-    // console.log(event.target.value);
+    // //console.log(event.target.value);
     setMsg(event.target.value);
   };
 
@@ -229,32 +229,32 @@ const Chat = () => {
       }; //전송 데이터(JSON)
 
       const temp = JSON.stringify(data);
-      console.log(temp, "temp");
-      console.log(data, "data");
+      //console.log(temp, "temp");
+      //console.log(data, "data");
       // if (data !== undefined) {
       //   const tempData = chatt.concat(data);
-      //   console.log(tempData, "tempData");
+      //   //console.log(tempData, "tempData");
       //   setChatt(tempData);
       // }
 
-      console.log(ws.current.readyState, "ws.current.readyState");
-      console.log(ws.current, "ws.current");
+      //console.log(ws.current.readyState, "ws.current.readyState");
+      //console.log(ws.current, "ws.current");
       if (ws.current.readyState === 0) {
         //readyState는 웹 소켓 연결 상태를 나타냄
         ws.current.onopen = () => {
-          console.log("################################");
+          //console.log("################################");
           //webSocket이 맺어지고 난 후, 실행
-          console.log(ws.current.readyState);
+          //console.log(ws.current.readyState);
           ws.current.send(temp, "@@@@@@");
-          console.log(ws);
+          //console.log(ws);
         };
       } else {
-        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
         ws.current.send(temp);
         // if (data !== undefined) {
         //   const tempData = chatt.concat(data);
-        //   console.log(tempData, "tempData");
+        //   //console.log(tempData, "tempData");
         //   setChatt(tempData);
         // }
       }
@@ -454,7 +454,7 @@ const Chat = () => {
                 onKeyDown={(ev) => {
                   if (ev.keyCode === 13) {
                     send();
-                    console.log("onKeyDown");
+                    //console.log("onKeyDown");
                   }
                 }}
                 // onChange={keywordChange}
@@ -503,7 +503,7 @@ const Chat = () => {
                 onKeyDown={(ev) => {
                   if (ev.keyCode === 13) {
                     send();
-                    console.log("onKeyDown");
+                    //console.log("onKeyDown");
                   }
                 }}
               ></textarea>
@@ -514,7 +514,7 @@ const Chat = () => {
                 id="btnSend"
                 onClick={() => {
                   send();
-                  console.log("onClick");
+                  //console.log("onClick");
                 }}
               />
             </div> */}

@@ -26,7 +26,7 @@ const withCardStyling = (WrappedComponent) => {
   `;
 
   return function (props) {
-    // console.log(props, "withCardStyling");
+    // //console.log(props, "withCardStyling");
     return <StyledCard {...props} />;
   };
 };
@@ -40,7 +40,7 @@ const withTextGroupStyling = (WrappedComponent) => {
   `;
 
   return function (props) {
-    // console.log(props, "withTextGroupStyling");
+    // //console.log(props, "withTextGroupStyling");
 
     return <StyledTextGroup {...props} />;
   };
@@ -190,11 +190,11 @@ const ReviewWrite = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setReview(res.data);
       })
       .catch((ex) => {
-        console.log("requset fail : " + ex);
+        //console.log("requset fail : " + ex);
       });
   }
   const [clicked, setClicked] = useState([false, false, false, false, false]);
@@ -214,8 +214,8 @@ const ReviewWrite = () => {
       clickStates[i] = i <= index ? true : false;
     }
     setClicked(clickStates);
-    console.log(clickStates.filter((el) => el === true));
-    console.log(clickStates.filter(Boolean).length);
+    //console.log(clickStates.filter((el) => el === true));
+    //console.log(clickStates.filter(Boolean).length);
     setReviewKind(clickStates.filter(Boolean).length);
   };
 
@@ -225,7 +225,7 @@ const ReviewWrite = () => {
       clickStates[i] = i <= index ? true : false;
     }
     setClicked2(clickStates);
-    console.log(clickStates.filter((el) => el === true));
+    //console.log(clickStates.filter((el) => el === true));
     setReviewTime(clickStates.filter(Boolean).length);
   };
   const handleStarClick3 = (index) => {
@@ -234,7 +234,7 @@ const ReviewWrite = () => {
       clickStates[i] = i <= index ? true : false;
     }
     setClicked3(clickStates);
-    console.log(clickStates.filter((el) => el === true));
+    //console.log(clickStates.filter((el) => el === true));
     setReviewDelecacy(clickStates.filter(Boolean).length);
   };
 
@@ -253,13 +253,14 @@ const ReviewWrite = () => {
     sendReview();
 
     // Log the review content to the console
-    console.log(
-      "Review Content:",
-      reviewKind,
-      reviewTime,
-      reviewDelecacy,
-      reviewContent
-    );
+    //console.log
+    // (
+    //   "Review Content:",
+    //   reviewKind,
+    //   reviewTime,
+    //   reviewDelecacy,
+    //   reviewContent
+    // );
 
     postMakeReview();
   };
@@ -268,20 +269,20 @@ const ReviewWrite = () => {
   useEffect(() => {
     getMakeReviewList();
     sendReview();
-    console.log(
-      reviewKind,
-      reviewTime,
-      reviewDelecacy,
-      reviewContent,
-      "clicked3clicked3clicked3"
-    );
+    //console.log(
+    //   reviewKind,
+    //   reviewTime,
+    //   reviewDelecacy,
+    //   reviewContent,
+    //   "clicked3clicked3clicked3"
+    // );
   }, [clicked, clicked2, clicked3, reviewKind]);
 
   async function postMakeReview(event) {
     const url = `/dolbom/inReview?userId=${startId}&sitterId=${
       location.pathname.split("/")[2]
     }&reviewTime=${reviewTime}&reviewKind=${reviewKind}&reviewDelecacy=${reviewDelecacy}&reviewMsg=${event}`;
-    console.log(state);
+    //console.log(state);
     axios({
       url: "/dolbom/inReview",
       params: {
@@ -294,26 +295,26 @@ const ReviewWrite = () => {
       method: "post",
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         nav("/checkUser");
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   }
   const handleInputKeyPress = (event) => {
     if (event.key === "Enter") {
-      console.log("Entered value:", event.target.value);
+      //console.log("Entered value:", event.target.value);
       setReviewContent(event.target.value);
       // 입력된 값을 처리하거나 상태로 저장할 수 있습니다.
-      console.log(
-        startId,
-        location.pathname.split("/")[2],
-        reviewTime,
-        reviewKind,
-        reviewDelecacy,
-        event.target.value
-      );
+      //console.log(
+      //   startId,
+      //   location.pathname.split("/")[2],
+      //   reviewTime,
+      //   reviewKind,
+      //   reviewDelecacy,
+      //   event.target.value
+      // );
       handleModalOpen();
       postMakeReview(event.target.value);
     }

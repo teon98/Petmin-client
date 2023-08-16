@@ -21,9 +21,9 @@ const Toast = Swal.mixin({
 const ReserveForm = () => {
   const navigation = useNavigate();
   const [userId] = useRecoilState(idtextAtom); //로그인한 유저
-  console.log("userId!!!!!!!!!!!!!" + userId);
+  //console.log("userId!!!!!!!!!!!!!" + userId);
   const params = useParams(); //sitterID
-  console.log(params);
+  //console.log(params);
 
   const [caretype, setCaretype] = useState("산책");
   let today = new Date();
@@ -38,12 +38,12 @@ const ReserveForm = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         //케어타입이 산책인지,날짜인지 구분
         let careTypeFilltering = [];
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i]["dolbomOption"] === caretype) {
-            console.log("응애", res.data[i]["Hour"]);
+            //console.log("응애", res.data[i]["Hour"]);
 
             let baby = res.data[i]["Hour"];
             if (baby.dolbomStatus === 0) {
@@ -61,11 +61,11 @@ const ReserveForm = () => {
             }
           }
         }
-        console.log("careTypeFilltering", careTypeFilltering);
+        //console.log("careTypeFilltering", careTypeFilltering);
         setScheduleData(careTypeFilltering);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, []);
   const handleChange = (e) => {
@@ -78,7 +78,7 @@ const ReserveForm = () => {
       sitterdate = format(selectedDay, "y-MM-dd");
     }
 
-    console.log("케어타입", caretype);
+    //console.log("케어타입", caretype);
     axios
       .get("/sitter/getSchedule", {
         params: {
@@ -87,12 +87,12 @@ const ReserveForm = () => {
         },
       })
       .then((res) => {
-        console.log("날자", res.data);
+        //console.log("날자", res.data);
         //케어타입이 산책인지,날짜인지 구분
         let careTypeFilltering = [];
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i]["dolbomOption"] === e.target.value) {
-            console.log("응애", res.data[i]["Hour"]);
+            //console.log("응애", res.data[i]["Hour"]);
 
             let baby = res.data[i]["Hour"];
             if (baby.dolbomStatus === 0) {
@@ -110,18 +110,18 @@ const ReserveForm = () => {
             }
           }
         }
-        console.log("careTypeFilltering", careTypeFilltering);
+        //console.log("careTypeFilltering", careTypeFilltering);
         setScheduleData(careTypeFilltering);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
   const [checkedTime, setCheckedTime] = useState([]);
 
   const timeCheckhandle = (e) => {
-    // console.log(
+    // //console.log(
     //   "날짜",
     //   typeof selectedDay === "undefined"
     //     ? today
@@ -133,7 +133,7 @@ const ReserveForm = () => {
         ? today
         : format(selectedDay, "y-MM-dd");
     //클릭 됐을 때
-    console.log(e.target.checked, e.target.value);
+    //console.log(e.target.checked, e.target.value);
     if (e.target.checked) {
       setCheckedTime([...checkedTime, daybyday + " " + e.target.value]);
     } else {
@@ -149,7 +149,7 @@ const ReserveForm = () => {
     if (!e) {
       return;
     }
-    console.log(e);
+    //console.log(e);
     setSelectedDay(e);
     let sitterdate = format(e, "y-MM-dd");
     axios
@@ -160,16 +160,16 @@ const ReserveForm = () => {
         },
       })
       .then((res) => {
-        console.log("날자", res.data);
+        //console.log("날자", res.data);
         //케어타입이 산책인지,날짜인지 구분
         let careTypeFilltering = [];
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i]["dolbomOption"] === caretype) {
-            console.log("응애", res.data[i]["Hour"]);
+            //console.log("응애", res.data[i]["Hour"]);
 
             let baby = res.data[i]["Hour"];
             if (baby.dolbomStatus === 0) {
-              //console.log("??", baby.Hour2 === "6:00");
+              ////console.log("??", baby.Hour2 === "6:00");
               if (baby.Hour2 === "6:00") {
                 careTypeFilltering.push("06:00");
               } else if (baby.Hour2 === "7:00") {
@@ -184,25 +184,25 @@ const ReserveForm = () => {
             }
           }
         }
-        console.log("careTypeFilltering", careTypeFilltering);
+        //console.log("careTypeFilltering", careTypeFilltering);
         setScheduleData(careTypeFilltering);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
   const reserveClick = () => {
-    console.log("userId", userId);
-    console.log("sitterId", params.sitterID);
-    // console.log(
+    //console.log("userId", userId);
+    //console.log("sitterId", params.sitterID);
+    // //console.log(
     //   "날짜",
     //   typeof selectedDay === "undefined"
     //     ? today
     //     : format(selectedDay, "y-MM-dd")
     // );
-    console.log("checkedTime", checkedTime);
-    console.log("반려견", petList);
+    //console.log("checkedTime", checkedTime);
+    //console.log("반려견", petList);
 
     var formData = new FormData();
     formData.append("userId", userId);
@@ -217,11 +217,11 @@ const ReserveForm = () => {
           icon: "success",
           title: "요청이 완료되었습니다.:)!.",
         });
-        console.log(res.data);
+        //console.log(res.data);
         navigation("/");
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -239,7 +239,7 @@ const ReserveForm = () => {
       method: "get",
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setPetList(res.data);
         const options = res.data.map((pet) => {
           let icon = "◌";
@@ -258,11 +258,11 @@ const ReserveForm = () => {
         setPetListOptions(options);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [userId]);
 
-  //console.log(petList);
+  ////console.log(petList);
 
   return (
     <div>

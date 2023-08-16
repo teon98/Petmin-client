@@ -22,13 +22,13 @@ const ChatList = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.map((el) => console.log(el)));
+        //console.log(res.data.map((el) => //console.log(el)));
         setChatList(res.data);
-        console.log(res.data.length);
+        //console.log(res.data.length);
       })
       .catch((ex) => {
-        console.log(ex.length);
-        console.log("requset fail : " + ex);
+        //console.log(ex.length);
+        //console.log("requset fail : " + ex);
       });
   }
 
@@ -41,35 +41,35 @@ const ChatList = () => {
   });
 
   useEffect(() => {
-    console.log(userName);
+    //console.log(userName);
     getRoomList();
   }, []);
 
   const chatroomdel = (no) => {
-    console.log("지금 보내는 값은: " + no);
+    //console.log("지금 보내는 값은: " + no);
     axios({
       url: "/chat/roomdel",
       params: { roomId: no },
       method: "delete",
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 
   return (
     // <ul>
     //   {chatList?.map((data, idx) => {
-    //     console.log(data);
+    //     //console.log(data);
     //     return (
     //       <li
     //         onClick={() => {
     //           // navigate(`/${userNick}`);
     //           navigate(`/room/${data.chatroomId}/${data.receiver.userId}`);
-    //           //   console.log(data.chatroomNo);
+    //           //   //console.log(data.chatroomNo);
     //         }}
     //         key={idx}
     //         style={{
@@ -162,7 +162,7 @@ const ChatList = () => {
               //     }`
               //   );
               //   //   navigate(`/room/${data.chatroomNo}`);
-              //   console.log(data.chatroomNo);
+              //   //console.log(data.chatroomNo);
               // }}
               key={idx}
               style={{
@@ -206,7 +206,7 @@ const ChatList = () => {
                       }`
                     );
                     //   navigate(`/room/${data.chatroomNo}`);
-                    console.log(data.chatroomNo);
+                    //console.log(data.chatroomNo);
                   }}
                   style={{
                     fontWeight: "400",
