@@ -402,9 +402,9 @@ const PSView = () => {
             }}
           >{`리뷰 전체보기 >`}</div>
           <div className={`${style.box} ${style.reviewBox}`}>
-            {reviewList.map((item) => {
+            {reviewList.map((item, index) => {
               return (
-                <div className={style.reviewCard}>
+                <div className={style.reviewCard} key={index}>
                   <p id={style.reviewtitleName}>{item.userName}</p>
                   <p id={style.reviewtitleContent}>{item.reviewMsg}</p>
                 </div>

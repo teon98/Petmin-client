@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import BackTitleHeader from "../../components/BackTitleHeader";
 import styled from "styled-components";
-import InsuranceModal from "./InsuranceModal";
 import style from "../../styles/PSView.module.css";
 import StarRatings from "react-star-ratings";
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -10,6 +9,7 @@ import axios from "axios";
 import { FaStar } from "react-icons/fa";
 import { useRecoilState } from "recoil";
 import { idtextAtom, nametextAtom } from "../../atom/atoms";
+import ReviewModal from "./ReviewModal";
 
 const withCardStyling = (WrappedComponent) => {
   const StyledCard = styled(WrappedComponent)`
@@ -409,7 +409,7 @@ const ReviewWrite = () => {
                 </form>
               </div>
             </div>
-            {isModalOpen && <InsuranceModal onClose={handleModalClose} />}
+            {isModalOpen && <ReviewModal onClose={handleModalClose} />}
           </StyledCardDiv>
         ))}
       </CardContainer>
