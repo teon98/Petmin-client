@@ -14,7 +14,7 @@ import axios from "axios";
 const Main = () => {
   const [userId] = useRecoilState(idtextAtom);
   const [notificationArrived, setNotificationArrived] = useState(true);
-  console.log(`현재 로그인한 유저는 ${userId} 입니다.`);
+  //console.log(`현재 로그인한 유저는 ${userId} 입니다.`);
 
   useEffect(() => {
     axios({
@@ -29,10 +29,10 @@ const Main = () => {
             setNotificationArrived(false);
           }
         }
-        console.log(notificationArrived);
+        //console.log(notificationArrived);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   }, []);
 
@@ -81,7 +81,7 @@ const Main = () => {
       {/* <div
         className={style.flexBT}
         onClick={() => {
-          console.log("클릭중");
+          //console.log("클릭중");
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
       >

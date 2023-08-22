@@ -68,7 +68,7 @@ function Signup1(props) {
         setIdVaild(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 

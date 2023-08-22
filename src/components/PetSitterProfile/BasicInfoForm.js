@@ -2,10 +2,18 @@ import React, { useCallback, useEffect, useRef } from "react";
 import style from "../../styles/PetSitterProfile.module.css";
 import { useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { FaImages } from "react-icons/fa6";
 import { useRecoilState } from "recoil";
 import { idtextAtom } from "../../atom/atoms";
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "center",
+  showConfirmButton: false,
+  timer: 1000,
+  timerProgressBar: true,
+});
 const BasicInfoForm = () => {
   const [about, setAbout] = useState("");
   const [place, setPlace] = useState("");
@@ -22,7 +30,7 @@ const BasicInfoForm = () => {
         },
       })
       .then((res) => {
-        //console.log(res.data);
+        ////console.log(res.data);
         setAbout(res.data.sitterMsg);
         for (let i = 0; i < placetype.length; i++) {
           if (placetype[i].id === res.data.sitterHousetype) {
@@ -46,7 +54,7 @@ const BasicInfoForm = () => {
         setPreviews(previews_arr);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, []);
 
@@ -56,7 +64,7 @@ const BasicInfoForm = () => {
 
   //업로드된 이미지 미리보기
   const handleChange = useCallback((e) => {
-    //console.log(imagesRef.current.files);
+    ////console.log(imagesRef.current.files);
     setCount(1);
     const {
       target: { name, value },
@@ -77,7 +85,7 @@ const BasicInfoForm = () => {
       for (let i = 0; i < imagesRef.current.files.length; i++) {
         //미리보기 구현
         let file = imagesRef.current.files[i];
-        //console.log(file);
+        ////console.log(file);
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
@@ -92,9 +100,9 @@ const BasicInfoForm = () => {
   }, []);
 
   const handlePost = () => {
-    //console.log("about", about);
-    //console.log("place", place);
-    //console.log("prviewImg", previews);
+    ////console.log("about", about);
+    ////console.log("place", place);
+    ////console.log("prviewImg", previews);
 
     var formData = new FormData();
     //태영: userID는 추후 로그인한 사용자로 변경
@@ -116,11 +124,14 @@ const BasicInfoForm = () => {
           },
         })
         .then((res) => {
-          alert("자기소개가 수정되었습니다:)!");
-          console.log(res.data);
+          Toast.fire({
+            icon: "success",
+            title: "자기소개가 수정되었습니다:)!.",
+          });
+          //console.log(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     } else {
       axios
@@ -130,11 +141,14 @@ const BasicInfoForm = () => {
           },
         })
         .then((res) => {
-          alert("자기소개가 수정되었습니다(●'◡'●)!");
-          console.log(res.data);
+          Toast.fire({
+            icon: "success",
+            title: "자기소개가 수정되었습니다(●'◡'●)!",
+          });
+          //console.log(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   };

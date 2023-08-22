@@ -8,6 +8,15 @@ import FocusTrap from "focus-trap-react";
 import axios from "axios";
 import { idtextAtom } from "../../atom/atoms";
 import { useRecoilState } from "recoil";
+import Swal from "sweetalert2";
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: "center",
+  showConfirmButton: false,
+  timer: 1000,
+  timerProgressBar: true,
+});
 
 const ScheduleForm = () => {
   const [userId] = useRecoilState(idtextAtom);
@@ -33,7 +42,7 @@ const ScheduleForm = () => {
   };
 
   const handleInputChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     setInputValue(e.target.value);
     const date = parse(e.target.value, "y-MM-dd", new Date());
     if (isValid(date)) {
@@ -48,7 +57,7 @@ const ScheduleForm = () => {
   };
 
   const handleDaySelect = (date) => {
-    console.log("date", date);
+    //console.log("date", date);
     setScheduleTimeList([]);
 
     // 기존 일정 불러오기
@@ -60,16 +69,16 @@ const ScheduleForm = () => {
         },
       })
       .then((res) => {
-        console.log("응애", res.data);
+        //console.log("응애", res.data);
         let timearr = [];
         for (let i = 0; i < res.data.length; i++) {
-          console.log(res.data[i].Hour["Hour2"]);
+          //console.log(res.data[i].Hour["Hour2"]);
           timearr.push(res.data[i].Hour["Hour2"]);
         }
         setScheduleTimeList(timearr);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
     setSelected(date);
     if (date) {
@@ -101,16 +110,19 @@ const ScheduleForm = () => {
   const [scheduleTimeList, setScheduleTimeList] = useState([]);
 
   const handleChange = (e) => {
-    console.log("??", e.target.id);
+    //console.log("??", e.target.checked);
     if (e.target.checked === true) {
       setScheduleTimeList([...scheduleTimeList, e.target.id]);
     } else if (e.target.checked === false) {
       //삭제
+      var aa = [...scheduleTimeList];
       for (var i = 0; i < scheduleTimeList.length; i++) {
-        if (scheduleTimeList[i] === e.target.id) {
-          scheduleTimeList.splice(i, 1);
+        if (aa[i] === e.target.id) {
+          aa.splice(i, 1);
         }
       }
+      //console.log(aa);
+      setScheduleTimeList(aa);
     }
   };
 
@@ -138,7 +150,6 @@ const ScheduleForm = () => {
         for (let i = 0; i < res.data.length; i++) {
           //console.log(res.data[i].Hour["Hour2"]);
           //console.log(res.data[i].Hour["dolbomStatus"]);
-
           for (let j = 0; j < timetable.length; j++) {
             if (res.data[i].Hour["Hour2"] === timetable[j].id) {
               if (!res.data[i].Hour["dolbomStatus"]) {
@@ -151,13 +162,13 @@ const ScheduleForm = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [inputValue]);
 
   const handleClick = () => {
-    console.log(scheduleTimeList);
-    //console.log(type);
+    //console.log(scheduleTimeList);
+    ////console.log(type);
 
     var formData = new FormData();
     formData.append("sitterId", userId);
@@ -168,7 +179,10 @@ const ScheduleForm = () => {
     axios
       .post("/sitter/schedule", formData)
       .then((res) => {
-        alert("일정이 등록되었습니다.");
+        Toast.fire({
+          icon: "success",
+          title: "일정이 등록되었습니다.",
+        });
 
         //체크박스 해제
         let alldayCheckbox = document.querySelector("#allday");
@@ -179,16 +193,16 @@ const ScheduleForm = () => {
           "input[type=radio][name=type]"
         );
         typeRadiobutton.checked = false;
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
   const allHandleClick = (e) => {
     const value = e.target.checked;
-    //console.log(value);
+    ////console.log(value);
     var timetable = document.querySelectorAll(
       "#timetable input[type='checkbox']"
     );
@@ -277,6 +291,25 @@ const ScheduleForm = () => {
         <input id="allday" type="checkbox" onClick={allHandleClick} />
         <label htmlFor="allday">종일 가능</label>
       </div>
+      <div className={style.subtitle3}>돌봄 형태</div>
+      <div className={style.typetable}>
+        <input
+          id="type1"
+          value="산책"
+          type="radio"
+          name="type"
+          onChange={typeChange}
+        />
+        <label htmlFor="type1">산책</label>
+        <input
+          id="type2"
+          value="돌봄"
+          type="radio"
+          name="type"
+          onChange={typeChange}
+        />
+        <label htmlFor="type2">돌봄</label>
+      </div>
       <div id="timetable">
         <div className={style.subtitle3}>오전</div>
         <div className={style.timetable}>
@@ -300,25 +333,7 @@ const ScheduleForm = () => {
             );
           })}
         </div>
-        <div className={style.subtitle3}>돌봄 형태</div>
-        <div className={style.typetable}>
-          <input
-            id="type1"
-            value="산책"
-            type="radio"
-            name="type"
-            onChange={typeChange}
-          />
-          <label htmlFor="type1">산책</label>
-          <input
-            id="type2"
-            value="돌봄"
-            type="radio"
-            name="type"
-            onChange={typeChange}
-          />
-          <label htmlFor="type2">돌봄</label>
-        </div>
+
         <div
           className={style.saveBT}
           id={style.frame}

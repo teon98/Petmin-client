@@ -1,0 +1,102 @@
+.bottom {
+  height: 70px;
+  position: fixed;
+  bottom: 0;
+  border-top: 1px solid #c7c7c7;
+  background: #fff;
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.bottom button[type="button"] {
+  background-color: #ff6666;
+  color: white;
+  font-family: "PreMedium";
+  border: none;
+  border-radius: 10px;
+  padding: 15px 40px;
+  font-size: 15px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.body {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  padding-bottom: 85px;
+}
+
+.subtitle2 {
+  font-family: "PreSemiBold";
+  font-size: 17px;
+  margin-bottom: 20px;
+  color: #ff6666;
+}
+
+.caretypeButton {
+  margin-bottom: 30px;
+}
+.caretypeButton input[type="radio"] {
+  display: none;
+}
+
+.caretypeButton input[type="radio"] + label {
+  border-radius: 5px;
+  border: 1px solid #bdbdbd;
+  font-family: "PreMedium";
+  padding: 7px 20px;
+  color: #bdbdbd;
+  transition: all 0.3s ease 0s;
+}
+
+.caretypeButton input[type="radio"]:checked + label {
+  color: #ff6666;
+  border-color: #ff6666;
+  margin-right: 7px;
+}
+
+.timetable {
+  margin: 0px 17px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.timetable input[type="checkbox"] {
+  display: none;
+}
+
+.timetable input[type="checkbox"] + label {
+  display: inline-block;
+  font-family: "PreLight";
+  border-radius: 5px;
+  border: 1px solid #bdbdbd;
+  padding: 5px 10px;
+  color: #bdbdbd;
+  width: 37px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  transition: all 0.3s ease 0s;
+  display: inline-block;
+  text-align: center;
+}
+
+.subtitle3 {
+  font-family: "PreLight";
+  font-size: 15px;
+  margin: 20px 15px 20px 10px;
+  width: 100%;
+}
+
+.timetable input[type="checkbox"]:checked + label {
+  color: #ff6666;
+  border-color: #ff6666;
+}

@@ -19,9 +19,9 @@ const PetSitterView = () => {
   const [userId] = useRecoilState(idtextAtom);
   const [address] = useRecoilState(userAddrAtom);
   const adds = address.split(" ");
-  console.log("address", address);
-  //console.log("userID", !!userId);
-  //console.log("주소", adds[0] + " " + adds[1] + " " + adds[2]);
+  // //console.log("address", address);
+  ////console.log("userID", !!userId);
+  ////console.log("주소", adds[0] + " " + adds[1] + " " + adds[2]);
   //로딩이 느려서 추가
   const [loading, setLoading] = useState(true);
 
@@ -45,25 +45,25 @@ const PetSitterView = () => {
   const [caretype, setCareType] = useState("");
 
   const careTypeChange = (e) => {
-    console.log("선택된 산책유형", e.target.value);
-    console.log("리스트", originList);
+    // //console.log("선택된 산책유형", e.target.value);
+    // //console.log("리스트", originList);
     let date = !selected ? today : selected;
-    console.log("선택된 날짜", format(date, "y-MM-dd"));
+    // //console.log("선택된 날짜", format(date, "y-MM-dd"));
     if (e.target.name === "caretype") {
       setCareType(e.target.value);
     }
 
     //필터링
-    console.log("필터링된 리스트", petSitterList);
-    console.log("originList", originList);
+    //console.log("필터링된 리스트", petSitterList);
+    //console.log("originList", originList);
     setPetSitterList(
       originList.filter((item) => {
-        console.log(item.scheduleDay);
+        //console.log(item.scheduleDay);
 
         //판별기
         let result = false;
         for (let [key, value] of Object.entries(item.scheduleDay)) {
-          console.log(key, value);
+          //console.log(key, value);
           if (key === format(date, "y-MM-dd") && value === e.target.value) {
             result = true;
           }
@@ -113,17 +113,17 @@ const PetSitterView = () => {
       setInputValue(filter_date);
       closePopper();
       //날짜 배열 중에 선택된 날짜가 포함되어 있으면 그 날짜로 필터링
-      console.log("돌봄 유형", caretype);
-      console.log("filter_date", filter_date);
+      //console.log("돌봄 유형", caretype);
+      //console.log("filter_date", filter_date);
       if (!!caretype) {
         setPetSitterList(
           originList.filter((item) => {
-            console.log(item.scheduleDay);
+            //console.log(item.scheduleDay);
 
             //판별기
             let result = false;
             for (let [key, value] of Object.entries(item.scheduleDay)) {
-              console.log(key, value);
+              //console.log(key, value);
               if (key === filter_date && value === caretype) {
                 result = true;
               }
@@ -136,17 +136,17 @@ const PetSitterView = () => {
         setPetSitterList(
           originList.filter((item) => {
             //기준 되는 날짜
-            // console.log(item.scheduleDay);
+            // //console.log(item.scheduleDay);
             let scheduleList = Object.keys(item.scheduleDay);
             //caretype이 null이면
-            //console.log("scheduleList", scheduleList.includes(filter_date));
+            ////console.log("scheduleList", scheduleList.includes(filter_date));
             //caretype이 null이 아니면
             return scheduleList.includes(filter_date);
           })
         );
       }
 
-      console.log(originList);
+      //console.log(originList);
     } else {
       setInputValue("");
     }
@@ -176,7 +176,7 @@ const PetSitterView = () => {
           },
         })
         .then((res) => {
-          //console.log(res.data);
+          ////console.log(res.data);
           if (res.data[0]["추천"] === "실패") {
             setLoadSuccess(false);
           }
@@ -185,7 +185,7 @@ const PetSitterView = () => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     } else {
       //로그인하지 않았을 때
@@ -197,7 +197,7 @@ const PetSitterView = () => {
           },
         })
         .then((res) => {
-          //console.log(res.data);
+          ////console.log(res.data);
           // if (res.data[0]["추천"] === "실패") {
           //   setLoadSuccess(false);
           // }
@@ -206,14 +206,14 @@ const PetSitterView = () => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }, []);
 
   //사용자 정보에 저장되어있지 않은 다른 위치를 검색할 때
   const anotherLocationSearch = useCallback(() => {
-    //console.log(location);
+    ////console.log(location);
     setLoading(true);
     setLoadSuccess(true);
     if (!!userId) {
@@ -225,7 +225,7 @@ const PetSitterView = () => {
           },
         })
         .then((res) => {
-          //console.log(res.data);
+          ////console.log(res.data);
           if (res.data[0]["추천"] === "실패") {
             setLoadSuccess(false);
           }
@@ -233,7 +233,7 @@ const PetSitterView = () => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     } else {
       axios
@@ -244,7 +244,7 @@ const PetSitterView = () => {
           },
         })
         .then((res) => {
-          //console.log(res.data);
+          ////console.log(res.data);
           if (res.data[0]["추천"] === "실패") {
             setLoadSuccess(false);
           }
@@ -252,7 +252,7 @@ const PetSitterView = () => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }, [location]);

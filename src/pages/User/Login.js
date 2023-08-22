@@ -15,6 +15,7 @@ import {
   userAddrAtom,
   userImgAtom,
   licenceAtom,
+  userCardNumber,
 } from "../../atom/atoms";
 
 const LoginForm = styled.div`
@@ -72,6 +73,7 @@ function Login(props) {
   const [email, setEmail] = useRecoilState(emailtextAtom);
   const [licence, setLicence] = useRecoilState(licenceAtom);
   const [img, setImg] = useRecoilState(userImgAtom);
+  const [cardNumber, setCardNumber] = useRecoilState(userCardNumber);
 
   const [pwd, setPwd] = useState("");
   const [btnState, setBtnState] = useState(false);
@@ -124,12 +126,13 @@ function Login(props) {
           setLicence(() => res.data.userLicence);
           setPwd(() => "");
           setImg(() => res.data.userImg);
-          console.log(res.data);
+          setCardNumber(() => res.data.userCardNumber);
+          //console.log(res.data);
           nav("/");
         }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 

@@ -94,14 +94,14 @@ function PetInfo(props) {
       method: "get",
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setPetInfo(res.data);
         stePetTendency(res.data.petTendency);
         setPetVaccine(res.data.petVaccine);
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, []);
 

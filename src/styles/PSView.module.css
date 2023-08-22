@@ -260,6 +260,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
+  z-index: 2;
 }
 
 .buttonFooter button {
@@ -292,4 +293,14 @@
 .stay + label {
   color: #2bba64 !important;
   border-color: #2bba64 !important;
+}
+
+.yes + label {
+  color: #ff6666 !important;
+  border-color: #ff6666 !important;
+}
+
+.no + label {
+  color: #bdbdbd !important;
+  border-color: #bdbdbd !important;
 }

@@ -9,10 +9,10 @@ const About = () => {
     axios
       .post("/petInformationRead/7")
       .then((res) => {
-        console.log(res);
+        //console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   });
   return (

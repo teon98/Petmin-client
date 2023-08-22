@@ -63,7 +63,7 @@ function CareRequest3(props) {
       method: "get",
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setPetList(res.data);
         const options = res.data.map((pet) => {
           let icon = "◌";
@@ -82,7 +82,7 @@ function CareRequest3(props) {
         setCareTypeOptions(options);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, []);
 
@@ -90,7 +90,7 @@ function CareRequest3(props) {
 
   for (let i = 0; i < checkValueList.length; i++) {
     const element = checkValueList[i];
-    console.log(element); // 각 요소를 하나씩 출력하거나 원하는 작업을 수행
+    //console.log(element); // 각 요소를 하나씩 출력하거나 원하는 작업을 수행
   }
 
   return (
