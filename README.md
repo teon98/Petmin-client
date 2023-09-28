@@ -19,7 +19,7 @@
 
 |             펫시터 일정 등록              |                펫시터 목록 필터링                |        펫시터 상세 정보 보여주기 및 예약 요청         |
 | :---------------------------------------: | :---------------------------------------: | :---------------------------------------: |
-|<img src=https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnNna3BqbHBrY3lka3BpY3E2am9uMTY5emVrYjQwaTFzb2gzZ3RvYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/r1dTfZkjCTggijFBeS/giphy.gif>| |  |
+|<img src=https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnNna3BqbHBrY3lka3BpY3E2am9uMTY5emVrYjQwaTFzb2gzZ3RvYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/r1dTfZkjCTggijFBeS/giphy.gif>|<img src=https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnJ2MzI4ODE4ajJldm5pbXB4ZHQ0Z3Nyd3NrZjAxMmxzaHRkcmhzaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3KSaVqCJ5anNHeW7Kh/giphy.gif >| <img  src=https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXo2ZHd1NTE0cW5hZnV1NmU4YmJmZXVuYW9mcHdveWRxMXcxYW8zdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/oQ8UCWtSJdaWDjsvCH/giphy.gif> |
 
 
 ## 🛢 ERD
